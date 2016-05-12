@@ -26,7 +26,7 @@ angular.module('delivery.controllers', [])
     });
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $ionicPlatform, $ionicPopup) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -164,13 +164,18 @@ angular.module('delivery.controllers', [])
     // Create the categories modal which should be the starting point in the app
     $ionicModal.fromTemplateUrl('templates/categories.html', {
         scope: $rootScope,
-        hardwareBackButtonClose: false,
+        hardwareBackButtonClose: true,
     }).then(function (modal) {
         $rootScope.categoriesModal = modal;
     });
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
+        
         $rootScope.categoriesModal.show();
+        var isOffline = $cordovaNetwork.isOffline();
+        if (isOffline) {
+            $cordovaToast.show("Please check your internet connection", 'long', 'center');
+        }
     });
 })

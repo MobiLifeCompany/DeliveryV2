@@ -26,5 +26,13 @@
   "USE_CURRENT_ADDRESS": "متابعة بالعنوان الحالي",
   "PICK_FROM_SAVED_ADDRESSES": "أو قم باختيار أحد العناوين المخزنة",
   "OR_PICK_A_NEW_ADDRESS": "أو قم باختيار عنوان جديد",
-  "PICK_A_NEW_ADDRESS": "اختيار عنوان جديد"
+  "PICK_A_NEW_ADDRESS": "اختيار عنوان جديد",
+  "MIN_DELIVERY_AMOUNT": "الحد الأدنى للتوصيل",
+  "DELIVERY_TIME": "وقت التوصيل",
+  "SORT_BY": "ترتيب حسب",
+  "FILTER_BY_MASTERY": "تصفية حسب الاختصاص",
+  "ADVANCE_FILTER":  "تصفية متقدمة",
+  "ALPHABETICAL": "أبجدي",
+  "REVIEWS": "التقييم",
+  "PROMO": "عرض"
 }

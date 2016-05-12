@@ -4,7 +4,7 @@
 // 'driver' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'delivery.controllers' is found in controllers.js
-angular.module('delivery', ['ionic', 'delivery.controllers', 'pascalprecht.translate', 'ionic-material', 'jett.ionic.filter.bar'])
+angular.module('delivery', ['ionic', 'delivery.controllers', 'pascalprecht.translate', 'ionic-material', 'jett.ionic.filter.bar', 'ngCordova'])
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -25,7 +25,13 @@
   "USE_CURRENT_ADDRESS": "Use current address",
   "PICK_FROM_SAVED_ADDRESSES": "OR Pick from saved addresses",
   "OR_PICK_A_NEW_ADDRESS":  "OR Pick a new address",
-  "PICK_A_NEW_ADDRESS":  "Pick a new address"
-
-
+  "PICK_A_NEW_ADDRESS":  "Pick a new address",
+  "MIN_DELIVERY_AMOUNT": "Min. Delivery Amount",
+  "DELIVERY_TIME": "Delivery Time",
+  "SORT_BY": "Sort By",
+  "FILTER_BY_MASTERY": "Filter By Mastery",
+  "ADVANCE_FILTER":  "Advance Filter",
+  "ALPHABETICAL": "Alphabetical",
+  "REVIEWS": "Reviews",
+  "PROMO": "Promo"
 }
