@@ -1,0 +1,17 @@
+<ion-modal-view ng-controller="AreasCtrl">
+    <ion-header-bar class="bar-assertive">
+        <button class="button button-icon button-clear" ng-click="prevStep()"><span class="icon ion-chevron-left"></span></button>
+        <h1 class="title" translate="AREAS"></h1>
+    </ion-header-bar>
+    <ion-content overflow-scroll="false">
+        <div class="dl-location-bar"><img src="img/location-bg.jpg" /></div>
+        <div class="bar bar-subheader bar-energized static text-center">
+            <h4 class="title"><span translate="SELECT_AREA"></span></h4>
+        </div>
+        <div class="list" ng-show="done_loading == true">
+            <a class="item item-icon-right" style="border-bottom: 1px solid silver;" ng-repeat="area in areas" ng-click="setArea({{area.id}})">
+                <i class="icon ion-chevron-right stable dl-menu-item-icon"></i><strong class="assertive"> {{ area.name }}</strong>
+            </a>
+        </div>
+    </ion-content>
+</ion-modal-view>
