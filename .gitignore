@@ -1,3 +1,5 @@
 node_modules
 platforms
-bin\Android\Debug
+bin/Android/Debug
+platforms/platforms.json
+plugins/android.json
