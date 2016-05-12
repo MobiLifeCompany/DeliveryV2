@@ -7,28 +7,28 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
-        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+            "PACKAGE_NAME": "com.delivery.app"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.delivery.app"
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.delivery.app"
         },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.delivery.app"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.delivery.app"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.delivery.app"
+        },
         "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.delivery.app"
+        },
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.delivery.app"
         }
     },
