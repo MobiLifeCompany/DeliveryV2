@@ -1,23 +1,18 @@
 angular.module('delivery.controllers')
 
-.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $ionicModal) {
-    $ionicLoading.show();
-    // wait for 1000 milliseconds and hide the overlay to simulate data loading from server
-    $timeout(function () {
-        $ionicLoading.hide();
-        $scope.done_loading = true;
-    }, 500);
+.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, citiesFactory, deliveryLoader) {
 
-    // dummy data for cities
-    $scope.cities = [
-        { name: 'Hama', id: 1},
-        { name: 'Homs', id: 2 },
-        { name: 'Aleppo', id: 3 },
-        { name: 'Damascus', id: 4 },
-        { name: 'Lattakia', id: 5 },
-        { name: 'Idleb', id: 6 }
-    ];
-
+    $scope.cities = [];
+    deliveryLoader.showLoading('Loading...');
+    citiesFactory.get().success(function (data) {
+        $scope.cities = data;
+        deliveryLoader.hideLoading();
+    }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
+        deliveryLoader.toggleLoadingWithMessage(err.message);
+    })
+    
+    $scope.done_loading = true;
     $rootScope.selectedCity = [];
 
     /// <summary>setCity: Add the selected city to '$rootScope' and 'localStorage' then redirect the user to 'select area' modal</summary>

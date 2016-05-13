@@ -1,32 +1,19 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk) {
-    $ionicLoading.show();
-    // wait for 3 seconds and hide the overlay
-    $timeout(function () {
-        $ionicLoading.hide();
-        $scope.done_loading = true;
-    }, 500);
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader) {
 
-    $scope.shops = [
-        { name: 'KFC', id: 1, src: "img/shops/kfc.jpg", rating: 3, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min' ,hasPromotion: true, isOpen: true },
-        { name: 'McDonalds', id: 2, src: "img/shops/mcdonalds.jpg", rating: 4, masteries: ['Arabic', 'Sweets', 'Grill'], minAmount: '15$', deliveryTime: '30 min', hasPromotion: false, isOpen: true },
-        { name: 'Pizza Hut', id: 3, src: "img/shops/pizza_hut.jpg", rating: 4, masteries: ['Chiken', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', hasPromotion: false, isOpen: false },
-        { name: 'Dominos Pizza', id: 4, src: "img/shops/dominos.jpg", rating: 5, masteries: ['Pizza', 'Deserts'], minAmount: '12$', deliveryTime: '40 min', hasPromotion: true, isOpen: true },
-        { name: 'Shop FIVE', id: 5, src: "img/categories/icon5.jpg", rating: 2, masteries: ['Salads', 'Burgers'], minAmount: '8$', deliveryTime: '45 min', hasPromotion: true, isOpen: true },
-        { name: 'Shop SIX', id: 6, src: "img/categories/icon6.jpg", rating: 2, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', hasPromotion: false, isOpen: true }
-    ];
+    $scope.shops = [];
+    deliveryLoader.showLoading('Loading...');
+    shopsFactory.get().success(function (data) {
+        $scope.shops = data;
+        $scope.masteriesArray = mastriesFactory.get($scope.shops);
+        deliveryLoader.hideLoading();
+     }).error(function (err, statusCode) {
+         deliveryLoader.hideLoading();
+         deliveryLoader.toggleLoadingWithMessage(err.message);
+     })
 
-    $scope.masteries = [
-        {name: 'Chicken'},
-        { name: 'Fast Food' },
-        { name: 'Salads' },
-        { name: 'Pizza' },
-        { name: 'Burgers' },
-        { name: 'Grill' },
-        { name: 'Sweets' },
-        { name: 'Deserts' }
-    ];
+    $scope.done_loading = true;
 
     //set the default order criteria to 'rating'
     $scope.orderCriteria = 'rating';

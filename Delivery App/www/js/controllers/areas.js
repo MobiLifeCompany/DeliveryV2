@@ -1,29 +1,23 @@
 angular.module('delivery.controllers')
 
-.controller('AreasCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $ionicFilterBar, $ionicSlideBoxDelegate) {
-    $ionicLoading.show();
-    // wait for 1 seconds and hide the overlay
-    $timeout(function () {
-        $ionicLoading.hide();
-        $scope.done_loading = true;
-    }, 1000);
+.controller('AreasCtrl', function ($scope, $rootScope, $ionicLoading, $http, $timeout, $ionicFilterBar, $ionicSlideBoxDelegate,areasFactory,deliveryLoader) {
 
-    //dummy data for areas
-    $scope.areas = [
-        { name: 'Sahat Al-Assi', id: 1 },
-        { name: 'Alshareaa', id: 2 },
-        { name: 'Aldabagha', id: 3 },
-        { name: 'Almarabet', id: 4 },
-        { name: 'Janob Al-Malaab', id: 5 },
-        { name: 'Aldahia', id: 6 },
-        { name: 'Tarek Halab', id: 7 }
-    ];
+    $scope.areas = [];
+    deliveryLoader.showLoading('Loading...');
+    areasFactory.get().success(function (data) {
+        $scope.areas = data;
+        deliveryLoader.hideLoading();
+     }).error(function (err, statusCode) {
+         deliveryLoader.hideLoading();
+         deliveryLoader.toggleLoadingWithMessage(err.message);
+     })
 
-    $rootScope.selectedArea = {};
+     $scope.done_loading = true;
+     $rootScope.selectedArea = {};
 
-    /// <summary>setArea: add the selected area to '$rootScope' and 'localStorage' then redirect the user to main view</summary>
-    /// <param name="i" type="integer">The id of the selected area</param>
-    $scope.setArea = function (i) {
+     /// <summary>setArea: add the selected area to '$rootScope' and 'localStorage' then redirect the user to main view</summary>
+     /// <param name="i" type="integer">The id of the selected area</param>
+     $scope.setArea = function (i) {
         $rootScope.selectedArea = { id: i, name: $scope.areas[i - 1].name };
         localStorage.setItem("areaID", i);
         localStorage.setItem("areaName", $scope.areas[i - 1].name);
