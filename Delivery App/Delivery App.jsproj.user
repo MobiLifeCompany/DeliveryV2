@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ReferenceCachePath>C:\Users\Smarttech-DELL\AppData\Local\Temp\Delivery App_refcache</ReferenceCachePath>
+    <ReferenceCachePath>C:\Users\Kamal\AppData\Local\Temp\noyz4sma_Delivery App_refcache</ReferenceCachePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
-    <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
+    <DebuggerFlavor>RippleNexusS</DebuggerFlavor>
     <AndroidEmulatorID>AndroidDevice;Device</AndroidEmulatorID>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|iOS'">
