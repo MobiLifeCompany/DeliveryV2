@@ -3,4 +3,5 @@ platforms
 bin
 Delivery App\platforms\platforms.json
 Delivery App\plugins\android.json
-
+.vs\Delivery App\v14\.suo
+Delivery App\Delivery App.jsproj.user
