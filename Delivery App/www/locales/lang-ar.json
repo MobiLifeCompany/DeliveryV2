@@ -34,5 +34,13 @@
   "ADVANCE_FILTER":  "تصفية متقدمة",
   "ALPHABETICAL": "أبجدي",
   "REVIEWS": "التقييم",
-  "PROMO": "عرض"
+  "PROMO": "عرض",
+  "DELIVERY_FEE": "أجور التوصيل",
+  "DELIVERY_HOURS": "ساعات التوصيل",
+  "SHOP_DETAILS": "تفاصيل المتجر",
+  "OPENING_HOURS": "أوقات العمل",
+  "LOCATION": "الموقع",
+  "ADD_TO_CART": "إضافة إلى السلة",
+  "PRICE": "السعر: ",
+  "QUANTITY": "الكمية"
 }

@@ -80,7 +80,7 @@
                 </div>
 
                 <ion-content class="has-header dl-sort-action-sheet-content" overflow-scroll="false">
-                        <div class="list">
+                        <ion-list>
                             <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
                                 <div translate="MIN_DELIVERY_AMOUNT"></div>
                                 <div class="range range-positive">
@@ -127,7 +127,7 @@
                                         </div>
                                     </label>
                                 </div>
-                            </div>
+                            </ion-list>
                 </ion-content>
 
             </ion-modal-view>
@@ -138,7 +138,7 @@
             <ion-slide class="dl-promotion-slider"><img src="img/promotions/promotion1.jpg" /></ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">
-            <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#">
+            <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#/app/shop-details/{{shop.id}}">
                 <div class="promotion-triangle" ng-show="{{shop.hasPromotion}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
                 <div class="is-open-triangle" ng-show="{{shop.isOpen}}"></div>
                 <div class="is-close-triangle" ng-hide="{{shop.isOpen}}"></div>

@@ -55,6 +55,16 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         }
     })
 
+    .state('app.shop-details', {
+        url: '/shop-details/:shopId',
+        views: {
+            'order': {
+                templateUrl: 'templates/shop-details.html',
+                controller: 'ShopDetailsCtrl'
+            }
+        }
+    })
+
     .state('app.old-orders', {
         url: '/old-orders',
         views: {
