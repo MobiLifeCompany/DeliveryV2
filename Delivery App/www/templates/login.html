@@ -4,37 +4,20 @@
     <h1 class="title" translate="LOGIN"></h1>
   </ion-header-bar>
   <ion-content>
-    <form name="loginFom" ng-submit="doLogin()">
-        <div class="list">
-
-            <label class="list item-input padding-right padding-top">
-                <i class="icon ion-person placeholder-icon"></i>
-                <input name="Username" type="text" ng-model="loginData.username" placeholder="Email / Mobile Number" style="border-bottom:inset;" required>
-            </label>
-            <span ng-show="loginFom.username.$touched || loginFom.username.$invalid || loginForm.username.$dirty || loginForm.username.$untouched">Enter Email or Mobile Number</span>
-
-            <label class="list item-input padding-right">
-                <i class="icon ion-locked placeholder-icon"></i>
-                <input  name="Password" type="password" ng-model="loginData.password" placeholder="Password" style="border-bottom:inset;"  required>
-            </label>
-            <span ng-show="loginFom.password.$touched || loginFom.password.$invalid || loginForm.password.$dirty || loginForm.password.$untouched">Enter Password</span>
-            <div style="text-align:left;object-position:left;">
-                <p class="text-left padding-left">
-                    <a href="forgetPassword.html" style="color:red;font-style:normal;"><span translate="ForgetPassword"></span></a>
-                </p>
-            </div>
-                <div class="padding-bottom" style="text-align:center;object-position:center;border-bottom:inset">
-                    <button class="button button-small button-balanced" type="submit" style="width:90%;">Log in</button>
-                </div>
-            </div>
-    </form>
-      <content class="list" style="border-bottom: 1px solid silver;"></content>
-      <form name="RegFom" ng-submit="goRegister()">
-        <div class="list">
-           <h5 class="list item-input align" translate="asktoRegister"></h5>
-            <div style="text-align:center;object-position:center;">
-                <button class="button button-small button-energized" type="submit" style="width:90%;">REGISTER NOW</button>
-            </div>
+    <form ng-submit="doLogin()">
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="loginData.username" placeholder="Username">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password" placeholder="Password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+      </div>
     </form>
   </ion-content>
 </ion-modal-view>
