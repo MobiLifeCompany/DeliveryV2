@@ -34,5 +34,7 @@
   "ADVANCE_FILTER":  "تصفية متقدمة",
   "ALPHABETICAL": "أبجدي",
   "REVIEWS": "التقييم",
-  "PROMO": "عرض"
+  "PROMO": "عرض",
+  "ForgetPassword": "نسيت كلمة المرور ؟",
+  "asktoRegister": "لا تملك حساب للدخول ؟"
 }

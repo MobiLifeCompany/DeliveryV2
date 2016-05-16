@@ -37,10 +37,41 @@
                 <div class="bar bar-header bar-assertive" style="position: static;">
                     <div class="buttons buttons-left header-item">
                         <span class="left-buttons">
-                            <button class="button button-icon button-clear ion-ios-close-outline"></button>
+                            <button class="button button-icon button-clear ion-ios-close-outline" ng-click="clearMasteryFilter()"></button>
                         </span>
                     </div>
                     <div class="h1 title" translate="FILTER_BY_MASTERY"></div>
+                    <div class="buttons buttons-right header-item">
+                        <span class="right-buttons">
+                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="closeFilter()"></button>
+                        </span>
+                    </div>
+                </div>
+
+                <ion-content class="has-header dl-sort-action-sheet-content" overflow-scroll="false">
+                    <div class="list">
+                        <div class="item item-checkbox" style="border-bottom: 1px solid silver; padding-left: 16px;" ng-repeat="mastery in masteriesCheckList">
+                            <span>{{mastery.name}}</span>
+                            <label class="checkbox">
+                                <input type="checkbox" class="pull-right" ng-model="mastery.checked" ng-checked="mastery.checked">
+                            </label>
+                        </div>
+                    </div>
+                </ion-content>
+
+            </ion-modal-view>
+        </script>
+
+        <!--'Advance Filter' modal template-->
+        <script id="advance-filter-modal.html" type="text/ng-template">
+            <ion-modal-view class="dl-sort-action-sheet">
+                <div class="bar bar-header bar-assertive" style="position: static;">
+                    <div class="buttons buttons-left header-item">
+                        <span class="left-buttons">
+                            <button class="button button-icon button-clear ion-ios-close-outline"></button>
+                        </span>
+                    </div>
+                    <div class="h1 title" translate="ADVANCE_FILTER"></div>
                     <div class="buttons buttons-right header-item">
                         <span class="right-buttons">
                             <button class="button button-icon button-clear ion-ios-checkmark-outline"></button>
@@ -49,16 +80,54 @@
                 </div>
 
                 <ion-content class="has-header dl-sort-action-sheet-content" overflow-scroll="false">
-                    <form ng-submit="">
                         <div class="list">
-                            <div class="item item-checkbox" style="border-bottom: 1px solid silver; padding-left: 16px;" ng-repeat="mastery in masteriesArray" ng-click="">
-                                <span>{{mastery.name}}</span>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="pull-right">
-                                </label>
+                            <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
+                                <div translate="MIN_DELIVERY_AMOUNT"></div>
+                                <div class="range range-positive">
+                                    <i>1</i>
+                                    <input type="range" name="volume" min="0" max="100" value="33">
+                                    <i>All</i>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
+                                <div translate="DELIVERY_TIME"></div>
+                                <div class="range range-positive">
+                                    <i>15min</i>
+                                    <input type="range" name="volume" min="0" max="100" value="33">
+                                    <i>All</i>
+                                </div>
+                            </div>
+                            <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
+                                <span>Rating</span>
+                                <div class="button-bar bar-assertive">
+                                    <a class="button button-raised">1</a>
+                                    <a class="button button-raised ink-dark">2</a>
+                                    <a class="button button-raised ink-dark">3</a>
+                                    <a class="button button-raised ink-dark">4</a>
+                                    <a class="button button-raised ink-dark">5</a>
+                                </div>
+                            </div>
+
+
+                                <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
+                                    <span>Show closed resturants</span>
+                                    <label class="toggle toggle-assertive pull-right">
+                                        <input type="checkbox">
+                                        <div class="track">
+                                            <div class="handle"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
+                                    <span>Show resturants with promotions only</span>
+                                    <label class="toggle toggle-assertive pull-right">
+                                        <input type="checkbox">
+                                        <div class="track">
+                                            <div class="handle"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                 </ion-content>
 
             </ion-modal-view>
@@ -69,7 +138,7 @@
             <ion-slide class="dl-promotion-slider"><img src="img/promotions/promotion1.jpg" /></ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">
-            <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | orderBy: orderCriteria: descending" href="#">
+            <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#">
                 <div class="promotion-triangle" ng-show="{{shop.hasPromotion}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
                 <div class="is-open-triangle" ng-show="{{shop.isOpen}}"></div>
                 <div class="is-close-triangle" ng-hide="{{shop.isOpen}}"></div>
@@ -108,7 +177,7 @@
             <a class="tab-item" ng-click="showFilter()">
                 <i class="icon ion-ios-color-filter" style="font-size: x-large;"></i><span translate="FILTER_BY_MASTERY"></span>
             </a>
-            <a class="tab-item">
+            <a class="tab-item" ng-click="showAdvanceFilter()">
                 <i class="icon ion-ios-settings-strong" style="font-size: x-large;"></i><span translate="ADVANCE_FILTER"></span>
             </a>
         </div>
