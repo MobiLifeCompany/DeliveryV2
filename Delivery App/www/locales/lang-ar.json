@@ -42,5 +42,7 @@
   "LOCATION": "الموقع",
   "ADD_TO_CART": "إضافة إلى السلة",
   "PRICE": "السعر: ",
-  "QUANTITY": "الكمية"
+  "QUANTITY": "الكمية",
+  "ForgetPassword": "نسيت كلمة المرور ؟",
+  "asktoRegister": "لا تملك حساب للدخول ؟"
 }
