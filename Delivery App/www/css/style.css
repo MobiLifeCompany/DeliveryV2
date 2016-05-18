@@ -227,7 +227,6 @@ body {
   padding: 0 2rem;
   border-radius: 2px;
   background-clip: padding-box;
-  text-transform: uppercase;
   border: none;
   outline: 0;
   -webkit-tap-highlight-color: transparent; }
@@ -243,7 +242,6 @@ body {
   /* background: transparent; */
   white-space: nowrap;
   text-align: center;
-  text-transform: uppercase;
   font-weight: 500;
   font-style: inherit;
   font-variant: inherit;
