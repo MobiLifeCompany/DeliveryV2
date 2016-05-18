@@ -25,4 +25,10 @@ angular.module('delivery.controllers')
         }, 1000);
     };
 
+    /// <summary>prevStep: Redirect the user back to 'select categories' modal</summary>
+    /// <param>no parameters</param>
+    $scope.prevStep = function () {
+        $scope.closeLogin();
+    }
+
 });

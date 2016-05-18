@@ -44,5 +44,16 @@
   "ADVANCE_FILTER":  "Advance Filter",
   "ALPHABETICAL": "Alphabetical",
   "REVIEWS": "Reviews",
-  "PROMO": "Promo"
+  "PROMO": "Promo",
+  "DELIVERY_FEE": "Delivery Fee",
+  "DELIVERY_HOURS": "Delivery Hours",
+  "SHOP_DETAILS": "Shop Details",
+  "OPENING_HOURS": "Opening Hours",
+  "LOCATION": "Location",
+  "ADD_TO_CART": "Add To Cart",
+  "RETURN_TO_MENU": "Return To Menu",
+  "PRICE": "Price: ",
+  "QUANTITY": "Quantity",
+  "ForgetPassword": "Forgot your password ?",
+  "asktoRegister": "Don't have an account ?"
 }

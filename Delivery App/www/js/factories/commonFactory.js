@@ -64,6 +64,29 @@ angular.module('delivery.factory', [])
     }
     
 })
+
+.factory('shopDetailsFactory', function () {
+    var shopsArray = [{ name: 'KFC', id: 1, src: "img/shops/kfc.jpg", rating: 3, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: 'great promotion here', warningNote: 'important warning too!', address: 'Hama, Sahat Al-Assi', longitude: '35.130351', latitude: '36.755670' },
+                    { name: 'McDonalds', id: 2, src: "img/shops/mcdonalds.jpg", rating: 4, masteries: ['Arabic', 'Sweets', 'Grill'], minAmount: '15$', deliveryTime: '30 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: true, promotionNote: 'great promotion here', warningNote: 'important warning too!', address: 'Hama, Al-Dabagha', longitude: '35.131506', latitude: '36.753518' },
+                    { name: 'Pizza Hut', id: 3, src: "img/shops/pizza_hut.jpg", rating: 4, masteries: ['Chiken', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: false, promotionNote: 'great promotion here', warningNote: '', address: 'Hama, Sahat Al-Assi', longitude: '35.130351', latitude: '36.755670' },
+                    { name: 'Dominos Pizza', id: 4, src: "img/shops/dominos.jpg", rating: 5, masteries: ['Pizza', 'Deserts'], minAmount: '12$', deliveryTime: '40 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: '', warningNote: '', address: 'Hama, Al-Dabagha', longitude: '35.131506', latitude: '36.753518' },
+                    { name: 'Shop FIVE', id: 5, src: "img/categories/icon5.jpg", rating: 2, masteries: ['Salads', 'Burgers'], minAmount: '8$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: '', warningNote: '', address: '', longitude: '', latitude: '' },
+                    { name: 'Shop SIX', id: 6, src: "img/categories/icon6.jpg", rating: 2, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: true, promotionNote: '', warningNote: '', address: '', longitude: '', latitude: '' }
+    ];
+    var shopDetails = {};
+    return {
+        get: function (shopId) {
+            for (i = 0; i < shopsArray.length; i++) {
+                if (shopsArray[i].id == shopId) {
+                    shopDetails = shopsArray[i];
+                }
+            }
+            return shopDetails;
+        }
+    }
+    
+})
+
 .factory('deliveryLoader',  function ($ionicLoading, $timeout) {
 
     var LOADERAPI = {
