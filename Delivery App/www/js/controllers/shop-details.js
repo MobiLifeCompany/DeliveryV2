@@ -174,7 +174,7 @@ angular.module('delivery.controllers')
             confirmPopup.then(function (res) {
                 if (res) {
                     //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
-                    $rootScope.cartShop = shop.id;
+                    $rootScope.cartShop = shop;
                     $rootScope.cartItems = [];
                     var quantity = document.getElementById(item.id).innerHTML;
                     $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });

@@ -1,13 +1,12 @@
 angular.module('delivery.controllers')
 
-.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
 
-    $scope.$on('$ionicViewEnter', function () {
-        alert();
+    $scope.$on('$ionicView.enter', function () {
         $rootScope.showCartFabButton = false; //hide the cart button while in cart screen
     })
 
-    $scope.$on('$ionicViewLeave', function () {
+    $scope.$on('$ionicView.leave', function () {
         $rootScope.showCartFabButton = true; //show the cart button when leaving cart screen
     })
 
@@ -53,6 +52,10 @@ angular.module('delivery.controllers')
         var total = $scope.subtotal + parseFloat($rootScope.cartShop.deliveryFee);
         $scope.total = total;
         return total;
+    }
+
+    $scope.goBackHome = function () {
+        $ionicHistory.goBack(-100); //go back to start view 'shops', use this methode instead of 'ui-serf' to clear the ionic view history and show the side menu icon on nav-bar
     }
 
 });
