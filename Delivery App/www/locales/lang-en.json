@@ -44,5 +44,11 @@
   "PRICE": "Price: ",
   "QUANTITY": "Quantity",
   "ForgetPassword": "Forgot your password ?",
-  "asktoRegister": "Don't have an account ?"
+  "asktoRegister": "Don't have an account ?",
+  "YOUR_CART": "Your Cart",
+  "SUBTOTAL": "Subtotal",
+  "TOTAL": "Total",
+  "CONFIRM_YOUR_ORDER": "Confirm your order",
+  "YOUR_CART_IS_EMPTY": "Your cart is empty",
+  "START_SHOPPING": "Start Shopping!"
 }

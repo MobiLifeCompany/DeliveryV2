@@ -44,5 +44,11 @@
   "PRICE": "السعر: ",
   "QUANTITY": "الكمية",
   "ForgetPassword": "نسيت كلمة المرور ؟",
-  "asktoRegister": "لا تملك حساب للدخول ؟"
+  "asktoRegister": "لا تملك حساب للدخول ؟",
+  "YOUR_CART": "مشترياتك",
+  "SUBTOTAL": "المجموع",
+  "TOTAL": "المجموع الكلي",
+  "CONFIRM_YOUR_ORDER": "تأكيد الطلب",
+  "YOUR_CART_IS_EMPTY": "سلة التسوق فارغة",
+  "START_SHOPPING": "إبدأ بالتسوق!"
 }

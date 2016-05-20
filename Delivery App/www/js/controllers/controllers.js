@@ -37,9 +37,13 @@ angular.module('delivery.controllers', [])
 
     // showMainView: control the visibility of the main app screen, initial value = false, true when an address has been choosen
     $rootScope.showMainView = false;
+
     //Define application-wide variables here
     $rootScope.isUserLoggedin = false;
     $rootScope.userName = '';
+    $rootScope.showCartFabButton = false;
+    $rootScope.cartItems = [];
+    $rootScope.cartShop = null;
 
     //Get saved pereferences from localStorage
     if (localStorage.getItem("isUserLoggedin")) {

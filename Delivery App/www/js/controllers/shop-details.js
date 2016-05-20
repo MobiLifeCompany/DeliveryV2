@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
 
     $scope.shopDetails = [];
     //deliveryLoader.showLoading('Loading...');
@@ -114,32 +114,73 @@ angular.module('delivery.controllers')
     });
 
     //increaseAmount: increase the item quantity counter label when click on '+' button
-    $scope.increaseAmount = function (itemAmount) {
-        var item = document.getElementById(itemAmount);
+    $scope.increaseQuantity = function (itemQuantity) {
+        var item = document.getElementById(itemQuantity);
         item.innerHTML = parseInt(item.innerHTML) + 1;
     };
 
     //decreseAmount: decrease the item quantity counter label when click on '-' button
-    $scope.decreseAmount = function (itemAmount) {
-            var item = document.getElementById(itemAmount);
+    $scope.decreseQuantity = function (itemQuantity) {
+            var item = document.getElementById(itemQuantity);
             if (parseInt(item.innerHTML) > 1) {
                 item.innerHTML = parseInt(item.innerHTML) - 1;
             }
     };
 
     //increaseAmountFromModal: increase the item quantity counter on 'itemDetailsModal' when click on '+' button
-    $scope.increaseAmountFromModal = function (itemAmount) {
-        var item = document.getElementById(itemAmount);
+    $scope.increaseQuantityFromModal = function (itemQuantity) {
+        var item = document.getElementById(itemQuantity);
         var selectedItem = document.getElementById('selectedItemId');
         item.innerHTML = selectedItem.innerHTML = parseInt(item.innerHTML) + 1;
     };
 
     //decreseAmountFromModal: decrease the item quantity counter on 'itemDetailsModal' when click on '-' button
-    $scope.decreseAmountFromModal = function (itemAmount) {
-        var item = document.getElementById(itemAmount);
+    $scope.decreseQuantityFromModal = function (itemQuantity) {
+        var item = document.getElementById(itemQuantity);
         var selectedItem = document.getElementById('selectedItemId');
         if (parseInt(item.innerHTML) > 1) {
             item.innerHTML = selectedItem.innerHTML = parseInt(item.innerHTML) - 1;
         }
+    };
+
+    //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
+    $scope.addToCart = function (item, shop) {
+        if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+            var isNewItem = true; // used to determine if the added item is new or allready in the cart
+            var quantity = document.getElementById(item.id).innerHTML;
+            $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
+            $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
+            for (i = 0; i < $rootScope.cartItems.length; i++) {
+                if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
+                    $rootScope.cartItems[i].quantity = quantity;
+                    isNewItem = false;
+                    i = $rootScope.cartItems.length; //break the loop
+                }
+
+            }
+            if (isNewItem) //all new item to cart
+                $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+        }
+        else {
+            // Show a warning popup if shop changed
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Change Shop',
+                template: 'Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?',
+                cancelText: 'No',
+                okText: 'Yes'
+            });
+
+            // Resolve the promise returned by the popup, then empty the cart if user confirm
+            confirmPopup.then(function (res) {
+                if (res) {
+                    //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
+                    $rootScope.cartShop = shop.id;
+                    $rootScope.cartItems = [];
+                    var quantity = document.getElementById(item.id).innerHTML;
+                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+                }
+            });
+        }
+
     };
 });

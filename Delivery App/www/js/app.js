@@ -65,6 +65,16 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         }
     })
 
+    .state('app.cart', {
+        url: '/cart',
+        views: {
+            'order': {
+                templateUrl: 'templates/cart.html',
+                controller: 'CartCtrl'
+            }
+        }
+    })
+
     .state('app.old-orders', {
         url: '/old-orders',
         views: {
