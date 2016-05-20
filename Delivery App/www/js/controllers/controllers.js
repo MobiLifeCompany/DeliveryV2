@@ -26,7 +26,7 @@ angular.module('delivery.controllers', [])
     });
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
