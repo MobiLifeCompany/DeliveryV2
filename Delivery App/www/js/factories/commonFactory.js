@@ -1,48 +1,44 @@
-﻿var baseURL = 'http://private-fa897-backendapi2.apiary-mock.com';
+﻿var baseURL = 'http://deliveryonweb.com/api/v1';
 
 angular.module('delivery.factory', [])
 
-.factory('businessCategoriesFactory', function ($http) {
+.factory('businessCategoriesFactory', function ($rootScope, $http) {
 
     var API = {
         get: function () {
-            return $http.get(baseURL + '/businessCateogries');
+            return $http.get(baseURL + '/businesses?lang=' + $rootScope.lang);
         }
     };
 
     return API;
 })
-.factory('areasFactory', function ($http) {
-
+.factory('areasFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/areas');
+            return $http.get(baseURL + '/cities/' + $rootScope.selectedCity.id + '/areas');
         }
     };
 
     return API;
 })
-.factory('citiesFactory', function ($http) {
-
+.factory('citiesFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/cities');
+            return $http.get(baseURL + '/countries/' + $rootScope.countryId + '/cities_areas?lang=' + $rootScope.lang);
         }
     };
 
     return API;
 })
-.factory('shopsFactory', function ($http) {
-
+.factory('shopsFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/shops');
+            return $http.get(baseURL + '/businesses/' + $rootScope.selectedCategory.id + '/areas/' + $rootScope.selectedArea.id + '/shops?lang=' + $rootScope.lang);
         }
     };
 
     return API;
 })
-
 .factory('mastriesFactory', function () {
     var resultArray = [];
     return {
@@ -65,32 +61,98 @@ angular.module('delivery.factory', [])
     
 })
 
-.factory('shopDetailsFactory', function () {
-    var shopsArray = [{ name: 'KFC', id: 1, src: "img/shops/kfc.jpg", rating: 3, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: 'great promotion here', warningNote: 'important warning too!', address: 'Hama, Sahat Al-Assi', longitude: '35.130351', latitude: '36.755670' },
-                    { name: 'McDonalds', id: 2, src: "img/shops/mcdonalds.jpg", rating: 4, masteries: ['Arabic', 'Sweets', 'Grill'], minAmount: '15$', deliveryTime: '30 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: true, promotionNote: 'great promotion here', warningNote: 'important warning too!', address: 'Hama, Al-Dabagha', longitude: '35.131506', latitude: '36.753518' },
-                    { name: 'Pizza Hut', id: 3, src: "img/shops/pizza_hut.jpg", rating: 4, masteries: ['Chiken', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: false, promotionNote: 'great promotion here', warningNote: '', address: 'Hama, Sahat Al-Assi', longitude: '35.130351', latitude: '36.755670' },
-                    { name: 'Dominos Pizza', id: 4, src: "img/shops/dominos.jpg", rating: 5, masteries: ['Pizza', 'Deserts'], minAmount: '12$', deliveryTime: '40 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: '', warningNote: '', address: 'Hama, Al-Dabagha', longitude: '35.131506', latitude: '36.753518' },
-                    { name: 'Shop FIVE', id: 5, src: "img/categories/icon5.jpg", rating: 2, masteries: ['Salads', 'Burgers'], minAmount: '8$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: true, isOpen: true, promotionNote: '', warningNote: '', address: '', longitude: '', latitude: '' },
-                    { name: 'Shop SIX', id: 6, src: "img/categories/icon6.jpg", rating: 2, masteries: ['Fast Food', 'Salads', 'Burgers'], minAmount: '10$', deliveryTime: '45 min', deliveryFee: '2$', deliveryHours: '9:00 am - 10:00 pm', hasPromotion: false, isOpen: true, promotionNote: '', warningNote: '', address: '', longitude: '', latitude: '' }
-    ];
+.factory('shopDetailsFactory', function ($rootScope, $http) {
+    var shopsArray = $rootScope.shops;
     var shopDetails = {};
-    return {
+    var SAPI = {
         get: function (shopId) {
             for (i = 0; i < shopsArray.length; i++) {
                 if (shopsArray[i].id == shopId) {
                     shopDetails = shopsArray[i];
                 }
             }
+            $rootScope.selectedShop = shopDetails;
             return shopDetails;
+        },
+        getShopItemsCategories: function () {
+               return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items');
         }
     }
-    
+    return SAPI;
 })
 
+.factory('LSFactory', function () {
+
+        var LSAPI = {
+
+            clear: function () {
+                return localStorage.clear();
+            },
+
+            get: function (key) {
+                return JSON.parse(localStorage.getItem(key));
+            },
+
+            set: function (key, data) {
+                return localStorage.setItem(key, JSON.stringify(data));
+            },
+
+            delete: function (key) {
+                return localStorage.removeItem(key);
+            },
+            getCurrentLanguage: function () {
+                return localStorage.getItem("language")
+            }
+
+        };
+
+        return LSAPI;
+
+})
+
+.factory('AuthFactory', function (LSFactory) {
+    var userKey = 'user';
+    var AuthAPI = {
+
+        isLoggedIn: function () {
+            return this.getUser() === null ? false : true;
+        },
+
+        getUser: function () {
+            return LSFactory.get(userKey);
+        },
+
+        setUser: function (user) {
+            return LSFactory.set(userKey, user);
+        },
+
+        deleteAuth: function () {
+            LSFactory.delete(userKey);
+        }
+
+    };
+    return AuthAPI;
+})
+
+.factory('UserFactory', 
+    function ($http) {
+        
+        var UserAPI = {
+
+            login: function (customer) {
+               return $http.post(baseURL + '/customers/login', customer);
+            },
+
+            register: function (customer) {
+                return $http.post(baseURL + '/customers', customer);
+            }
+        };
+
+        return UserAPI;
+    }
+ )
 .factory('deliveryLoader',  function ($ionicLoading, $timeout) {
-
     var LOADERAPI = {
-
         showLoading: function (text) {
             text = text || 'Loading...';
             $ionicLoading.show({

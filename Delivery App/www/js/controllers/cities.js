@@ -5,7 +5,7 @@ angular.module('delivery.controllers')
     $scope.cities = [];
     deliveryLoader.showLoading('Loading...');
     citiesFactory.get().success(function (data) {
-        $scope.cities = data;
+        $scope.cities = data.cities;
         deliveryLoader.hideLoading();
     }).error(function (err, statusCode) {
         deliveryLoader.hideLoading();
@@ -17,9 +17,10 @@ angular.module('delivery.controllers')
 
     /// <summary>setCity: Add the selected city to '$rootScope' and 'localStorage' then redirect the user to 'select area' modal</summary>
     /// <param name="i" type="integer">The id of the selected area</param>
-    $scope.setCity = function (i) {
-        $rootScope.selectedCity = { id: i, name: $scope.cities[i - 1].name };
-        localStorage.setItem("cityName", $scope.cities[i - 1].name);
+    $scope.setCity = function (city) {
+        $rootScope.selectedCity = city;
+        localStorage.setItem("cityName", city.name);
+
 
         $ionicModal.fromTemplateUrl('templates/areas.html', {
             scope: $rootScope,

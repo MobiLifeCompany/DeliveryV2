@@ -3,22 +3,20 @@ angular.module('delivery.controllers')
 .controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
 
     $scope.shopDetails = [];
-    //deliveryLoader.showLoading('Loading...');
-    $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
-
-    //categories dummy data.. to be replaced
+    $rootScope.selectedShop={};
     $scope.categories = [];
-    var itemId = 1;
-    for (var i = 0; i < 10; i++) {
-        $scope.categories[i] = {
-            id: i,
-            name: 'Category' + i,
-            items: []
-        };
-        for (var j = 0; j < 3; j++) {
-            $scope.categories[i].items.push({id: itemId, name: 'item ' + itemId++, description: 'item details to descripe the item', price: '10$', photo: 'img/shops/item'+j+'.jpg'});
-        }
-    }
+
+    $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
+    
+    deliveryLoader.showLoading('Loading...');
+    shopDetailsFactory.getShopItemsCategories().success(function (data) {
+        $scope.categories = data;
+       deliveryLoader.hideLoading();
+    }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
+        deliveryLoader.toggleLoadingWithMessage(err.message);
+    })
+
 
     // toggleCategory if given category is the selected category, deselect it. else, select the given category
     $scope.toggleCategory = function (category) {
@@ -113,6 +111,18 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal.remove();
     });
 
+    $scope.getCurrentDeliverHour = function (){
+        days = $scope.shopDetails.delivery_hours;
+        var weekDays = ["sat","sun","mon","tue","wed","thu","fri"];
+        var d=new Date();
+        dayNumber = d.getDay();
+        for (i = 0; i < days.length; i++) {
+            if (days[i].day == weekDays[dayNumber]) {
+                return days[i].open;
+            }
+        }
+        return "";
+    }
     //increaseAmount: increase the item quantity counter label when click on '+' button
     $scope.increaseQuantity = function (itemQuantity) {
         var item = document.getElementById(itemQuantity);

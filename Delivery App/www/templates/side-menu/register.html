@@ -1,51 +1,48 @@
 <ion-modal-view ng-controller="RegisterCtrl">
   <ion-header-bar class="bar-assertive">
-    <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
+    <button class="button button-icon button-clear" ng-click="closeRegister()"><span class="icon ion-ios-arrow-left"></span></button>
     <h1 class="title" translate="REGISTER"></h1>
   </ion-header-bar>
+
     <ion-content overflow-scroll="false">
-        <form name="regFom" ng-submit="doRegister()">
-            <div class="list">
-                <label class="list item-input padding-right padding-top">
-                    <i class="icon ion-android-person placeholder-icon"></i>
-                    <input name="Username" type="text" ng-model="regData.username" placeholder="* Username" style="border-bottom:inset;" required min="3">
-                </label>
-                <span ng-show="regFom.username.$touched || regFom.username.$invalid || regFom.username.$dirty || regFom.username.$untouched" style="color:red">Enter Username</span>
+            <form>
+                <div class="list">
 
-                <label class="list item-input padding-right">
-                    <i class="icon ion-person placeholder-icon"></i>
-                    <input name="FirstName" type="text" ng-model="regData.firstname" placeholder="* Your First Name" style="border-bottom:inset;" required min="3">
-                </label>
-                <span ng-show="regFom.firstname.$touched || regFom.firstname.$invalid || regFom.firstname.$dirty || regFom.firstname.$untouched">Enter First Name</span>
-
-                <label class="list item-input padding-right">
-                    <i class="icon ion-person placeholder-icon"></i>
-                    <input name="LastName" type="text" ng-model="regData.lastname" placeholder="* Your Last Name" style="border-bottom:inset;" required min="3">
-                </label>
-                <span ng-show="regFom.lastname.$touched || regFom.lastname.$invalid || regFom.lastname.$dirty || regFom.lastname.$untouched" style="color:red">Enter Last Name</span>
-
-                <label class="list item-input padding-right">
-                    <i class="icon ion-locked placeholder-icon"></i>
-                    <input name="Password" id="Password" type="password" ng-model="regData.password" placeholder="* Your Password" style="border-bottom:inset;" ng-required min="8">
-                </label>
-                <span ng-show="regFom.password.$touched || regFom.password.$invalid || regFom.password.$dirty || regFom.password.$untouched" style="color:red">Enter Password</span>
-
-                <label class="list item-input padding-right">
-                    <i class="icon ion-locked placeholder-icon"></i>
-                    <input name="ConfirmPassword" id="ConfirmPassword" type="password" ng-model="regData.confirmpassword" placeholder="* Confirm Password" style="border-bottom:inset;" min="8" ng-required pw-check="password" >
-                </label>
-                <span ng-show="regFom.confirmpassword.$touched || regFom.confirmpassword.$invalid || regFom.confirmpassword.$dirty || regFom.confirmpassword.$untouched" style="color:red">Confirm Your Password</span>
-                <div class="msg-block" ng-show="regForm.$error">
-                    <span class="msg-error" ng-show="regForm.confirmpassword.$error.pwmatch">
-                        Passwords don't match.
-                    </span>
+                    <span ng-show="!customer.username" style="color:red; margin-top:15px;">Enter Username</span>
+                    <label class="list item-input padding-right padding-top">
+                        <i class="icon ion-android-person placeholder-icon"></i>
+                        <input type="text" ng-model="customer.username" placeholder="* Username" style="border-bottom:inset;" required min="3">
+                    </label>
+                   
+                    <span ng-show="!customer.full_name" style="color:red">Enter Full Name</span>
+                    <label class="list item-input padding-right">
+                        <i class="icon ion-person placeholder-icon"></i>
+                        <input type="text" ng-model="customer.full_name" placeholder="* Full Name" style="border-bottom:inset;" required min="3">
+                    </label>
+                    
+                    <span ng-show="!customer.password" style="color:red">Enter Password</span>
+                    <label class="list item-input padding-right">
+                        <i class="icon ion-locked placeholder-icon"></i>
+                        <input type="password" ng-model="customer.password" placeholder="* Your Password" style="border-bottom:inset;" ng-required min="8">
+                    </label>
+                    
+                    <span ng-show="!customer.password_confirmation" style="color:red">Confirm Your Password</span>
+                    <label class="list item-input padding-right">
+                        <i class="icon ion-locked placeholder-icon"></i>
+                        <input type="password" ng-model="customer.password_confirmation" placeholder="* Confirm Password" style="border-bottom:inset;" min="8" ng-required pw-check="password">
+                    </label>
+                   
+                    <div class="msg-block" ng-show="customer.password != customer.password_confirmation">
+                        <span class="msg-error" style="color:red" ng-show="customer.password != customer.password_confirmation">
+                            Passwords don't match.
+                        </span>
+                    </div>
+                    <div class="padding-bottom" style="text-align:center;object-position:center;">
+                        <button class="button button-small button-balanced" ng-disabled="!customer.username || !customer.full_name || !customer.password_confirmation ||!customer.password || (customer.password != customer.password_confirmation)" ng-click="register()" type="submit" style="width:90%;">Done</button>
+                    </div>
+                    <div ng-messages="customer.password_confirmation.$error"
+                         ng-messages-include="messages.html"></div>
                 </div>
-                <div class="padding-bottom" style="text-align:center;object-position:center;">
-                    <button class="button button-small button-balanced" type="submit" style="width:90%;">Done</button>
-                </div>
-                <div ng-messages="regFom.confirmPassword.$error"
-                     ng-messages-include="messages.html"></div>
-            </div>
-          </form>
+            </form> 
     </ion-content>
 </ion-modal-view>

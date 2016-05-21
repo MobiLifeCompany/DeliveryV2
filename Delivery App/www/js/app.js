@@ -23,16 +23,22 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 })
 
 .run(['$rootScope', function ($rootScope) {
-    if (localStorage.getItem("language"))
-        $rootScope.lang = localStorage.getItem("language");
-    else
-        $rootScope.lang = 'en';
+    if (angular.isDefined(localStorage.getItem("language")) && !localStorage.getItem("language"))
+            $rootScope.lang = localStorage.getItem("language");
+    else{
+            $rootScope.lang = 'en';
+            localStorage.setItem("language",  $rootScope.lang);
+        }
 
     $rootScope.default_float = 'left';
     $rootScope.opposite_float = 'right';
 
     $rootScope.default_direction = 'ltr';
     $rootScope.opposite_direction = 'rtl';
+
+    // for Syria the coutnry id = 1
+    $rootScope.countryId = 1;
+    localStorage.setItem("countryId", "1");
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {

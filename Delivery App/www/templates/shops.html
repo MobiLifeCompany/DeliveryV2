@@ -139,12 +139,12 @@
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">
             <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#/app/shop-details/{{shop.id}}">
-                <div class="promotion-triangle" ng-show="{{shop.hasPromotion}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
-                <div class="is-open-triangle" ng-show="{{shop.isOpen}}"></div>
-                <div class="is-close-triangle" ng-hide="{{shop.isOpen}}"></div>
+                <div class="promotion-triangle" ng-show="{{shop.promotion_note}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
+                <div class="is-open-triangle" ng-show="{{shop.is_open}}"></div>
+                <div class="is-close-triangle" ng-hide="{{shop.is_open}}"></div>
                 <div style="overflow: auto;">
                     <div style="width: 25%; float: left;">
-                        <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shop.src}}" style="width: 60%; height: 60%;" /></div>
+                        <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shop.photo}}" style="width: 60%; height: 60%;" /></div>
                         <div style="text-align: center;">
                             <i ng-class="shop.rating >= 1 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             <i ng-class="shop.rating >= 2 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
@@ -160,8 +160,8 @@
                                 <li class="assertive" style="display: inline-block; font-size: small;" ng-repeat="mastery in shop.masteries">{{mastery}}<span ng-if="$index < shop.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
                             </ul>
                         </div>
-                        <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.minAmount}}</h5></div>
-                        <div style="float: left; width: 50%;"><h5 translate="DELIVERY_TIME"></h5><h5>{{shop.deliveryTime}}</h5></div>
+                        <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.min_amount}} SY</h5></div>
+                        <div style="float: left; width: 50%;"><h5 translate="DELIVERY_TIME"></h5><h5>{{shop.estimation_time}}</h5></div>
                     </div>
                 </div>
                 <i class="icon ion-chevron-right stable dl-menu-item-icon"></i>

@@ -16,9 +16,9 @@ angular.module('delivery.controllers')
    
     /// <summary>setCategory: Add the selected category to $rootScope and redirect user to next page based on saved pereferences</summary>
     /// <param name="i" type="integer">The id of the selected category</param>
-    $rootScope.setCategory = function (i) {
+    $rootScope.setCategory = function (category) {
         
-        $rootScope.selectedCategory = { id: i, name: $scope.categories[i - 1].name }
+        $rootScope.selectedCategory = category;
 
         //If the user has been logged in before redirect him\her to 'saved areas' modal
         if ($rootScope.isUserLoggedin) {

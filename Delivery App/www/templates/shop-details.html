@@ -16,7 +16,7 @@
                     <div class="buttons buttons-right header-item">
                         <span class="right-buttons">
                             <button class="button button-fab">
-                                <img src="{{shopDetails.src}}" style="width: 100%; height: 100%;"/>
+                                <img src="{{shopDetails.photo}}" style="width: 100%; height: 100%;"/>
                             </button>
                         </span>
                     </div>
@@ -42,12 +42,8 @@
                         <ion-item class="item-divider" style="text-align: center;" translate="OPENING_HOURS">
                         </ion-item>
                         <ion-item style="text-align: center;">
-                            <ul>
-                                <li>Saturday 9:00 - 11:00</li>
-                                <li>Sunday 9:00 - 11:00</li>
-                                <li>Monday 9:00 - 11:00</li>
-                                <li>Tuesday 9:00 - 11:00</li>
-                                <li>Wedensday 9:00 - 11:00</li>
+                            <ul  ng-repeat="dayHour in shopDetails.delivery_hours">
+                                <li>{{dayHour.day}}: {{dayHour.open}}</li>
                             </ul>
                         </ion-item>
                         <ion-item class="item-divider" style="text-align: center;" translate="REVIEWS">
@@ -103,12 +99,12 @@
             </ion-modal-view>
         </script>
         <div style="border-bottom: 1px solid silver; padding-bottom: 10px;" ng-click="showShopInfo()">
-            <div class="promotion-triangle" ng-show="{{shopDetails.hasPromotion}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
-            <div class="is-open-triangle" ng-show="{{shopDetails.isOpen}}"></div>
-            <div class="is-close-triangle" ng-hide="{{shopDetails.isOpen}}"></div>
+            <div class="promotion-triangle" ng-show="{{shopDetails.promotion_note}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
+            <div class="is-open-triangle" ng-show="{{shopDetails.is_open}}"></div>
+            <div class="is-close-triangle" ng-hide="{{shopDetails.is_open}}"></div>
             <div style="overflow: auto;">
                 <div style="width: 25%; float: left; margin-top: 10px;">
-                    <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shopDetails.src}}" style="width: 70%; height: 70%;" /></div>
+                    <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shopDetails.photo}}" style="width: 70%; height: 70%;" /></div>
                     <div style="text-align: center;">
                         <i ng-class="shopDetails.rating >= 1 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                         <i ng-class="shopDetails.rating >= 2 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
@@ -125,12 +121,12 @@
                         </ul>
                     </div>
                     <div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="MIN_DELIVERY_AMOUNT"></h6><h6 style="margin: 0px;">{{shopDetails.minAmount}}</h6></div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_TIME"></h6><h6 style="margin: 0px;">{{shopDetails.deliveryTime}}</h6></div>
+                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="MIN_DELIVERY_AMOUNT"></h6><h6 style="margin: 0px;">{{shopDetails.min_amount}} SYP</h6></div>
+                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_TIME"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_expected_time}}</h6></div>
                     </div>
                     <div style="margin-top: 40px;">
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.deliveryFee}}</h6></div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{shopDetails.deliveryHours}}</h6></div>
+                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_charge}} SYP</h6></div>
+                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{getCurrentDeliverHour()}}</h6></div>
                     </div>
                 </div>
             </div>
@@ -139,18 +135,18 @@
         <!--Promotions & Warnings area-->
         <ion-list>
             <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px; border-right: 1px solid silver;" ng-click="toggleNotifications('promotions')">
-                <span class="ion-pricetags" ng-class="shopDetails.promotionNote != '' ? 'energized' : 'stable'"> Promotions</span>
-                <i class="icon dl-menu-item-icon" ng-if="shopDetails.promotionNote != ''" ng-class="isNotificationShown('promotions') && shopDetails.promotionNote != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
+                <span class="ion-pricetags" ng-class="shopDetails.promotion_note != '' ? 'energized' : 'stable'"> Promotions</span>
+                <i class="icon dl-menu-item-icon" ng-if="shopDetails.promotion_note != ''" ng-class="isNotificationShown('promotions') && shopDetails.promotion_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
             <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px;" ng-click="toggleNotifications('warnings')">
-                <span class="ion-alert" ng-class="shopDetails.warningNote != '' ? 'assertive' : 'stable'"> Warnings</span>
-                <i class="icon dl-menu-item-icon" ng-if="shopDetails.warningNote != ''" ng-class="isNotificationShown('warnings') && shopDetails.warningNote != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
+                <span class="ion-alert" ng-class="shopDetails.warning_note != '' ? 'assertive' : 'stable'"> Warnings</span>
+                <i class="icon dl-menu-item-icon" ng-if="shopDetails.warning_note != ''" ng-class="isNotificationShown('warnings') && shopDetails.warning_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
-            <ion-item class="item-accordion" ng-if="isNotificationShown('promotions') == true && shopDetails.promotionNote != ''" style="border-bottom: 1px solid silver; padding: 5px;">
-                {{shopDetails.promotionNote}}
+            <ion-item class="item-accordion" ng-if="isNotificationShown('promotions') == true && shopDetails.promotion_note != ''" style="border-bottom: 1px solid silver; padding: 5px;">
+                {{shopDetails.promotion_note}}
             </ion-item>
-            <ion-item class="item-accordion" ng-if="isNotificationShown('warnings') == true && shopDetails.warningNote != ''" style="border-bottom: 1px solid silver; padding: 5px;">
-                {{shopDetails.warningNote}}
+            <ion-item class="item-accordion" ng-if="isNotificationShown('warnings') == true && shopDetails.warning_note != ''" style="border-bottom: 1px solid silver; padding: 5px;">
+                {{shopDetails.warning_note}}
             </ion-item>
         </ion-list>
 

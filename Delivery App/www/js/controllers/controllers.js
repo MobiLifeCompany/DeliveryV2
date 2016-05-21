@@ -95,11 +95,7 @@ angular.module('delivery.controllers', [])
     }).then(function (modal) {
         $rootScope.registerModal = modal;
     });
-    /// <summary>showRegister: Show the register modal when the corresponding sidemenu item is clicked</summary>
-    /// <param>No parameters</param>
-    $rootScope.showRegister = function () {
-        $rootScope.registerModal.show();
-    }
+    
 
     // Create the profile modal
     $ionicModal.fromTemplateUrl('templates/side-menu/profile.html', {

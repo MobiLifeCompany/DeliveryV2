@@ -9,7 +9,7 @@
             <h4 class="title"><span translate="SELECT_CITY"></span></h4>
         </div>
         <div class="list" ng-show="done_loading == true">
-            <a class="item item-icon-right" style="border-bottom: 1px solid silver;" ng-repeat="city in cities" ng-click="setCity({{city.id}})">
+            <a class="item item-icon-right" style="border-bottom: 1px solid silver;" ng-repeat="city in cities" ng-click="setCity(city)">
                 <i class="icon ion-chevron-right stable dl-menu-item-icon"></i><strong class="assertive"> {{ city.name }}</strong>
             </a>
         </div>

@@ -2,17 +2,19 @@ angular.module('delivery.controllers')
 
 .controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader) {
 
-    $scope.shops = [];
-    $scope.masteriesArray = [];
-    $scope.masteriesCheckList = [];
-    deliveryLoader.showLoading('Loading...');
-    shopsFactory.get().success(function (data) {
-        $scope.shops = data;
-        $scope.masteriesArray = mastriesFactory.get($scope.shops);
+    $rootScope.shops = [];
+    $rootScope.masteriesArray = [];
+    $rootScope.masteriesCheckList = [];
+
+    $rootScope.loadShops = function () {
+     deliveryLoader.showLoading('Loading...');
+     shopsFactory.get().success(function (data) {
+         $rootScope.shops = data;
+         $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
 
         //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
-        for (i = 0; i < $scope.masteriesArray.length; i++) {
-            $scope.masteriesCheckList.push({ name: $scope.masteriesArray[i].name, checked: false });
+        for (i = 0; i < $rootScope.masteriesArray.length; i++) {
+            $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
         }
 
         deliveryLoader.hideLoading();
@@ -20,6 +22,7 @@ angular.module('delivery.controllers')
          deliveryLoader.hideLoading();
          deliveryLoader.toggleLoadingWithMessage(err.message);
      })
+    };
 
     $scope.done_loading = true;
 

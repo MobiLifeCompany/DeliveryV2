@@ -9,21 +9,21 @@
         </div>
         <div class="padding">
             <div class="row" ng-repeat="category in categories" ng-if="$index % 4 === 0">
-                <a class="col col-25 dl-category" ng-if="$index < categories.length" width="25%" ng-click="setCategory({{categories[$index].id}})">
-                    <img class="button button-fab" ng-src="{{categories[$index].src}}" width="100%" />
-                    <p>{{categories[$index].title}}</p>
+                <a class="col col-25 dl-category" ng-if="$index < categories.length" width="25%" ng-click="setCategory(categories[$index])">
+                    <img class="button button-fab" ng-src="{{categories[$index].photo}}" width="100%" />
+                    <p>{{categories[$index].name}}</p>
                 </a>
-                <a class="col col-25 dl-category" ng-if="$index + 1 < categories.length" width="25%" ng-click="setCategory({{categories[$index].id}})">
-                    <img class="button button-fab" ng-src="{{categories[$index + 1].src}}" width="100%" />
-                    <p>{{categories[$index + 1].title}}</p>
+                <a class="col col-25 dl-category" ng-if="$index + 1 < categories.length" width="25%" ng-click="setCategory(categories[$index + 1])">
+                    <img class="button button-fab" ng-src="{{categories[$index + 1].photo}}" width="100%" />
+                    <p>{{categories[$index + 1].name}}</p>
                 </a>
-                <a class="col col-25 dl-category" ng-if="$index + 2 < categories.length" width="25%" ng-click="setCategory({{categories[$index].id}})">
-                    <img class="button button-fab" ng-src="{{categories[$index + 2].src}}" width="100%" />
-                    <p>{{categories[$index + 2].title}}</p>
+                <a class="col col-25 dl-category" ng-if="$index + 2 < categories.length" width="25%" ng-click="setCategory(categories[$index + 2])">
+                    <img class="button button-fab" ng-src="{{categories[$index + 2].photo}}" width="100%" />
+                    <p>{{categories[$index + 2].name}}</p>
                 </a>
-                <a class="col col-25 dl-category" ng-if="$index + 3 < categories.length" width="25%" ng-click="setCategory({{categories[$index].id}})">
-                    <img class="button button-fab" ng-src="{{categories[$index + 3].src}}" width="100%" />
-                    <p>{{categories[$index + 3].title}}</p>
+                <a class="col col-25 dl-category" ng-if="$index + 3 < categories.length" width="25%" ng-click="setCategory(categories[$index + 3])">
+                    <img class="button button-fab" ng-src="{{categories[$index + 3].photo}}" width="100%" />
+                    <p>{{categories[$index + 3].name}}</p>
                 </a>
             </div>
         </div>
