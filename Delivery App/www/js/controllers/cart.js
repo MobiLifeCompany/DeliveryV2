@@ -49,7 +49,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.calculateTotal = function () {
-        var total = $scope.subtotal + parseFloat($rootScope.cartShop.deliveryFee);
+        var total = $scope.subtotal + parseFloat($rootScope.cartShop.delivery_charge);
         $scope.total = total;
         return total;
     }

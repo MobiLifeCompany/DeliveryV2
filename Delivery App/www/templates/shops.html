@@ -168,8 +168,14 @@
                 
             </a>
         </div>
+
+        <div ng-show="noShopsFound" class="padding">
+            <div class="icon ion-sad-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
+            <h4 class="stable text-center" translate="NO_SHOPS_IN_SELECTED_AREA"></h4>
+            <button class="button icon-left ion-location button-balanced button-block" ng-click="changeAddress()" translate="PICK_A_NEW_ADDRESS"></button>
+        </div>
     </ion-content>
-    <div class="bar bar-footer">
+    <div class="bar bar-footer" ng-show="!noShopsFound">
         <div class="tabs tabs-icon-left">
             <a class="tab-item" ng-click="showSort()">
                 <i class="icon ion-funnel" style="font-size: x-large;"></i><span translate="SORT_BY"></span>

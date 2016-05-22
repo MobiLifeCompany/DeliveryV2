@@ -10,17 +10,23 @@ angular.module('delivery.controllers')
      deliveryLoader.showLoading('Loading...');
      shopsFactory.get().success(function (data) {
          $rootScope.shops = data;
-         $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
+         if ($rootScope.shops.length > 0) {
+             $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
 
-        //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
-        for (i = 0; i < $rootScope.masteriesArray.length; i++) {
-            $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
-        }
+             //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
+             for (i = 0; i < $rootScope.masteriesArray.length; i++) {
+                 $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
+             }
+             $scope.noShopsFound = false;
+         }
+         else
+             $scope.noShopsFound = true;
 
         deliveryLoader.hideLoading();
      }).error(function (err, statusCode) {
          deliveryLoader.hideLoading();
          deliveryLoader.toggleLoadingWithMessage(err.message);
+         $scope.noShopsFound = true;
      })
     };
 

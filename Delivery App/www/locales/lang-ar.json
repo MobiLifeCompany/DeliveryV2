@@ -10,7 +10,10 @@
   "LOGOUT": "تسجيل الخروج",
   "REGISTER": "تسجيل جديد",
   "ABOUT": "حول البرنامج",
-  "CONTACT_US":  "اتصل بنا",
+  "CONTACT_US": "اتصل بنا",
+  "USERNAME": "اسم المستخدم",
+  "PASSWORD": "كلمة المرور",
+  "REGISTER_NOW": "سجل الآن",
   "RATE_US": "تقييم البرنامج",
   "CATEGORIES": "التصنيفات",
   "SELECT_CATEGORY": "الرجاء اختيار أحد التصنيفات",
@@ -61,5 +64,6 @@
   "TOTAL": "المجموع الكلي",
   "CONFIRM_YOUR_ORDER": "تأكيد الطلب",
   "YOUR_CART_IS_EMPTY": "سلة التسوق فارغة",
-  "START_SHOPPING": "إبدأ بالتسوق!"
+  "START_SHOPPING": "إبدأ بالتسوق!",
+  "NO_SHOPS_IN_SELECTED_AREA":  "لا يوجد متاجر في هذه المنطقة"
 }

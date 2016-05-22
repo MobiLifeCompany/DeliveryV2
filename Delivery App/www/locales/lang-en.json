@@ -10,7 +10,10 @@
   "LOGOUT": "Logout",
   "REGISTER": "Register",
   "ABOUT": "About",
-  "CONTACT_US":  "Contact us",
+  "CONTACT_US": "Contact us",
+  "USERNAME": "Username",
+  "PASSWORD": "Password",
+  "REGISTER_NOW": "Register now",
   "CATEGORIES": "Categories",
   "SELECT_CATEGORY": "Please select a category",
   "CITIES": "Cities",
@@ -61,5 +64,6 @@
   "TOTAL": "Total",
   "CONFIRM_YOUR_ORDER": "Confirm your order",
   "YOUR_CART_IS_EMPTY": "Your cart is empty",
-  "START_SHOPPING": "Start Shopping!"
+  "START_SHOPPING": "Start Shopping!",
+  "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area"
 }
