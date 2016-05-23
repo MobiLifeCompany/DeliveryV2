@@ -2,11 +2,11 @@
 
 angular.module('delivery.factory', [])
 
-.factory('businessCategoriesFactory', function ($rootScope, $http) {
+.factory('businessCategoriesFactory', function (storageUtilityFactory, $http) {
 
     var API = {
         get: function () {
-            return $http.get(baseURL + '/businesses?lang=' + $rootScope.lang);
+            return $http.get(baseURL + '/businesses?lang=' + storageUtilityFactory.getSelectedLanguage());
         }
     };
 
@@ -99,9 +99,6 @@ angular.module('delivery.factory', [])
 
             delete: function (key) {
                 return localStorage.removeItem(key);
-            },
-            getCurrentLanguage: function () {
-                return localStorage.getItem("language")
             }
 
         };
@@ -110,34 +107,119 @@ angular.module('delivery.factory', [])
 
 })
 
-.factory('AuthFactory', function (LSFactory) {
-    var userKey = 'user';
+.factory('authFactory', function (LSFactory) {
+    var customerKey = 'customer';
     var AuthAPI = {
 
         isLoggedIn: function () {
-            return this.getUser() === null ? false : true;
+            return this.getCustomer() === null ? false : true;
         },
 
-        getUser: function () {
-            return LSFactory.get(userKey);
+        getCustomer: function () {
+            return LSFactory.get(customerKey);
         },
 
-        setUser: function (user) {
-            return LSFactory.set(userKey, user);
+        setCustomer: function (customer) {
+            return LSFactory.set(customerKey, customer);
         },
 
         deleteAuth: function () {
-            LSFactory.delete(userKey);
+            LSFactory.delete(customerKey);
         }
 
     };
     return AuthAPI;
 })
+.factory('storageUtilityFactory', function (LSFactory) {
 
-.factory('UserFactory', 
-    function ($http) {
+    var selectedCategoryKey = 'selectedCategory';
+    var selectedCountryKey = 'selectedCountry';
+    var selectedCityKey = 'selectedCity';
+    var selectedAreaKey = 'selectedArea';
+    var customerAddressesKey = 'customerAddresses';
+    var selectedLanguageKey = 'selectedLanguage';
+
+    var UtilityAPI = {
+
+        getCountry: function () {
+            return LSFactory.get(selectedCountryKey);
+        },
+
+        setCountry: function (countryId) {
+            return LSFactory.set(selectedCountryKey, countryId);
+        },
+
+        deleteCountry: function () {
+            LSFactory.delete(selectedCountryKey);
+        },
+
+        getSelectedCategory: function () {
+            return LSFactory.get(selectedCategoryKey);
+        },
+
+        setSelectedCategory: function (category) {
+            return LSFactory.set(selectedCategoryKey, category);
+        },
+
+        deleteSelectedCategory: function () {
+            LSFactory.delete(selectedCategoryKey);
+        },
+
+        getSelectedCity: function () {
+            return LSFactory.get(selectedCityKey);
+        },
+
+        setSelectedCity: function (city) {
+            return LSFactory.set(selectedCityKey, city);
+        },
+
+        deleteSelectedCity: function () {
+            LSFactory.delete(selectedCityKey);
+        },
+
+        getSelectedArea: function () {
+            return LSFactory.get(selectedAreaKey);
+        },
+
+        setSelectedArea: function (area) {
+            return LSFactory.set(selectedAreaKey, area);
+        },
+
+        deleteSelectedArea: function () {
+            LSFactory.delete(selectedAreaKey);
+        },
+
+        getCustomerAddresses: function () {
+            return LSFactory.get(customerAddressesKey);
+        },
+
+        setCustomerAddresses: function (customerAddresses) {
+            return LSFactory.set(customerAddressesKey, customerAddresses);
+        },
+
+        deleteCustomerAddresses: function () {
+            LSFactory.delete(customerAddressesKey);
+        },
+
+        getSelectedLanguage: function () {
+            return LSFactory.get(selectedLanguageKey);
+        },
+
+        setSelectedLanguage: function (selectedLanguage) {
+            return LSFactory.set(selectedLanguageKey, selectedLanguage);
+        },
+
+        deleteSelectedLanguage: function () {
+            LSFactory.delete(selectedLanguage);
+        }
+
+    };
+    return UtilityAPI;
+})
+.factory('customerFactory', 
+    function ($http, $rootScope, storageUtilityFactory, authFactory) {
         
-        var UserAPI = {
+        var customerAPI = {
 
             login: function (customer) {
                return $http.post(baseURL + '/customers/login', customer);
@@ -145,10 +227,50 @@ angular.module('delivery.factory', [])
 
             register: function (customer) {
                 return $http.post(baseURL + '/customers', customer);
+            },
+
+            createCustomerAddress: function (customerAddress) {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()){
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                    }
+                return $http.post(baseURL + '/customers/' + customerId + '/addresses', customerAddress, { headers: { 'auth-token': customerAuthToken } });
+            },
+
+            getCustomerAddressess: function () {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                }
+                return $http.get(baseURL + '/customers/' + customerId + '/addresses', { headers: { 'auth-token': customerAuthToken } });
+            },
+
+            updateCustomerAddress: function (customerAddress) {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                }
+                return $http.put(baseURL + '/customers/' + customerId + '/addresses/' + customerAddress.id, customerAddress, { headers: { 'auth-token': customerAuthToken } });
+            },
+
+            deleteCustomerAddress: function (customerAddressId) {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                }
+                return $http.delete(baseURL + '/customers/' + customerId + '/addresses/' + customerAddressId, { headers: { 'auth-token': customerAuthToken } });
             }
         };
 
-        return UserAPI;
+        return customerAPI;
     }
  )
 .factory('deliveryLoader',  function ($ionicLoading, $timeout) {
