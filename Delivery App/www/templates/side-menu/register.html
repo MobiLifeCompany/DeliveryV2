@@ -5,44 +5,72 @@
   </ion-header-bar>
 
     <ion-content overflow-scroll="false">
+        <div class="text-center padding-top" style="height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
+            <img src="img/delivery_logo.png" style="vertical-align: middle;">
+        </div>
+        <div class="padding-left padding-right">
             <form>
                 <div class="list">
-
-                    <span ng-show="!customer.username" style="color:red; margin-top:15px;">Enter Username</span>
-                    <label class="list item-input padding-right padding-top">
-                        <i class="icon ion-android-person placeholder-icon"></i>
-                        <input type="text" ng-model="customer.username" placeholder="* Username" style="border-bottom:inset;" required min="3">
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.username.length >= 3"></i> {{'USERNAME' | translate}}</span>
+                        <input type="text" ng-model="customer.username" placeholder="{{'USERNAME' | translate}}" required min="3">
                     </label>
-                   
-                    <span ng-show="!customer.full_name" style="color:red">Enter Full Name</span>
-                    <label class="list item-input padding-right">
-                        <i class="icon ion-person placeholder-icon"></i>
-                        <input type="text" ng-model="customer.full_name" placeholder="* Full Name" style="border-bottom:inset;" required min="3">
-                    </label>
-                    
-                    <span ng-show="!customer.password" style="color:red">Enter Password</span>
-                    <label class="list item-input padding-right">
-                        <i class="icon ion-locked placeholder-icon"></i>
-                        <input type="password" ng-model="customer.password" placeholder="* Your Password" style="border-bottom:inset;" ng-required min="8">
-                    </label>
-                    
-                    <span ng-show="!customer.password_confirmation" style="color:red">Confirm Your Password</span>
-                    <label class="list item-input padding-right">
-                        <i class="icon ion-locked placeholder-icon"></i>
-                        <input type="password" ng-model="customer.password_confirmation" placeholder="* Confirm Password" style="border-bottom:inset;" min="8" ng-required pw-check="password">
-                    </label>
-                   
-                    <div class="msg-block" ng-show="customer.password != customer.password_confirmation">
-                        <span class="msg-error" style="color:red" ng-show="customer.password != customer.password_confirmation">
-                            Passwords don't match.
-                        </span>
+                    <div class="error-container" ng-hide="customer.username.length >= 3">
+                        <div class="error" ng-hide="customer.username.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.username.length < 3">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_3' | translate}}
+                        </div>
                     </div>
-                    <div class="padding-bottom" style="text-align:center;object-position:center;">
-                        <button class="button button-small button-balanced" ng-disabled="!customer.username || !customer.full_name || !customer.password_confirmation ||!customer.password || (customer.password != customer.password_confirmation)" ng-click="register()" type="submit" style="width:90%;">Done</button>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.full_name.length >= 3"></i> {{'FULL_NAME' | translate}}</span>
+                        <input type="text" ng-model="customer.full_name" placeholder="{{'FULL_NAME' | translate}}" required min="3">
+                    </label>
+                    <div class="error-container" ng-hide="customer.full_name.length >= 3">
+                        <div class="error" ng-hide="customer.full_name.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.full_name.length < 3">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_3' | translate}}
+                        </div>
                     </div>
-                    <div ng-messages="customer.password_confirmation.$error"
-                         ng-messages-include="messages.html"></div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password.length >= 8"></i> {{'PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customer.password" placeholder="{{'PASSWORD' | translate}}" required min="8">
+                    </label>
+                    <div class="error-container" ng-hide="customer.password.length >= 8">
+                        <div class="error" ng-hide="customer.password.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.password.length < 8">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_8' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password_confirmation == customer.password"></i> {{'CONFIRM_PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customer.password_confirmation" placeholder="{{'CONFIRM_PASSWORD' | translate}}" required min="8" pw-check="password">
+                    </label>
+                    <div class="error-container" ng-hide="customer.password == customer.password_confirmation && customer.password_confirmation.length > 0">
+                        <div class="error" ng-hide="customer.password_confirmation.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.password != customer.password_confirmation && customer.password && customer.password_confirmation">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_PASSWORD_DONT_MATCH' | translate}}
+                        </div>
+                    </div>
                 </div>
-            </form> 
+
+                <button class="button button-small button-balanced button-block" ng-disabled="!customer.username || !customer.full_name || !customer.password_confirmation ||!customer.password || (customer.password != customer.password_confirmation)" ng-click="register()" type="submit" translate="CREATE_ACCOUNT"></button>
+            </form>
+        </div>
     </ion-content>
 </ion-modal-view>

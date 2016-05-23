@@ -3,37 +3,36 @@
         <button class="button button-icon button-clear" ng-click="prevStep()"><span class="icon ion-chevron-left"></span></button>
         <h1 class="title" translate="LOGIN"></h1>
     </ion-header-bar>
-
     <ion-content overflow-scroll="false">
-            <form>
-                <div class="list">
-                    <label class="list item-input padding-right padding-top">
-                        <i class="icon ion-person placeholder-icon"></i>
-                        <input name="Username" type="text" ng-model="loginData.username" placeholder="User Name" style="border-bottom:inset;" required>
-                    </label>
-                    <label class="list item-input padding-right">
-                        <i class="icon ion-locked placeholder-icon"></i>
-                        <input name="Password" type="password" ng-model="loginData.password" placeholder="Password" style="border-bottom:inset;" required>
-                    </label>
-                    <div style="text-align:left;object-position:left;">
-                        <p class="text-left padding-left">
-                            <a style="color:red;font-style:normal;"><span translate="ForgetPassword"></span></a>
-                        </p>
+        <div class="text-center padding-top" style="height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
+            <img src="img/delivery_logo.png" style="vertical-align: middle;">
+        </div>
+        <div class="padding-left padding-right" style="height: 75%">
+            <div style="height: 70%; min-height: 200px;">
+                <form>
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label assertive-900"><i class="icon ion-android-person"></i> {{'USERNAME' | translate}}</span>
+                            <input name="Username" type="text" ng-model="loginData.username" placeholder="{{'USERNAME' | translate}}" required>
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label assertive-900"><i class="icon ion-locked"></i> {{'PASSWORD' | translate}}</span>
+                            <input name="Password" type="password" ng-model="loginData.password" placeholder="{{'PASSWORD' | translate}}" required>
+                        </label>
                     </div>
-                    <div class="padding-bottom" style="text-align:center;object-position:center;border-bottom:inset">
-                        <button class="button button-small button-balanced" ng-disabled="!loginData.username || !loginData.password" type="submit" ng-click ="doLogin()" style="width:90%;">Log in</button>
-                    </div>
+                    <button class="button button-small button-positive button-block" ng-disabled="!loginData.username || !loginData.password" type="submit" ng-click="doLogin()" translate="LOGIN"></button>
+                    <a class="assertive"><span translate="FORGOT_YOUR_PASSWORD"></span></a>
+                </form>
+            </div>
+            <div style="height: 30%; min-height: 80px;">
+                <div class="dl-seperator-with-legend">
+                    <h5><span class="dl-seperator-legend" translate="DONT_HAVE_ACCOUNT"></span></h5>
                 </div>
-            </form>
-            <content class="list" style="border-bottom: 1px solid silver;"></content>
-
-            <form name="RegFom" ng-submit="goRegister()">
-                <div class="list">
-                    <h5 class="list item-input align" translate="asktoRegister"></h5>
-                    <div style="text-align:center;object-position:center;">
-                        <button class="button button-small button-energized" ng-click="showRegister()" style="width:90%;">REGISTER NOW</button>
-                    </div>
-            </form>
+                <div class="padding-top">
+                    <button class="button button-small button-energized button-block" ng-click="switchToRegister()" translate="REGISTER_NOW"></button>
+                </div>
+            </div>
+        </div>
 
     </ion-content>
 </ion-modal-view>

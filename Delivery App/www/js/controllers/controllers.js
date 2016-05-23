@@ -61,11 +61,6 @@ angular.module('delivery.controllers', [])
     }).then(function (modal) {
         $rootScope.loginModal = modal;
     });
-    /// <summary>showLogin: Show the login modal when the corresponding sidemenu item is clicked</summary>
-    /// <param>No parameters</param>
-    $rootScope.showLogin = function () {
-        $rootScope.loginModal.show();
-    };
 
     /// <summary>logout: Logout cuurent user when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>

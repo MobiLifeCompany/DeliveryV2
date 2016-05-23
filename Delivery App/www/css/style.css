@@ -489,3 +489,57 @@ i.dl-menu-item-icon.icon {
   font-size: 20px;
   line-height: 20px;
 }
+
+.input-label{
+    font-size: 14px;
+}
+ 
+.error {
+  
+  padding: 0px 5px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 8px;
+  text-transform: uppercase;
+  color: #555;
+  vertical-align: middle;
+  line-height: 16px;
+  white-space:nowrap;
+}
+ 
+.error i {
+  font-size: 14px;
+  color: #B83E2C;  
+  vertical-align: middle;
+}
+
+.error-container {
+    margin-top: 5px;
+	position: absolute;
+    right: 0;
+	background: #transparent;
+	border: 1px solid #a10000;
+    border-radius: 3px;
+}
+.error-container:after, .error-container:before {
+	bottom: 100%;
+	right: 10px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.error-container:after {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #transparent;
+	border-width: 2px;
+	margin-left: -2px;
+}
+.error-container:before {
+	border-color: rgba(161, 0, 0, 0);
+	border-bottom-color: #a10000;
+	border-width: 5px;
+	margin-left: -5px;
+}
