@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, UserFactory, AuthFactory, deliveryLoader) {
+.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, customerFactory, deliveryLoader) {
 
     $scope.customer = {};
     
@@ -15,7 +15,7 @@ angular.module('delivery.controllers')
     $scope.register = function () {
         deliveryLoader.showLoading('Registering...');
         $scope.customer.lang = $rootScope.lang;
-        UserFactory.register($scope.customer).success(function (data) {
+        customerFactory.register($scope.customer).success(function (data) {
             deliveryLoader.hideLoading();
             $rootScope.registerModal.hide();
         }).error(function (err, statusCode) {

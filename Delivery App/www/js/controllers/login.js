@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, UserFactory, deliveryLoader) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, authFactory, deliveryLoader) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -15,16 +15,19 @@ angular.module('delivery.controllers')
     $scope.doLogin = function () {
         var userName = "";
         deliveryLoader.showLoading('Log in...');
-   //     var requestData = '{\"customer\":{\"username": \"'+$scope.loginData.username+'\",\"password": \"'+$scope.loginData.password+'\"}}';
-        UserFactory.login($scope.loginData).success(function (data) {
-            userName = data.full_name;
+        customerFactory.login($scope.loginData).success(function (data) {
+            userName = data.username;
             $rootScope.isAuthenticated = true;
             $rootScope.isUserLoggedin = true;
-            localStorage.setItem("isUserLoggedin", true);
-            localStorage.setItem("userName", userName);
+            $rootScope.currentCustomerId = data.id;
+            $rootScope.currentCustomerUserName = data.username;
+            $rootScope.currentCustomerAuthToken = data.auth_token;
+            authFactory.setCustomer(data);
             $scope.closeLogin();
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
+            $rootScope.isAuthenticated = false;
+            authFactory.deleteAuth();
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(statusCode +": " + err);
         });

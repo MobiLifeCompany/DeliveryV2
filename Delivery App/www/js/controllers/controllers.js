@@ -1,10 +1,10 @@
 angular.module('delivery.controllers', [])
 
 .controller('LanguageSwitchController',
-  function ($scope, $rootScope, $translate, $ionicPlatform) {
+  function ($scope, $rootScope, $translate, $ionicPlatform, storageUtilityFactory) {
     $scope.changeLanguage = function(langKey) {
         $translate.use(langKey);
-        localStorage.setItem("language", langKey);
+        storageUtilityFactory.setSelectedLanguage(langKey);
     };
 
     $rootScope.$on('$translateChangeSuccess', function(event, data) {
@@ -20,13 +20,13 @@ angular.module('delivery.controllers', [])
       
     });
 
-    // get the user prefered language from 'localStoragre' and set the application language
+    // get the user prefered language from 'localStorage' and set the application language
     $ionicPlatform.ready(function () {
-        $scope.changeLanguage(localStorage.getItem("language"));
+        $scope.changeLanguage(storageUtilityFactory.getSelectedLanguage());
     });
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork, authFactory) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -41,14 +41,15 @@ angular.module('delivery.controllers', [])
     //Define application-wide variables here
     $rootScope.isUserLoggedin = false;
     $rootScope.userName = '';
+
     $rootScope.showCartFabButton = false;
     $rootScope.cartItems = [];
     $rootScope.cartShop = null;
 
     //Get saved pereferences from localStorage
-    if (localStorage.getItem("isUserLoggedin")) {
+    if (authFactory.isLoggedIn()) {
         $rootScope.isUserLoggedin = true;
-        $rootScope.userName = localStorage.getItem("userName");
+        $rootScope.userName = authFactory.getCustomer().username;
     }
 
     ///////////////////////////////////////////////////////
@@ -81,8 +82,7 @@ angular.module('delivery.controllers', [])
         // Resolve the promise returned by the popup, then logout the user if user confirm
         confirmPopup.then(function (res) {
             if (res) {
-                localStorage.removeItem("isUserLoggedin");
-                localStorage.removeItem("userName");
+                authFactory.deleteAuth();
                 $rootScope.isUserLoggedin = false;
                 $rootScope.userName = '';
             }
@@ -118,6 +118,7 @@ angular.module('delivery.controllers', [])
     /// <summary>showAddresses: Show the addresses modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAddresses = function () {
+        $rootScope.getCustomerAddress();
         $rootScope.addressesModal.show();
     }
 

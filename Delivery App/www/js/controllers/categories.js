@@ -1,8 +1,17 @@
 angular.module('delivery.controllers')
 
-.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, businessCategoriesFactory,deliveryLoader) {
+.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
    
     $scope.categories = [];
+    $scope.done_loading = true;
+
+    if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
+        $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
+    } else {
+        $rootScope.lang = 'en';
+        storageUtilityFactory.setSelectedLanguage($rootScope.lang);
+    }
+
     deliveryLoader.showLoading('Loading...');
     businessCategoriesFactory.get().success(function (data) {
         $scope.categories = data;
@@ -12,16 +21,15 @@ angular.module('delivery.controllers')
         deliveryLoader.toggleLoadingWithMessage(err.message);
     })
    
-    $scope.done_loading = true;
-   
     /// <summary>setCategory: Add the selected category to $rootScope and redirect user to next page based on saved pereferences</summary>
     /// <param name="i" type="integer">The id of the selected category</param>
     $rootScope.setCategory = function (category) {
         
         $rootScope.selectedCategory = category;
+        storageUtilityFactory.setSelectedCategory(category);
 
         //If the user has been logged in before redirect him\her to 'saved areas' modal
-        if ($rootScope.isUserLoggedin) {
+        if (authFactory.isLoggedIn()) {
             $ionicModal.fromTemplateUrl('templates/saved-areas.html', {
                 scope: $rootScope,
                 hardwareBackButtonClose: false,

@@ -6,19 +6,14 @@
     <ion-content overflow-scroll="false">
         <div class="dl-location-bar"><img src="img/location-bg.jpg" /></div>
         <div class="bar bar-subheader bar-energized static text-center">
-            <h4 class="title"><span translate="YOU_ARE_IN"></span><span> {{city}}, {{area}}</span></h4>
-        </div>
-        <div class="padding">
-            <button class="button button-block button-positive" ng-click="selectCurrentAddress()">
-                <strong translate="USE_CURRENT_ADDRESS"></strong>
-            </button>
+           {{fullName}} <h3 class="title"><span translate="YOU_ARE_IN"></span><span> {{selectedCity.name}}, {{selectedArea.name}}</span></h3>
         </div>
         <div style="width: 100%; height: 10px; border-bottom: 1px solid grey; text-align: center">
             <h5><span style="background-color: white; padding: 0px 5px;" translate="PICK_FROM_SAVED_ADDRESSES"></span></h5>
         </div>
         <div class="padding">
-            <button class="button button-block button-balanced" ng-repeat="area in savedAreas" ng-click="selectSavedAddress({{area.id}})">
-                <strong> {{ area.name }} </strong>
+            <button class="button button-block button-balanced" ng-repeat="savedArea in savedAreas" ng-click="selectSavedAddress(savedArea.area)">
+                <strong> {{ savedArea.area.name }} </strong>
             </button>
         </div>
         <div class="dl-seperator-with-legend">

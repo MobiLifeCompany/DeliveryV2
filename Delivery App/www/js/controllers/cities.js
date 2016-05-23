@@ -1,8 +1,11 @@
 angular.module('delivery.controllers')
 
-.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, citiesFactory, deliveryLoader) {
+.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, storageUtilityFactory, citiesFactory, deliveryLoader) {
 
     $scope.cities = [];
+    $scope.done_loading = true;
+    $rootScope.selectedCity = {};
+
     deliveryLoader.showLoading('Loading...');
     citiesFactory.get().success(function (data) {
         $scope.cities = data.cities;
@@ -12,15 +15,11 @@ angular.module('delivery.controllers')
         deliveryLoader.toggleLoadingWithMessage(err.message);
     })
     
-    $scope.done_loading = true;
-    $rootScope.selectedCity = [];
-
     /// <summary>setCity: Add the selected city to '$rootScope' and 'localStorage' then redirect the user to 'select area' modal</summary>
     /// <param name="i" type="integer">The id of the selected area</param>
     $scope.setCity = function (city) {
         $rootScope.selectedCity = city;
-        localStorage.setItem("cityName", city.name);
-
+        storageUtilityFactory.setSelectedCity(city);
 
         $ionicModal.fromTemplateUrl('templates/areas.html', {
             scope: $rootScope,

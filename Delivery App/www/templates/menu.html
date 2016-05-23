@@ -42,19 +42,19 @@
               <i class="icon ion-locked">
               </i><span translate="LOGOUT"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showRegister()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == false"  ng-click="showRegister()" class="item-icon-left">
               <i class="icon ion-person-add">
               </i><span translate="REGISTER"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showProfile()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true"  ng-click="showProfile()" class="item-icon-left">
               <i class="icon ion-person">
               </i><span translate="PROFILE"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showAddresses()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true"  ng-click="showAddresses()" class="item-icon-left">
               <i class="icon ion-home">
               </i><span translate="ADDRESSES"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showContactUs()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true"  ng-click="showContactUs()" class="item-icon-left">
               <i class="icon ion-compose">
               </i><span translate="CONTACT_US"></span>
           </ion-item>

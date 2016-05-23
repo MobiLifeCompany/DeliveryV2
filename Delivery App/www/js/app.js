@@ -22,13 +22,13 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
   });
 })
 
-.run(['$rootScope', function ($rootScope) {
-    if (angular.isDefined(localStorage.getItem("language")) && !localStorage.getItem("language"))
-            $rootScope.lang = localStorage.getItem("language");
-    else{
-            $rootScope.lang = 'en';
-            localStorage.setItem("language",  $rootScope.lang);
-        }
+.run(['$rootScope','storageUtilityFactory', function ($rootScope, storageUtilityFactory) {
+    if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
+        $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
+    }else {
+        $rootScope.lang = 'en';
+        storageUtilityFactory.setSelectedLanguage($rootScope.lang);
+    }
 
     $rootScope.default_float = 'left';
     $rootScope.opposite_float = 'right';
@@ -38,7 +38,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 
     // for Syria the coutnry id = 1
     $rootScope.countryId = 1;
-    localStorage.setItem("countryId", "1");
+    storageUtilityFactory.setCountry('1');
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {
