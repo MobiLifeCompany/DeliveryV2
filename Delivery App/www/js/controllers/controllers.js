@@ -57,7 +57,7 @@ angular.module('delivery.controllers', [])
     ///////////////////////////////////////////////////////
 
     // Create the login modal
-    $ionicModal.fromTemplateUrl('templates/login.html', {
+    $ionicModal.fromTemplateUrl('templates/side-menu/login.html', {
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.loginModal = modal;
