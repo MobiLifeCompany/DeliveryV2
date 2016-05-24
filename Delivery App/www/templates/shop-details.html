@@ -135,11 +135,11 @@
         <!--Promotions & Warnings area-->
         <ion-list>
             <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px; border-right: 1px solid silver;" ng-click="toggleNotifications('promotions')">
-                <span class="ion-pricetags" ng-class="shopDetails.promotion_note != '' ? 'energized' : 'stable'"> Promotions</span>
+                <span class="ion-pricetags" ng-class="shopDetails.promotion_note != '' ? 'energized' : 'stable'"> {{'PROMOTIONS' | translate}}</span>
                 <i class="icon dl-menu-item-icon" ng-if="shopDetails.promotion_note != ''" ng-class="isNotificationShown('promotions') && shopDetails.promotion_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
             <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px;" ng-click="toggleNotifications('warnings')">
-                <span class="ion-alert" ng-class="shopDetails.warning_note != '' ? 'assertive' : 'stable'"> Warnings</span>
+                <span class="ion-alert" ng-class="shopDetails.warning_note != '' ? 'assertive' : 'stable'"> {{'WARNINGS' | translate}}</span>
                 <i class="icon dl-menu-item-icon" ng-if="shopDetails.warning_note != ''" ng-class="isNotificationShown('warnings') && shopDetails.warning_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
             <ion-item class="item-accordion" ng-if="isNotificationShown('promotions') == true && shopDetails.promotion_note != ''" style="border-bottom: 1px solid silver; padding: 5px;">

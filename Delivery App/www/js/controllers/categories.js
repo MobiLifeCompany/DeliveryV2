@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
+.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
    
     $scope.categories = [];
     $scope.done_loading = true;
@@ -12,7 +12,7 @@ angular.module('delivery.controllers')
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
-    deliveryLoader.showLoading('Loading...');
+    deliveryLoader.showLoading($translate.instant('LOADING'));
     businessCategoriesFactory.get().success(function (data) {
         $scope.categories = data;
         deliveryLoader.hideLoading();

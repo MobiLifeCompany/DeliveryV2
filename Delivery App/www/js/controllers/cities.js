@@ -1,12 +1,12 @@
 angular.module('delivery.controllers')
 
-.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, storageUtilityFactory, citiesFactory, deliveryLoader) {
+.controller('CitiesCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $timeout, $http, $ionicModal, storageUtilityFactory, citiesFactory, deliveryLoader) {
 
     $scope.cities = [];
     $scope.done_loading = true;
     $rootScope.selectedCity = {};
 
-    deliveryLoader.showLoading('Loading...');
+    deliveryLoader.showLoading($translate.instant('LOADING'));
     citiesFactory.get().success(function (data) {
         $scope.cities = data.cities;
         deliveryLoader.hideLoading();

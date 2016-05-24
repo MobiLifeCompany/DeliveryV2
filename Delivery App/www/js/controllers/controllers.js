@@ -68,10 +68,10 @@ angular.module('delivery.controllers', [])
     $scope.logout = function () {
         // Show a confirmation popup
         var confirmPopup = $ionicPopup.confirm({
-            title: 'Logout',
-            template: 'Are you sure you want to logout?',
-            cancelText: 'No',
-            okText: 'Yes'
+            title: $translate.instant('LOGOUT'),
+            template:  $translate.instant('LOGOUT_MSG'),
+            cancelText: $translate.instant('NO'),
+            okText: $translate.instant('YES')
         });
 
         // Resolve the promise returned by the popup, then logout the user if user confirm
@@ -171,7 +171,7 @@ angular.module('delivery.controllers', [])
         $rootScope.categoriesModal.show();
         var isOffline = $cordovaNetwork.isOffline();
         if (isOffline) {
-            $cordovaToast.show("Please check your internet connection", 'long', 'center');
+            $cordovaToast.show($translate.instant('INTERNET_CONN_MSG'), 'long', 'center');
         }
     });
 })

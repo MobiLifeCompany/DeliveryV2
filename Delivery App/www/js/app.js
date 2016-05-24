@@ -38,7 +38,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 
     // for Syria the coutnry id = 1
     $rootScope.countryId = 1;
-    storageUtilityFactory.setCountry('1');
+    storageUtilityFactory.setCountry($rootScope.countryId);
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {

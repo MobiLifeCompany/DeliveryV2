@@ -1,14 +1,14 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader) {
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader) {
 
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
     $rootScope.masteriesCheckList = [];
 
     $rootScope.loadShops = function () {
-     deliveryLoader.showLoading('Loading...');
-     shopsFactory.get().success(function (data) {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        shopsFactory.get().success(function (data) {
          $rootScope.shops = data;
          if ($rootScope.shops.length > 0) {
              $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);

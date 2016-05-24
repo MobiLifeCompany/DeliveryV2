@@ -116,15 +116,15 @@
             </div>
             <div class="list">
                 <div class="item  padding" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="customerAddress in customerAddressess" href="#">
-                    <h4><strong>Street: </strong> {{customerAddress.street}}</h4>
-                    <h4><strong>Building</strong>, {{customerAddress.building}}</h4>
-                    <h4><strong>floor</strong>, {{customerAddress.floor}}</h4>
-                    <h4><strong>Details</strong>, {{customerAddress.details}}</h4>
-                    <h4><strong>Mobile</strong>+963 993 130 478,<strong>Email:</strong> person@gmail.com</h4>
+                    <h4><strong translate="STREET"></strong> {{customerAddress.street}}</h4>
+                    <h4><strong translate="BUILDING"></strong>, {{customerAddress.building}}</h4>
+                    <h4><strong translate="FLOOR"></strong>, {{customerAddress.floor}}</h4>
+                    <h4><strong translate="DETAILS"></strong>, {{customerAddress.details}}</h4>
+                    <h4><strong translate="Mobile"></strong>{{customerAddress.phone}},<strong translate="EMAIL"></strong> {{customerAddress.email}}</h4>
                     <div>
                         <button class="button button-small button-energized padding-horizontal" style="float: right;margin-left:5px" translate="EDIT" ng-click="showEditAddressModal(customerAddress)"> </button>
                         <button class="button button-small button-assertive padding-horizontal" style="float: right;margin-right:5px" translate="DELETE" ng-click="deleteAddressPopup(customerAddress.id)"> </button>
-                        <button class="button button-small button-positive padding-horizontal" style="float: right;margin-right:5px" ng-click=""> Map </button>
+                        <button class="button button-small button-positive padding-horizontal" style="float: right;margin-right:5px" translate="MAP" ng-click=""> Map </button>
                     </div>
                 </div>
             </div>
