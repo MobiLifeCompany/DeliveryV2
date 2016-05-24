@@ -80,6 +80,8 @@ angular.module('delivery.controllers', [])
                 authFactory.deleteAuth();
                 $rootScope.isUserLoggedin = false;
                 $rootScope.userName = '';
+                $rootScope.categoriesModal.show();
+                $rootScope.loadCategories();
             }
         });
     };
