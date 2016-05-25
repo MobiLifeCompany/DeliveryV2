@@ -13,7 +13,7 @@ angular.module('delivery.controllers')
 
     $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
     
-    deliveryLoader.showLoading('Loading...');
+    deliveryLoader.showLoading($translate.instant('LOADING'));
     shopDetailsFactory.getShopItemsCategories().success(function (data) {
         $scope.categories = data;
        deliveryLoader.hideLoading();
@@ -161,7 +161,7 @@ angular.module('delivery.controllers')
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
         if (!shop.is_open) {
-            // Show a warning popup if shop changed
+
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('SHOP_CLOSED'),
                 template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
@@ -187,10 +187,10 @@ angular.module('delivery.controllers')
             else {
                 // Show a warning popup if shop changed
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Change Shop',
-                    template: 'Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?',
-                    cancelText: 'No',
-                    okText: 'Yes'
+                    title: $translate.instant('CHANGE_SHOP'),
+                    template: $translate.instant('CHANGE_SHOP_MSG'),
+                    cancelText: $translate.instant('NO'),
+                    okText: $translate.instant('YES')
                 });
 
                 // Resolve the promise returned by the popup, then empty the cart if user confirm

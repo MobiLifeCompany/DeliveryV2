@@ -31,6 +31,7 @@ angular.module('delivery.controllers')
         $scope.addressCreateModal = modal;
     });
 
+
     //Create 'map' modal to display map of the selected address
     $ionicModal.fromTemplateUrl('map-modal.html', {
         scope: $scope
@@ -57,7 +58,7 @@ angular.module('delivery.controllers')
     });
 
     $scope.getCustomerAddress = function () {
-        deliveryLoader.showLoading('Loading Addressess...');
+        deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
         customerFactory.getCustomerAddressess().success(function (data) {
             $scope.customerAddressess = data;
             storageUtilityFactory.setCustomerAddresses(data);
@@ -86,7 +87,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.createAddress = function () {
-        deliveryLoader.showLoading('create Address...');
+        deliveryLoader.showLoading($translate.instant('CREATE_ADDRESSES'));
         $scope.customerAddress.city_id = $rootScope.selectedCity.id;
         $scope.customerAddress.area_id= $rootScope.selectedArea.id;
         $scope.customerAddress.latitude= 0;
@@ -102,7 +103,7 @@ angular.module('delivery.controllers')
         });
     };
     $scope.updateAddress = function () {
-        deliveryLoader.showLoading('update Address...');
+        deliveryLoader.showLoading($translate.instant('UPDATE_ADDRESSES'));
         customerFactory.updateCustomerAddress($scope.customerAddress).success(function (data) {
             $scope.closeEditAddressModal();
             deliveryLoader.hideLoading();
@@ -113,7 +114,7 @@ angular.module('delivery.controllers')
         });
     };
     $scope.deleteAddress = function (customerAddressId) {
-        deliveryLoader.showLoading('delete Address...');
+        deliveryLoader.showLoading($translate.instant('DELETE_ADDRESSES'));
         customerFactory.deleteCustomerAddress(customerAddressId).success(function (data) {
             deliveryLoader.hideLoading();
             $scope.getCustomerAddress();
@@ -126,10 +127,10 @@ angular.module('delivery.controllers')
     $scope.deleteAddressPopup = function (customerAddressId) {
         // Show a confirmation popup
         var confirmPopup = $ionicPopup.confirm({
-            title: 'Delete',
-            template: 'Are you sure you want to delete this Address?',
-            cancelText: 'No',
-            okText: 'Yes'
+            title: $translate.instant('DELETE'),
+            template: $translate.instant('ADDRESS_CONFIRMATION_MSG'),
+            cancelText: $translate.instant('NO'),
+            okText: $translate.instant('YES')
         });
 
         // Resolve the promise returned by the popup, then logout the user if user confirm

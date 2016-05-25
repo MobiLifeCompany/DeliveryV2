@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
+.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
    
     $scope.categories = [];
     $scope.done_loading = true;
@@ -12,14 +12,17 @@ angular.module('delivery.controllers')
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
-    deliveryLoader.showLoading('Loading...');
-    businessCategoriesFactory.get().success(function (data) {
-        $scope.categories = data;
-        deliveryLoader.hideLoading();
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        deliveryLoader.toggleLoadingWithMessage(err.message);
-    })
+    $rootScope.loadCategories = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        businessCategoriesFactory.get().success(function (data) {
+            $scope.categories = data;
+            deliveryLoader.hideLoading();
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            deliveryLoader.toggleLoadingWithMessage(err.message);
+        })
+    }
+   
    
     /// <summary>setCategory: Add the selected category to $rootScope and redirect user to next page based on saved pereferences</summary>
     /// <param name="i" type="integer">The id of the selected category</param>
@@ -54,4 +57,6 @@ angular.module('delivery.controllers')
             $rootScope.categoriesModal.hide();
         }, 500);
     };
+
+    $rootScope.loadCategories();
 });
