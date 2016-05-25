@@ -1,8 +1,5 @@
 <ion-view view-title="{{shopDetails.name}}">
-    <search-bar></search-bar>
-    <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-location" ng-click="changeAddress()"></button>
-    </ion-nav-buttons>
+    
     <ion-content overflow-scroll="false">
         <script id="shop-info-modal.html" type="text/ng-template">
             <ion-modal-view>
@@ -82,14 +79,14 @@
                                     <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">1</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
                                 </p>
                             </div>
-                            <div class="item item-body">
+                            <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
                                 {{selectedItem.description}}
                             </div>
                             <div class="item tabs tabs-secondary tabs-icon-left">
                                 <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
                                     <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
                                 </a>
-                                <a class="tab-item assertive" data-ink-opacity="0.5">
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
                                     <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>
                                 </a>
                             </div>

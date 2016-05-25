@@ -1,13 +1,9 @@
 angular.module('delivery.controllers')
 
-.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
 
     $scope.$on('$ionicView.enter', function () {
         $rootScope.showCartFabButton = false; //hide the cart button while in cart screen
-    })
-
-    $scope.$on('$ionicView.leave', function () {
-        $rootScope.showCartFabButton = true; //show the cart button when leaving cart screen
     })
 
     $scope.data = {
@@ -52,10 +48,17 @@ angular.module('delivery.controllers')
         var total = $scope.subtotal + parseFloat($rootScope.cartShop.delivery_charge);
         $scope.total = total;
         return total;
-    }
+    };
 
     $scope.goBackHome = function () {
-        $ionicHistory.goBack(-100); //go back to start view 'shops', use this methode instead of 'ui-serf' to clear the ionic view history and show the side menu icon on nav-bar
-    }
+        $ionicHistory.goBack(-100); //go back to start view 'shops', use this method instead of 'ui-serf' to clear the ionic view history and show the side menu icon on nav-bar
+    };
+
+    $scope.confirmOrder = function () {
+        if($rootScope.isUserLoggedin)
+            $state.go('app.cart-addresses');
+        else
+            $state.go('app.cart-login');
+    };
 
 });

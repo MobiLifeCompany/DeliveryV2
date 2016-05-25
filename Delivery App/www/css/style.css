@@ -543,3 +543,17 @@ i.dl-menu-item-icon.icon {
 	border-width: 5px;
 	margin-left: -5px;
 }
+
+.bar-subheader{
+    height: 30px !important;
+}
+
+.bar-subheader .title{
+    font-size: 16px !important;
+    height:30px;
+    margin: 0 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 400;
+    line-height: 30px !important;
+}

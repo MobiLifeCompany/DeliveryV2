@@ -1,6 +1,11 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $translate, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+
+    $scope.$on('$ionicView.enter', function () {
+        if ($rootScope.cartItems.length > 0)
+            $rootScope.showCartFabButton = true; //show the cart button when the cart has items
+    })
 
     $scope.shopDetails = [];
     $rootScope.selectedShop={};
@@ -155,42 +160,50 @@ angular.module('delivery.controllers')
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
-        if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
-            var isNewItem = true; // used to determine if the added item is new or allready in the cart
-            var quantity = document.getElementById(item.id).innerHTML;
-            $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
-            $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
-            for (i = 0; i < $rootScope.cartItems.length; i++) {
-                if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
-                    $rootScope.cartItems[i].quantity = quantity;
-                    isNewItem = false;
-                    i = $rootScope.cartItems.length; //break the loop
-                }
-
-            }
-            if (isNewItem) //all new item to cart
-                $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+        if (!shop.is_open) {
+            // Show a warning popup if shop changed
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('SHOP_CLOSED'),
+                template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
+            });
         }
         else {
-            // Show a warning popup if shop changed
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Change Shop',
-                template: 'Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?',
-                cancelText: 'No',
-                okText: 'Yes'
-            });
+            if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+                var isNewItem = true; // used to determine if the added item is new or allready in the cart
+                var quantity = document.getElementById(item.id).innerHTML;
+                $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
+                $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
+                for (i = 0; i < $rootScope.cartItems.length; i++) {
+                    if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
+                        $rootScope.cartItems[i].quantity = quantity;
+                        isNewItem = false;
+                        i = $rootScope.cartItems.length; //break the loop
+                    }
 
-            // Resolve the promise returned by the popup, then empty the cart if user confirm
-            confirmPopup.then(function (res) {
-                if (res) {
-                    //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
-                    $rootScope.cartShop = shop;
-                    $rootScope.cartItems = [];
-                    var quantity = document.getElementById(item.id).innerHTML;
-                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
                 }
-            });
-        }
+                if (isNewItem) //all new item to cart
+                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+            }
+            else {
+                // Show a warning popup if shop changed
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Change Shop',
+                    template: 'Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?',
+                    cancelText: 'No',
+                    okText: 'Yes'
+                });
 
+                // Resolve the promise returned by the popup, then empty the cart if user confirm
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
+                        $rootScope.cartShop = shop;
+                        $rootScope.cartItems = [];
+                        var quantity = document.getElementById(item.id).innerHTML;
+                        $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+                    }
+                });
+            }
+        }
     };
 });

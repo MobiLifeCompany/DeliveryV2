@@ -1,0 +1,35 @@
+<ion-view view-title="{{'CONFIRM_YOUR_ORDER' | translate}}">
+
+    <ion-content overflow-scroll="false">
+        <div ng-show="orderSubmittedSuccessfully && showSubmissionResult">
+            <div class="padding" ui-sref="app.old-orders">
+                <div class="icon ion-thumbsup balanced" style="font-size: 100px; width: 100%; text-align: center;"></div>
+                <h4 class="balanced text-center" translate="ORDER_RECEIVED"></h4>
+                <h5 class="balanced text-center" translate="THANK_YOU"></h5>
+            </div>
+            <hr />
+            <div style="text-align: center; font-size: 30px;">
+                <h5 translate="PLEASE_RATE_APP"></h5>
+                <i ng-click="appRating = 1" ng-class="appRating >= 1 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+                <i ng-click="appRating = 2" ng-class="appRating >= 2 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+                <i ng-click="appRating = 3" ng-class="appRating >= 3 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+                <i ng-click="appRating = 4" ng-class="appRating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+                <i ng-click="appRating = 5" ng-class="appRating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+            </div>
+            <div class="text-center padding">
+                <button class="button icon-left ion-android-send button-positive button-small" ng-click="sendRating()" translate="SEND"></button>
+            </div>
+        </div>
+        <div ng-show="!orderSubmittedSuccessfully && showSubmissionResult">
+            <div class="padding">
+                <div class="icon ion-thumbsdown assertive-900" style="font-size: 100px; width: 100%; text-align: center;"></div>
+                <h4 class="assertive-900 text-center" translate="SOMETHING_WRONG"></h4>
+            </div>
+            <hr />
+            <div class="text-center padding">
+                <h5 class="assertive-900 text-center" translate="RETRY_ORDER_SUBMIT"></h5>
+                <button class="button icon-left ion-refresh button-positive button-small" ng-click="submitOrder()" translate="RETRY"></button>
+            </div>
+        </div>
+</ion-content>
+</ion-view>

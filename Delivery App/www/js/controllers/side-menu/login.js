@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, authFactory, deliveryLoader) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $state, customerFactory, authFactory, deliveryLoader) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -43,6 +43,30 @@ angular.module('delivery.controllers')
             deliveryLoader.toggleLoadingWithMessage(statusCode +": " + err);
         });
     };
+
+    /// <summary>loginFromCart: Perform the login action when the user checkout and he is not logged in</summary>
+    $scope.loginFromCart = function () {
+        var userName = "";
+        deliveryLoader.showLoading('Log in...');
+        customerFactory.login($scope.loginData).success(function (data) {
+            userName = data.username;
+            $rootScope.isAuthenticated = true;
+            $rootScope.isUserLoggedin = true;
+            $rootScope.currentCustomerId = data.id;
+            $rootScope.currentCustomerUserName = data.username;
+            $rootScope.currentCustomerAuthToken = data.auth_token;
+            authFactory.setCustomer(data);
+            $scope.closeLogin();
+            deliveryLoader.hideLoading();
+            // if login successed, go to 'cart-addresses' view to continue order checkout
+            $state.go('app.cart-addresses');
+        }).error(function (err, statusCode) {
+            $rootScope.isAuthenticated = false;
+            authFactory.deleteAuth();
+            deliveryLoader.hideLoading();
+            deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
+        });
+    }
 
     /// <summary>prevStep: Redirect the user back to 'select categories' modal</summary>
     /// <param>no parameters</param>

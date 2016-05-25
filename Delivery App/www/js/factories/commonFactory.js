@@ -278,7 +278,7 @@ angular.module('delivery.factory', [])
         showLoading: function (text) {
             text = text || 'Loading...';
             $ionicLoading.show({
-                template: text
+                template: '<div class="loader" style="font-size: 8px;">' + text + '<svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
             });
         },
 

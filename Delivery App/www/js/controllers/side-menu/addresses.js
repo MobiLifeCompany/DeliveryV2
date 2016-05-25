@@ -1,9 +1,17 @@
 angular.module('delivery.controllers')
 
-.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $ionicPopup, $ionicModal, storageUtilityFactory, customerFactory, deliveryLoader) {
+.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $ionicPopup, $ionicModal, $ionicHistory, $translate, storageUtilityFactory, customerFactory, deliveryLoader) {
 
     $scope.customerAddress = {};
-    $scope.customerAddressess = {};
+    $scope.customerAddressess = [];
+    $scope.selectedAddressId = -1;
+
+    $scope.$on('$ionicView.enter', function () {
+        $scope.getCustomerAddress(); //load customer addresses from server
+        // remove the 'login view' from history after user login successfully, so clicking back wouldn't get him back to 'Login' again
+        if($ionicHistory.backTitle() == $translate.instant('LOGIN'))
+            $ionicHistory.removeBackView();
+    })
 
     /// <summary>closeAddresses: Close the addresses modal when user press back</summary>
     /// <param>No parameters</param>
@@ -23,7 +31,32 @@ angular.module('delivery.controllers')
         $scope.addressCreateModal = modal;
     });
 
-    $rootScope.getCustomerAddress = function () {
+    //Create 'map' modal to display map of the selected address
+    $ionicModal.fromTemplateUrl('map-modal.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.mapModal = modal;
+    });
+
+    $scope.showMapModal = function (customerAddress) {
+        $scope.mapModal.show();
+        $scope.showMap(customerAddress);
+    };
+
+    $scope.closeMapModal = function () {
+        $scope.mapModal.hide();
+    };
+
+    $scope.$on('$destroy', function () {
+        $scope.mapModal.remove();
+    });
+    $scope.$on('modal.hidden', function () {
+        $scope.$on('$destroy', function () {
+            $scope.map = null;
+        });
+    });
+
+    $scope.getCustomerAddress = function () {
         deliveryLoader.showLoading('Loading Addressess...');
         customerFactory.getCustomerAddressess().success(function (data) {
             $scope.customerAddressess = data;
@@ -34,8 +67,6 @@ angular.module('delivery.controllers')
             deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
         });
     };
-
-    
 
     $scope.showEditAddressModal = function (customerAddress) {
         $scope.customerAddress = customerAddress;
@@ -64,7 +95,7 @@ angular.module('delivery.controllers')
         customerFactory.createCustomerAddress($scope.customerAddress).success(function (data) {
             $scope.closeCreateAddressModal();
             deliveryLoader.hideLoading();
-            $scope.getCustomerAddress();
+            $scope.customerAddressess.push($scope.customerAddress);
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
@@ -108,5 +139,33 @@ angular.module('delivery.controllers')
             }
         });
     };
-    
+
+    //showMap: Show a map of the selected address with position marker, will be called from the 'mapModal' when it's shown
+    $scope.showMap = function (customerAddress) {
+        var latLng = new google.maps.LatLng(customerAddress.longitude, customerAddress.latitude);
+        var mapOptions = {
+            center: latLng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        var myLocation = new google.maps.Marker({
+            position: new google.maps.LatLng(customerAddress.longitude, customerAddress.latitude),
+            map: map,
+            title: customerAddress.street
+        });
+
+        $scope.map = map;
+    };
+
+    $scope.selectAddress = function (customerAddressId) {
+        if ($scope.selectedAddressId == customerAddressId) {
+            $scope.selectedAddressId = -1; // to unset the checkbox if clicked while it's already checked
+        }
+        else
+            $scope.selectedAddressId = customerAddressId;
+    };
+ 
 });

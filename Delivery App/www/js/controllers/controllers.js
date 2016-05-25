@@ -113,7 +113,6 @@ angular.module('delivery.controllers', [])
     /// <summary>showAddresses: Show the addresses modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAddresses = function () {
-        $rootScope.getCustomerAddress();
         $rootScope.addressesModal.show();
     }
 

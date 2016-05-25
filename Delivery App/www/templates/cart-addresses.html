@@ -1,0 +1,168 @@
+<ion-view view-title="{{'ADDRESSES' | translate}}">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-icon ion-plus" ng-click="showCreateAddressModal()"></button>
+    </ion-nav-buttons>
+
+    <ion-content overflow-scroll="false">
+
+        <!--'Edit Address' modal template-->
+        <script id="editAddress-modal.html" type="text/ng-template">
+            <ion-modal-view class="dl-sort-action-sheet">
+                <div class="bar bar-header bar-assertive" style="position: static;">
+                    <div class="buttons buttons-left header-item">
+                        <span class="left-buttons">
+                            <button class="button button-icon button-clear ion-ios-close-outline" ng-click="closeEditAddressModal()"></button>
+                        </span>
+                    </div>
+                    <div class="h1 title" translate="EDIT"></div>
+                    <div class="buttons buttons-right header-item">
+                        <span class="right-buttons">
+                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="updateAddress()"></button>
+                        </span>
+                    </div>
+                </div>
+
+                <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_PHONE"></span>
+                            <input type="text" placeholder="+963 33 2415081 | +963 993 130 478" ng-model="customerAddress.phone">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_EMAIL"></span>
+                            <input type="text" placeholder="youremail@email.com" ng-model="customerAddress.email">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_STREET"></span>
+                            <input type="text" placeholder="Zee Kar" ng-model="customerAddress.street">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_BUILDING"></span>
+                            <input type="text" placeholder="Gabban Building" ng-model="customerAddress.building">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_FLOOR"></span>
+                            <input type="text" placeholder="2" ng-model="customerAddress.floor">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_DETAILS"></span>
+                            <input type="text" placeholder="" ng-model="customerAddress.details">
+                        </label>
+                        <button class="button button-full button-balanced" ng-click="updateAddress()">
+                            <span translate="ADDRESS_SAVE"></span>
+                        </button>
+                    </div>
+                </ion-content>
+
+            </ion-modal-view>
+        </script>
+
+        <!--'Create Address' modal template-->
+        <script id="createAddress-modal.html" type="text/ng-template">
+            <ion-modal-view class="dl-sort-action-sheet">
+                <div class="bar bar-header bar-assertive" style="position: static;">
+                    <div class="buttons buttons-left header-item">
+                        <span class="left-buttons">
+                            <button class="button button-icon button-clear ion-ios-close-outline" ng-click="closeCreateAddressModal()"></button>
+                        </span>
+                    </div>
+                    <div class="h1 title" translate="NEW"></div>
+                    <div class="buttons buttons-right header-item">
+                        <span class="right-buttons">
+                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="createAddress()"></button>
+                        </span>
+                    </div>
+                </div>
+
+                <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_PHONE"></span>
+                            <input type="text" placeholder="+963 33 2415081 | +963 993 130 478" ng-model="customerAddress.phone">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_EMAIL"></span>
+                            <input type="text" placeholder="youremail@email.com" ng-model="customerAddress.email">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_STREET"></span>
+                            <input type="text" placeholder="Zee Kar" ng-model="customerAddress.street">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_BUILDING"></span>
+                            <input type="text" placeholder="Gabban Building" ng-model="customerAddress.building">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_FLOOR"></span>
+                            <input type="text" placeholder="2" ng-model="customerAddress.floor">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" translate="ADDRESS_DETAILS"></span>
+                            <input type="text" placeholder="" ng-model="customerAddress.details">
+                        </label>
+                        <button class="button button-full button-balanced" ng-click="createAddress()">
+                            <span translate="ADDRESS_SAVE"></span>
+                        </button>
+                    </div>
+                </ion-content>
+
+            </ion-modal-view>
+        </script>
+
+        <script id="map-modal.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar class="bar-assertive">
+                    <div class="buttons buttons-left header-item">
+                        <span class="left-buttons">
+                            <button class="button button-icon button-clear ion-ios-arrow-left" ng-click="closeMapModal()"></button>
+                        </span>
+                    </div>
+                    <div class="h1 title title-left light" translate="MAP"></div>
+                </ion-header-bar>
+                <ion-content overflow-scroll="false">
+                    <div id="map" data-tap-disabled="true"></div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
+
+        <div class="bar bar-subheader bar-energized static text-center">
+            <h5 class="title"><span translate="YOU_ARE_IN"></span><span> {{selectedCity.name}}, {{selectedArea.name}}</span></h5>
+        </div>
+        <div class="bar bar-subheader bar-stable static text-center">
+            <h5 class="title"><span translate="PLEASE_SELECT_ADDRESS"></span></h5>
+        </div>
+        <div ng-if="customerAddressess.length == 0">
+            <div class="icon ion-ios-home-outline stable" style="font-size: 150px; width: 100%; text-align: center;"></div>
+            <h5 class="stable text-center" translate="NO_SAVED_ADDRESS"></h5>
+        </div>
+        <div class="list padding-left padding-right" ng-show="customerAddressess.length > 0">
+            <div class="item" style="padding: 0px;" ng-repeat="customerAddress in customerAddressess">
+                <div style="position: absolute; top: 15px; right: 20px; z-index: 100;"><span style="font-size: 40px;" class="icon" ng-class="selectedAddressId == customerAddress.id ? 'assertive ion-ios-checkmark' : 'stable ion-ios-checkmark-outline'" ng-click="selectAddress(customerAddress.id)"></span></div>
+                <div class="list card" style="margin: 10px 0;">
+                    <div class="item item-body" ng-click="selectAddress(customerAddress.id)">
+                        <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{customerAddress.street}}<br />
+                        <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}}, 
+                        <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />
+                        <strong>{{'ADDRESS_DETAILS' | translate}}: </strong>{{customerAddress.details}}<br />
+                        <strong>{{'ADDRESS_PHONE' | translate}}: </strong>+963 993 130 478<br />
+                        <strong>{{'ADDRESS_EMAIL' | translate}}: </strong>person@gmail.com
+                    </div>
+                    <div class="item tabs tabs-secondary tabs-icon-top">
+                        <a class="tab-item energized" ng-click="showEditAddressModal(customerAddress)">
+                            <i class="icon ion-edit"></i><i> {{'EDIT' | translate}}</i>
+                        </a>
+                        <a class="tab-item assertive" ng-click="deleteAddressPopup(customerAddress.id)">
+                            <i class="icon ion-ios-trash"></i><i> {{'DELETE' | translate}}</i>
+                        </a>
+                        <a class="tab-item balanced" ng-click="showMapModal(customerAddress)">
+                            <i class="icon ion-map"></i><i> {{'MAP' | translate}}</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+            <button class="button button-balanced button-small button-block" ng-disabled="selectedAddressId == -1" translate="PLACE_ORDER" ui-sref="app.checkout"></button>
+        </div>
+    </ion-content>
+</ion-view>

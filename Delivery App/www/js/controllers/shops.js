@@ -38,6 +38,12 @@ angular.module('delivery.controllers')
     $scope.isMasteryFilterSet = false;
     $scope.isAdvanceFilterSet = false;
 
+    // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
+    $scope.$on('$ionicView.loaded', function () {
+        if ($rootScope.showMainView)
+            $rootScope.loadShops();
+    });
+
     $scope.changeAddress = function () {
         $rootScope.showMainView = false // hide the main screen while changing address
         if ($rootScope.isUserLoggedin) {

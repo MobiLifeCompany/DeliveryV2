@@ -4,7 +4,7 @@
 // 'driver' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'delivery.controllers' is found in controllers.js
-angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory', 'pascalprecht.translate', 'ionic-material', 'jett.ionic.filter.bar', 'ngCordova'])
+angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory', 'pascalprecht.translate', 'ionic-material', 'jett.ionic.filter.bar', 'ngCordova', 'ui.router'])
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -77,6 +77,36 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
             'order': {
                 templateUrl: 'templates/cart.html',
                 controller: 'CartCtrl'
+            }
+        }
+    })
+
+    .state('app.cart-login', {
+        url: '/cart-login',
+        views: {
+            'order': {
+                templateUrl: 'templates/cart-login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+
+    .state('app.cart-addresses', {
+        url: '/cart-addresses',
+        views: {
+            'order': {
+                templateUrl: 'templates/cart-addresses.html',
+                controller: 'AddressesCtrl'
+            }
+        }
+    })
+
+    .state('app.checkout', {
+        url: '/checkout',
+        views: {
+            'order': {
+                templateUrl: 'templates/checkout.html',
+                controller: 'CheckoutCtrl'
             }
         }
     })
