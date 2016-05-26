@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $state, customerFactory, authFactory, deliveryLoader) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $state, authFactory, deliveryLoader, errorCodeMessageFactory) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -27,20 +27,24 @@ angular.module('delivery.controllers')
         var userName = "";
         deliveryLoader.showLoading('Log in...');
         customerFactory.login($scope.loginData).success(function (data) {
-            userName = data.username;
-            $rootScope.isAuthenticated = true;
-            $rootScope.isUserLoggedin = true;
-            $rootScope.currentCustomerId = data.id;
-            $rootScope.currentCustomerUserName = data.username;
-            $rootScope.currentCustomerAuthToken = data.auth_token;
-            authFactory.setCustomer(data);
-            $scope.closeLogin();
+            try{
+                userName = data.username;
+                $rootScope.isAuthenticated = true;
+                $rootScope.isUserLoggedin = true;
+                $rootScope.currentCustomerId = data.id;
+                $rootScope.currentCustomerUserName = data.username;
+                $rootScope.currentCustomerAuthToken = data.auth_token;
+                authFactory.setCustomer(data);
+                $scope.closeLogin();
+            } catch (e) {
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(401, 'LOGIN'));
+            }
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             $rootScope.isAuthenticated = false;
             authFactory.deleteAuth();
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode +": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'LOGIN'));
         });
     };
 
