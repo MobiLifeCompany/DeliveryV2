@@ -144,8 +144,8 @@
                         <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}}, 
                         <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />
                         <strong>{{'ADDRESS_DETAILS' | translate}}: </strong>{{customerAddress.details}}<br />
-                        <strong>{{'ADDRESS_PHONE' | translate}}: </strong>+963 993 130 478<br />
-                        <strong>{{'ADDRESS_EMAIL' | translate}}: </strong>person@gmail.com
+                        <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{customerAddress.phone}}<br />
+                        <strong>{{'ADDRESS_EMAIL' | translate}}: </strong>{{customerAddress.email}}
                     </div>
                     <div class="item tabs tabs-secondary tabs-icon-top">
                         <a class="tab-item energized" ng-click="showEditAddressModal(customerAddress)">

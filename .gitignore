@@ -5,3 +5,4 @@ bin
 /Delivery App/Delivery App.jsproj.user
 /Delivery App/plugins/android.json
 /Delivery App/platforms
+/.vs/Delivery App/v14/*.suo

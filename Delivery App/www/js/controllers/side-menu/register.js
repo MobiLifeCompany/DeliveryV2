@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $http, $ionicModal, customerFactory, deliveryLoader) {
+.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $http, $ionicModal, customerFactory, deliveryLoader) {
 
     $scope.customer = {};
     
@@ -13,7 +13,7 @@ angular.module('delivery.controllers')
     }
 
     $scope.register = function () {
-        deliveryLoader.showLoading('Registering...');
+        deliveryLoader.showLoading($translate.instant('LOADING'));
         $scope.customer.lang = $rootScope.lang;
         customerFactory.register($scope.customer).success(function (data) {
             deliveryLoader.hideLoading();

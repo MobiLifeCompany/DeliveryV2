@@ -24,16 +24,16 @@ angular.module('delivery.controllers')
     /// <summary>doLogin: Perform the login action when the user submits the login form, and save user data to '$rootScope' and 'localStorage'</summary>
     /// <param>No parameters</param>
     $scope.doLogin = function () {
-        var userName = "";
         deliveryLoader.showLoading('Log in...');
         customerFactory.login($scope.loginData).success(function (data) {
             try{
-                userName = data.username;
                 $rootScope.isAuthenticated = true;
                 $rootScope.isUserLoggedin = true;
                 $rootScope.currentCustomerId = data.id;
                 $rootScope.currentCustomerUserName = data.username;
                 $rootScope.currentCustomerAuthToken = data.auth_token;
+                data.password = $scope.loginData.password;
+                data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
                 $scope.closeLogin();
             } catch (e) {
@@ -50,15 +50,15 @@ angular.module('delivery.controllers')
 
     /// <summary>loginFromCart: Perform the login action when the user checkout and he is not logged in</summary>
     $scope.loginFromCart = function () {
-        var userName = "";
         deliveryLoader.showLoading('Log in...');
         customerFactory.login($scope.loginData).success(function (data) {
-            userName = data.username;
             $rootScope.isAuthenticated = true;
             $rootScope.isUserLoggedin = true;
             $rootScope.currentCustomerId = data.id;
             $rootScope.currentCustomerUserName = data.username;
             $rootScope.currentCustomerAuthToken = data.auth_token;
+            data.password = $scope.loginData.password;
+            data.password_confirmation = $scope.loginData.password;
             authFactory.setCustomer(data);
             $scope.closeLogin();
             deliveryLoader.hideLoading();

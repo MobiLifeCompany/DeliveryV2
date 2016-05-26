@@ -1,9 +1,101 @@
 <ion-modal-view ng-controller="ProfileCtrl">
-  <ion-header-bar class="bar-assertive">
-    <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
-    <h1 class="title" translate="PROFILE"></h1>
-  </ion-header-bar>
-  <ion-content>
-    
-  </ion-content>
+    <ion-header-bar class="bar-assertive">
+        <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
+        <h1 class="title" translate="PROFILE"></h1>
+    </ion-header-bar>
+
+    <ion-content overflow-scroll="false">
+        <div class="text-center padding-top" style="height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
+            <img src="img/delivery_logo.png" style="vertical-align: middle;">
+        </div>
+        <div class="padding-left padding-right">
+            <form name="Cform">
+                <div class="list">
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.username.length >= 3"></i> {{'USERNAME' | translate}}</span>
+                        <input type="text" ng-model="customer.username" placeholder="{{'USERNAME' | translate}}" required min="3">
+                    </label>
+                    <div class="error-container" ng-hide="customer.username.length >= 3">
+                        <div class="error" ng-hide="customer.username.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.username.length < 3">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_3' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.full_name.length >= 3"></i> {{'FULL_NAME' | translate}}</span>
+                        <input type="text" ng-model="customer.full_name" placeholder="{{'FULL_NAME' | translate}}" required min="3">
+                    </label>
+                    <div class="error-container" ng-hide="customer.full_name.length >= 3">
+                        <div class="error" ng-hide="customer.full_name.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.full_name.length < 3">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_3' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password.length >= 8"></i> {{'PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customer.password" placeholder="{{'PASSWORD' | translate}}" required min="8">
+                    </label>
+                    <div class="error-container" ng-hide="customer.password.length >= 8">
+                        <div class="error" ng-hide="customer.password.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.password.length < 8">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_8' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password_confirmation == customer.password"></i> {{'CONFIRM_PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customer.password_confirmation" placeholder="{{'CONFIRM_PASSWORD' | translate}}" required min="8" pw-check="password">
+                    </label>
+                    <div class="error-container" ng-hide="customer.password == customer.password_confirmation && customer.password_confirmation.length > 0">
+                        <div class="error" ng-hide="customer.password_confirmation.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="customer.password != customer.password_confirmation && customer.password && customer.password_confirmation">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_PASSWORD_DONT_MATCH' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
+                        <input type="email" name="cemail" ng-model="customer.email" placeholder="{{'EMAIL' | translate}}" >
+                    </label>
+                    <div class="error-container" ng-hide="Cform.cemail.$valid">
+                        <div class="error" ng-hide="Cform.cemail.$valid">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_EMAIL_MATCH' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
+                        <input type="number" name="cphone" ng-model="customer.phone" ng-minlength="10" ng-maxlength="10" placeholder="{{'Mobile' | translate}}" only-num>
+                    </label>
+                    <div class="error-container" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"  >
+                        <div class="error" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MOBILE_MATCH' | translate}}
+                        </div>
+                    </div>
+                        <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                            <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;"></i> {{'GENDER' | translate}}</span>
+                            <ion-radio ng-model="customer.gender" ng-value="'F'">{{'FEMALE' | translate}}</ion-radio>
+                            <ion-radio ng-model="customer.gender" ng-value="'M'">{{'MALE' | translate}}</ion-radio>
+                        </label>
+                    </div>
+
+                <button class="button button-small button-balanced button-block" ng-disabled="!customer.username || !customer.full_name || !customer.password_confirmation ||!customer.password || (customer.password != customer.password_confirmation) || (((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)) || !Cform.cemail.$valid " ng-click="updateProfile()" type="submit" translate="CREATE_ACCOUNT"></button>
+            </form>
+        </div>
+    </ion-content>
 </ion-modal-view>

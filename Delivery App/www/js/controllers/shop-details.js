@@ -161,6 +161,7 @@ angular.module('delivery.controllers')
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
+        shop.is_open = true;
         if (!shop.is_open) {
 
             var alertPopup = $ionicPopup.alert({

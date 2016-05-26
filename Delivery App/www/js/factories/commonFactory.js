@@ -228,7 +228,9 @@ angular.module('delivery.factory', [])
             register: function (customer) {
                 return $http.post(baseURL + '/customers', customer);
             },
-
+            updateProfile: function (customer) {
+                return $http.put(baseURL + '/customers', customer);
+            },
             createCustomerAddress: function (customerAddress) {
                 var customerId = -1;
                 var customerAuthToken = '';
@@ -285,6 +287,8 @@ angular.module('delivery.factory', [])
                     return $translate.instant('LOGIN_ERROR_MSG');
                 } else if ((errorCode === 404 || errorCode === 401) && requestType === "ADDRESS") {
                     return $translate.instant('ADDRESS_ERROR_MSG');
+                } else if ((errorCode === 404 || errorCode === 401) && requestType === "PROFILE") {
+                    return $translate.instant('PROFILE_ERROR_MSG');
                 }
                 else if (errorCode === 500 )
                     return $translate.instant('COMMON_ERROR_MSG');
