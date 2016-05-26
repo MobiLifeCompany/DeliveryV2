@@ -58,6 +58,7 @@ angular.module('delivery.controllers', [])
 
     // Create the login modal
     $ionicModal.fromTemplateUrl('templates/side-menu/login.html', {
+        id: '1',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.loginModal = modal;
@@ -88,6 +89,7 @@ angular.module('delivery.controllers', [])
 
     // Create the register modal
     $ionicModal.fromTemplateUrl('templates/side-menu/register.html', {
+        id: '2',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.registerModal = modal;
@@ -96,6 +98,7 @@ angular.module('delivery.controllers', [])
 
     // Create the profile modal
     $ionicModal.fromTemplateUrl('templates/side-menu/profile.html', {
+        id: '3',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.profileModal = modal;
@@ -108,6 +111,7 @@ angular.module('delivery.controllers', [])
 
     // Create the addresses modal
     $ionicModal.fromTemplateUrl('templates/side-menu/addresses.html', {
+        id: '4',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.addressesModal = modal;
@@ -120,6 +124,7 @@ angular.module('delivery.controllers', [])
 
     // Create the contact us modal
     $ionicModal.fromTemplateUrl('templates/side-menu/contact-us.html', {
+        id: '5',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.contactUsModal = modal;
@@ -132,6 +137,7 @@ angular.module('delivery.controllers', [])
     
     // Create the help modal
     $ionicModal.fromTemplateUrl('templates/side-menu/help.html', {
+        id: '6',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.helpModal = modal;
@@ -144,6 +150,7 @@ angular.module('delivery.controllers', [])
 
     // Create the about modal
     $ionicModal.fromTemplateUrl('templates/side-menu/about.html', {
+        id: '7',
         scope: $rootScope
     }).then(function (modal) {
         $rootScope.aboutModal = modal;

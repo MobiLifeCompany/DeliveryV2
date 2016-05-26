@@ -16,7 +16,7 @@
                 <h6><span style="background-color: white; padding: 0px 5px;" translate="PICK_FROM_SAVED_ADDRESSES"></span></h6>
             </div>
             <div class="padding" ng-show="savedAreas.length > 0">
-                <button class="button button-block button-small button-balanced" ng-repeat="savedArea in savedAreas" ng-click="selectSavedAddress(savedArea.area)">
+                <button class="button button-block button-small button-balanced" ng-repeat="savedArea in uniqueAreas" ng-click="selectSavedAddress(savedArea.area)">
                     <strong> {{ savedArea.area.name }} </strong>
                 </button>
             </div>

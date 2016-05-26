@@ -6,12 +6,19 @@ angular.module('delivery.controllers')
     $scope.customerAddressess = [];
     $scope.selectedAddressId = -1;
 
+    // Will be fired when addresses opened from ion-view
     $scope.$on('$ionicView.enter', function () {
         $scope.getCustomerAddress(); //load customer addresses from server
         // remove the 'login view' from history after user login successfully, so clicking back wouldn't get him back to 'Login' again
         if($ionicHistory.backTitle() == $translate.instant('LOGIN'))
             $ionicHistory.removeBackView();
     })
+
+    // Will be fired when addresses opened from ion-modal-view
+    $rootScope.$on('modal.shown', function (event, modal) {
+        if(modal.id == '4')
+            $scope.getCustomerAddress(); //load customer addresses from server
+    });
 
     /// <summary>closeAddresses: Close the addresses modal when user press back</summary>
     /// <param>No parameters</param>

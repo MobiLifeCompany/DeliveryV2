@@ -7,6 +7,18 @@ angular.module('delivery.controllers')
     $rootScope.fullName = authFactory.getCustomer().full_name;
 
     $scope.savedAreas = storageUtilityFactory.getCustomerAddresses();
+    $scope.uniqueAreas = [];
+    // Get only unique values for savedAreas to prevent dubplication in the areas list
+    var areaExists = false;
+    for (i = 0; i < $scope.savedAreas.length; i++) {
+        for (j = 0; j < $scope.uniqueAreas.length; j++) {
+            if ($scope.savedAreas[i].area.id == $scope.uniqueAreas[j].area.id)
+                areaExists = true;
+        }
+        if (!areaExists)
+            $scope.uniqueAreas.push($scope.savedAreas[i]);
+        areaExists = false;
+    };
 
     $scope.prevStep = function () {
         $rootScope.savedAreasModal.hide();

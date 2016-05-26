@@ -7,6 +7,14 @@ angular.module('delivery.controllers')
     $scope.appRating = 0;
 
     $scope.$on('$ionicView.enter', function () {
+        $scope.submitOrder();
+    });
+
+    $scope.$on('$ionicView.leave', function () {
+        $ionicNavBarDelegate.showBackButton(true);
+    });
+
+    $scope.submitOrder = function(){
         //// Todo: place backend API call here to submit the order
 
         // On success:
@@ -31,10 +39,6 @@ angular.module('delivery.controllers')
 
 
         $scope.showSubmissionResult = true;
-    });
-
-    $scope.$on('$ionicView.leave', function () {
-
-    });
+    };
 
 });

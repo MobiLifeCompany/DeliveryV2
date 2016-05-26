@@ -3,7 +3,7 @@
             <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
             <div class="title" translate="ADDRESSES"></div>
             <div class="buttons">
-                <button class="button button-icon button-clear" translate="ADD_NEW_ADDRESSES" ng-click="showCreateAddressModal()"></button>
+                <button class="button button-clear button-icon ion-plus" ng-click="showCreateAddressModal()"></button>
             </div>
         </ion-header-bar>
         <ion-content overflow-scroll="false">
@@ -52,7 +52,7 @@
                                 <input type="text" placeholder="" ng-model="customerAddress.details">
                             </label>
                             <button class="button button-full button-balanced" ng-click="updateAddress()">
-                                <span  translate="ADDRESS_SAVE"></span>
+                                <span translate="ADDRESS_SAVE"></span>
                             </button>
                         </div>
                     </ion-content>
@@ -111,22 +111,57 @@
 
                 </ion-modal-view>
             </script>
-            <div class="bar bar-header bar-energized" style="position: static;">
-                <div class="h2 title">{{selectedCity.name}} - {{selectedArea.name}}</div>
+
+            <script id="map-modal.html" type="text/ng-template">
+                <ion-modal-view>
+                    <ion-header-bar class="bar-assertive">
+                        <div class="buttons buttons-left header-item">
+                            <span class="left-buttons">
+                                <button class="button button-icon button-clear ion-ios-arrow-left" ng-click="closeMapModal()"></button>
+                            </span>
+                        </div>
+                        <div class="h1 title title-left light" translate="MAP"></div>
+                    </ion-header-bar>
+                    <ion-content overflow-scroll="false">
+                        <div id="map" data-tap-disabled="true"></div>
+                    </ion-content>
+                </ion-modal-view>
+            </script>
+
+            <div class="bar bar-subheader bar-energized static text-center">
+                <h5 class="title"><span translate="YOU_ARE_IN"></span><span> {{selectedCity.name}}, {{selectedArea.name}}</span></h5>
             </div>
-            <div class="list">
-                <div class="item  padding" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="customerAddress in customerAddressess" href="#">
-                    <h4><strong translate="STREET"></strong> {{customerAddress.street}}</h4>
-                    <h4><strong translate="BUILDING"></strong>, {{customerAddress.building}}</h4>
-                    <h4><strong translate="FLOOR"></strong>, {{customerAddress.floor}}</h4>
-                    <h4><strong translate="DETAILS"></strong>, {{customerAddress.details}}</h4>
-                    <h4><strong translate="Mobile"></strong>{{customerAddress.phone}},<strong translate="EMAIL"></strong> {{customerAddress.email}}</h4>
-                    <div>
-                        <button class="button button-small button-energized padding-horizontal" style="float: right;margin-left:5px" translate="EDIT" ng-click="showEditAddressModal(customerAddress)"> </button>
-                        <button class="button button-small button-assertive padding-horizontal" style="float: right;margin-right:5px" translate="DELETE" ng-click="deleteAddressPopup(customerAddress.id)"> </button>
-                        <button class="button button-small button-positive padding-horizontal" style="float: right;margin-right:5px" translate="MAP" ng-click=""> Map </button>
+            <div class="bar bar-subheader bar-stable static text-center">
+                <h5 class="title"><span translate="PLEASE_SELECT_ADDRESS"></span></h5>
+            </div>
+            <div ng-if="customerAddressess.length == 0">
+                <div class="icon ion-ios-home-outline stable" style="font-size: 150px; width: 100%; text-align: center;"></div>
+                <h5 class="stable text-center" translate="NO_SAVED_ADDRESS"></h5>
+            </div>
+            <div class="list padding-left padding-right" ng-show="customerAddressess.length > 0">
+                <div class="item" style="padding: 0px;" ng-repeat="customerAddress in customerAddressess">
+                    <div class="list card" style="margin: 10px 0;">
+                        <div class="item item-body" ng-click="selectAddress(customerAddress.id)">
+                            <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{customerAddress.street}}<br />
+                            <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}},
+                            <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />
+                            <strong>{{'ADDRESS_DETAILS' | translate}}: </strong>{{customerAddress.details}}<br />
+                            <strong>{{'ADDRESS_PHONE' | translate}}: </strong>+963 993 130 478<br />
+                            <strong>{{'ADDRESS_EMAIL' | translate}}: </strong>person@gmail.com
+                        </div>
+                        <div class="item tabs tabs-secondary tabs-icon-top">
+                            <a class="tab-item energized" ng-click="showEditAddressModal(customerAddress)">
+                                <i class="icon ion-edit"></i><i> {{'EDIT' | translate}}</i>
+                            </a>
+                            <a class="tab-item assertive" ng-click="deleteAddressPopup(customerAddress.id)">
+                                <i class="icon ion-ios-trash"></i><i> {{'DELETE' | translate}}</i>
+                            </a>
+                            <a class="tab-item balanced" ng-click="showMapModal(customerAddress)">
+                                <i class="icon ion-map"></i><i> {{'MAP' | translate}}</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-</ion-content>
+        </ion-content>
 </ion-modal-view>
