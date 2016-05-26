@@ -273,6 +273,25 @@ angular.module('delivery.factory', [])
         return customerAPI;
     }
  )
+.factory('errorCodeMessageFactory', function ($translate) {
+
+    var errorCodeMessageAPI = {
+            getErrorMessage: function (errorCode, requestType) {
+                if (errorCode === 500 > -1 && requestType === "BUSINESS") {
+                    return "";
+                } else if (errorCode === 422 && requestType === "REGISTER") {
+                    return $translate.instant('REGISTER_ERROR_MSG');
+                } else if ((errorCode === 404 || errorCode === 401) && requestType === "LOGIN") {
+                    return $translate.instant('LOGIN_ERROR_MSG');
+                } else if ((errorCode === 404 || errorCode === 401) && requestType === "ADDRESS") {
+                    return $translate.instant('ADDRESS_ERROR_MSG');
+                }
+                else if (errorCode === 500 )
+                    return $translate.instant('COMMON_ERROR_MSG');
+            }
+        };
+    return errorCodeMessageAPI;
+})
 .factory('deliveryLoader',  function ($ionicLoading, $timeout) {
     var LOADERAPI = {
         showLoading: function (text) {

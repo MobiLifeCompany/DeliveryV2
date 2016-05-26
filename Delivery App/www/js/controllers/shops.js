@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader) {
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
@@ -9,19 +9,22 @@ angular.module('delivery.controllers')
     $rootScope.loadShops = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
         shopsFactory.get().success(function (data) {
-         $rootScope.shops = data;
-         if ($rootScope.shops.length > 0) {
-             $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
+         try {
+                 $rootScope.shops = data;
+                 if ($rootScope.shops.length > 0) {
+                     $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
 
-             //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
-             for (i = 0; i < $rootScope.masteriesArray.length; i++) {
-                 $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
-             }
-             $scope.noShopsFound = false;
-         }
-         else
-             $scope.noShopsFound = true;
-
+                     //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
+                     for (i = 0; i < $rootScope.masteriesArray.length; i++) {
+                         $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
+                     }
+                     $scope.noShopsFound = false;
+                 }
+                 else
+                     $scope.noShopsFound = true;
+             } catch (e) {
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500,''));
+            }
         deliveryLoader.hideLoading();
      }).error(function (err, statusCode) {
          deliveryLoader.hideLoading();

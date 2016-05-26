@@ -20,7 +20,7 @@ angular.module('delivery.controllers')
             $rootScope.registerModal.hide();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode +": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'REGISTER'));
         });
     }
 });

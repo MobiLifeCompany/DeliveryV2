@@ -1,11 +1,7 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $translate, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
 
-    $scope.$on('$ionicView.enter', function () {
-        if ($rootScope.cartItems.length > 0)
-            $rootScope.showCartFabButton = true; //show the cart button when the cart has items
-    })
 
     $scope.shopDetails = [];
     $rootScope.selectedShop={};
@@ -13,13 +9,18 @@ angular.module('delivery.controllers')
 
     $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
     
+    $scope.$on('$ionicView.enter', function () {
+        if ($rootScope.cartItems.length > 0)
+            $rootScope.showCartFabButton = true; //show the cart button when the cart has items
+    })
+
     deliveryLoader.showLoading($translate.instant('LOADING'));
     shopDetailsFactory.getShopItemsCategories().success(function (data) {
         $scope.categories = data;
        deliveryLoader.hideLoading();
     }).error(function (err, statusCode) {
         deliveryLoader.hideLoading();
-        deliveryLoader.toggleLoadingWithMessage(err.message);
+        deliveryLoader.toggleLoadingWithMessage(deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode)));
     })
 
 

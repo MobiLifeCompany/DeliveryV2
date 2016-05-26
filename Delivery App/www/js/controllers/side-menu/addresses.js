@@ -1,6 +1,7 @@
 angular.module('delivery.controllers')
 
-.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $ionicPopup, $ionicModal, $ionicHistory, $translate, storageUtilityFactory, customerFactory, deliveryLoader) {
+
+.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $translate, $ionicPopup, $ionicHistory, $ionicModal, storageUtilityFactory, customerFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.customerAddress = {};
     $scope.customerAddressess = [];
@@ -60,12 +61,16 @@ angular.module('delivery.controllers')
     $scope.getCustomerAddress = function () {
         deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
         customerFactory.getCustomerAddressess().success(function (data) {
-            $scope.customerAddressess = data;
-            storageUtilityFactory.setCustomerAddresses(data);
-            deliveryLoader.hideLoading();
+            try{
+                $scope.customerAddressess = data;
+                storageUtilityFactory.setCustomerAddresses(data);
+                deliveryLoader.hideLoading();
+            } catch (e) {
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(404, 'ADDRESS'));
+            }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
         });
     };
 
@@ -99,7 +104,7 @@ angular.module('delivery.controllers')
             $scope.customerAddressess.push($scope.customerAddress);
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
         });
     };
     $scope.updateAddress = function () {
@@ -110,7 +115,7 @@ angular.module('delivery.controllers')
             $scope.getCustomerAddress();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
         });
     };
     $scope.deleteAddress = function (customerAddressId) {
@@ -120,7 +125,7 @@ angular.module('delivery.controllers')
             $scope.getCustomerAddress();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
+            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
         });
     };
 

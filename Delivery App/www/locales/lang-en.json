@@ -104,6 +104,10 @@
   "CHANGE_SHOP": "Change Shop",
   "WARNINGS": "Warnings",
   "PROMOTIONS": "Promotions",
+  "COMMON_ERROR_MSG":  "Sorry, you have unexpected error, please call system admin to resolve the problem.",
   "CHANGE_SHOP_MSG": "Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?",
+  "REGISTER_ERROR_MSG": "Error In Register, please check your information",
+  "LOGIN_ERROR_MSG": "Error In Login, please check your information",
+  "ADDRESS_ERROR_MSG": "Error In Customer Addresses, please check your information",
   "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area"
 }
