@@ -4,8 +4,8 @@ angular.module('delivery.controllers')
 .controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $translate, $ionicPopup, $ionicHistory, $ionicModal, storageUtilityFactory, customerFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.customerAddress = {};
-    $scope.customerAddressess = [];
-    $scope.selectedAddressId = -1;
+    $rootScope.customerAddressess = [];
+    $rootScope.selectedAddressId = -1;
 
     // Will be fired when addresses opened from ion-view
     $scope.$on('$ionicView.enter', function () {
@@ -68,8 +68,15 @@ angular.module('delivery.controllers')
     $rootScope.getCustomerAddress = function () {
         deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
         customerFactory.getCustomerAddressess().success(function (data) {
-            try{
-                $scope.customerAddressess = data;
+            try {
+
+                var filteredAddresses = [];
+                for (i = 0; i < data.length; i++) 
+                    if(data[i].area.id === $rootScope.selectedArea.id && data[i].city.id === $rootScope.selectedCity.id)
+                        filteredAddresses.push(data[i]);
+                
+                $rootScope.customerAddressess = filteredAddresses;
+                storageUtilityFactory.deleteCustomerAddresses();
                 storageUtilityFactory.setCustomerAddresses(data);
                 deliveryLoader.hideLoading();
             } catch (e) {
@@ -108,7 +115,7 @@ angular.module('delivery.controllers')
         customerFactory.createCustomerAddress($scope.customerAddress).success(function (data) {
             $scope.closeCreateAddressModal();
             deliveryLoader.hideLoading();
-            $scope.customerAddressess.push($scope.customerAddress);
+            $rootScope.customerAddressess.push($scope.customerAddress);
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
@@ -120,6 +127,7 @@ angular.module('delivery.controllers')
             $scope.closeEditAddressModal();
             deliveryLoader.hideLoading();
             $scope.getCustomerAddress();
+            $scope.customerAddress = {};
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
@@ -174,11 +182,11 @@ angular.module('delivery.controllers')
     };
 
     $scope.selectAddress = function (customerAddressId) {
-        if ($scope.selectedAddressId == customerAddressId) {
-            $scope.selectedAddressId = -1; // to unset the checkbox if clicked while it's already checked
+        if ($rootScope.selectedAddressId == customerAddressId) {
+            $rootScope.selectedAddressId = -1; // to unset the checkbox if clicked while it's already checked
         }
         else
-            $scope.selectedAddressId = customerAddressId;
+            $rootScope.selectedAddressId = customerAddressId;
     };
  
 });

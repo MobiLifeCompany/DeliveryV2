@@ -15,45 +15,89 @@
                         </span>
                     </div>
                     <div class="h1 title" translate="EDIT"></div>
-                    <div class="buttons buttons-right header-item">
-                        <span class="right-buttons">
-                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="updateAddress()"></button>
-                        </span>
-                    </div>
                 </div>
 
                 <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
-                    <div class="list">
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_PHONE"></span>
-                            <input type="text" placeholder="+963 33 2415081 | +963 993 130 478" ng-model="customerAddress.phone">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_EMAIL"></span>
-                            <input type="text" placeholder="youremail@email.com" ng-model="customerAddress.email">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_STREET"></span>
-                            <input type="text" placeholder="Zee Kar" ng-model="customerAddress.street">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_BUILDING"></span>
-                            <input type="text" placeholder="Gabban Building" ng-model="customerAddress.building">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_FLOOR"></span>
-                            <input type="text" placeholder="2" ng-model="customerAddress.floor">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_DETAILS"></span>
-                            <input type="text" placeholder="" ng-model="customerAddress.details">
-                        </label>
-                        <button class="button button-full button-balanced" ng-click="updateAddress()">
-                            <span translate="ADDRESS_SAVE"></span>
-                        </button>
-                    </div>
+                    <form name="Cform">
+                        <div class="list">
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
+                                <input type="number" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
+                            </label>
+                            <div class="error-container" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                                <div class="error" ng-show="Cform.cphone.length < 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MOBILE_MATCH' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
+                                <input type="email" name="cemail" placeholder="youremail@email.com" ng-model="customerAddress.email">
+                            </label>
+                            <div class="error-container" ng-hide="Cform.cemail.$valid">
+                                <div class="error" ng-show="Cform.cemail.length < 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-hide="Cform.cemail.$valid">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_EMAIL_MATCH' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.street.length >= 8"></i> {{'ADDRESS_STREET' | translate}}</span>
+                                <input type="text" name="cstreet" placeholder="{{'ADDRESS_STREET' | translate}}" ng-model="customerAddress.street" required min="8">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.street.length >= 8">
+                                <div class="error" ng-hide="customerAddress.street.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.street.length < 8">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_8' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.building.length >= 8"></i> {{'ADDRESS_BUILDING' | translate}}</span>
+                                <input type="text" name="cbuilding" placeholder="{{'ADDRESS_BUILDING' | translate}}" ng-model="customerAddress.building" required min="8">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.building.length >= 8">
+                                <div class="error" ng-hide="customerAddress.building.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.building.length < 8">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_8' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.floor.length >= 1"></i> {{'ADDRESS_FLOOR' | translate}}</span>
+                                <input type="text" name="cfloor" placeholder="{{'ADDRESS_FLOOR' | translate}}" ng-model="customerAddress.floor" required min="1">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.floor.length >= 2">
+                                <div class="error" ng-hide="customerAddress.floor.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.floor.length < 2">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_1' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
+                                <input type="text" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
+                            </label>
+                        </div>
+                        <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="updateAddress()" type="submit" translate="ADDRESS_SAVE"></button>
+                    </form>
                 </ion-content>
-
             </ion-modal-view>
         </script>
 
@@ -67,47 +111,93 @@
                         </span>
                     </div>
                     <div class="h1 title" translate="NEW"></div>
-                    <div class="buttons buttons-right header-item">
-                        <span class="right-buttons">
-                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="createAddress()"></button>
-                        </span>
-                    </div>
                 </div>
 
                 <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
-                    <div class="list">
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_PHONE"></span>
-                            <input type="text" placeholder="+963 33 2415081 | +963 993 130 478" ng-model="customerAddress.phone">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_EMAIL"></span>
-                            <input type="text" placeholder="youremail@email.com" ng-model="customerAddress.email">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_STREET"></span>
-                            <input type="text" placeholder="Zee Kar" ng-model="customerAddress.street">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_BUILDING"></span>
-                            <input type="text" placeholder="Gabban Building" ng-model="customerAddress.building">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_FLOOR"></span>
-                            <input type="text" placeholder="2" ng-model="customerAddress.floor">
-                        </label>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" translate="ADDRESS_DETAILS"></span>
-                            <input type="text" placeholder="" ng-model="customerAddress.details">
-                        </label>
-                        <button class="button button-full button-balanced" ng-click="createAddress()">
-                            <span translate="ADDRESS_SAVE"></span>
-                        </button>
-                    </div>
+                    <form name="Cform">
+                        <div class="list">
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
+                                <input type="number" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
+                            </label>
+                            <div class="error-container" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                                <div class="error" ng-show="Cform.cphone.length < 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MOBILE_MATCH' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
+                                <input type="email" name="cemail" placeholder="youremail@email.com" ng-model="customerAddress.email">
+                            </label>
+                            <div class="error-container" ng-hide="Cform.cemail.$valid">
+                                <div class="error" ng-show="Cform.cemail.length < 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-hide="Cform.cemail.$valid">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_EMAIL_MATCH' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.street.length >= 8"></i> {{'ADDRESS_STREET' | translate}}</span>
+                                <input type="text" name="cstreet" placeholder="{{'ADDRESS_STREET' | translate}}" ng-model="customerAddress.street" required min="8">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.street.length >= 8">
+                                <div class="error" ng-hide="customerAddress.street.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.street.length < 8">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_8' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.building.length >= 8"></i> {{'ADDRESS_BUILDING' | translate}}</span>
+                                <input type="text" name="cbuilding" placeholder="{{'ADDRESS_BUILDING' | translate}}" ng-model="customerAddress.building" required min="8">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.building.length >= 8">
+                                <div class="error" ng-hide="customerAddress.building.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.building.length < 8">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_8' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.floor.length >= 2"></i> {{'ADDRESS_FLOOR' | translate}}</span>
+                                <input type="text" name="cfloor" placeholder="{{'ADDRESS_FLOOR' | translate}}" ng-model="customerAddress.floor" required min="2">
+                            </label>
+                            <div class="error-container" ng-hide="customerAddress.floor.length >= 2">
+                                <div class="error" ng-hide="customerAddress.floor.length > 0">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_REQUIRED' | translate}}
+                                </div>
+                                <div class="error" ng-show="customerAddress.floor.length < 2">
+                                    <i class="ion-information-circled"></i>
+                                    {{'VALIDATION_MIN_1' | translate}}
+                                </div>
+                            </div>
+                            <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
+                                <input type="text" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
+                            </label>
+                        </div>
+                        <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="createAddress()" type="submit" translate="ADDRESS_SAVE"></button>
+                    </form>
                 </ion-content>
 
             </ion-modal-view>
         </script>
+
 
         <script id="map-modal.html" type="text/ng-template">
             <ion-modal-view>

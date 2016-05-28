@@ -269,6 +269,24 @@ angular.module('delivery.factory', [])
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
                 return $http.delete(baseURL + '/customers/' + customerId + '/addresses/' + customerAddressId, { headers: { 'auth-token': customerAuthToken } });
+            },
+            createCustomerOrder: function (customerOrder) {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                }
+                return $http.post(baseURL + '/customers/' + customerId + '/orders', customerOrder, { headers: { 'auth-token': customerAuthToken } });
+            },
+             getCustomerOrders: function () {
+                var customerId = -1;
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
+                    customerId = authFactory.getCustomer().id;
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                }
+                return $http.get(baseURL + '/customers/' + customerId + '/orders', { headers: { 'auth-token': customerAuthToken } });
             }
         };
 
@@ -289,6 +307,8 @@ angular.module('delivery.factory', [])
                     return $translate.instant('ADDRESS_ERROR_MSG');
                 } else if ((errorCode === 404 || errorCode === 401) && requestType === "PROFILE") {
                     return $translate.instant('PROFILE_ERROR_MSG');
+                } else if ((errorCode === 404 || errorCode === 401) && requestType === "ORDER") {
+                    return $translate.instant('ORDER_ERROR_MSG');
                 }
                 else if (errorCode === 500 )
                     return $translate.instant('COMMON_ERROR_MSG');

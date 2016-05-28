@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $state, authFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $translate, $state, authFactory, deliveryLoader, errorCodeMessageFactory) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -24,7 +24,7 @@ angular.module('delivery.controllers')
     /// <summary>doLogin: Perform the login action when the user submits the login form, and save user data to '$rootScope' and 'localStorage'</summary>
     /// <param>No parameters</param>
     $scope.doLogin = function () {
-        deliveryLoader.showLoading('Log in...');
+        deliveryLoader.showLoading($translate.instant('LOGIN'));
         customerFactory.login($scope.loginData).success(function (data) {
             try{
                 $rootScope.isAuthenticated = true;
@@ -50,7 +50,7 @@ angular.module('delivery.controllers')
 
     /// <summary>loginFromCart: Perform the login action when the user checkout and he is not logged in</summary>
     $scope.loginFromCart = function () {
-        deliveryLoader.showLoading('Log in...');
+        deliveryLoader.showLoading($translate.instant('LOGIN'));
         customerFactory.login($scope.loginData).success(function (data) {
             $rootScope.isAuthenticated = true;
             $rootScope.isUserLoggedin = true;
