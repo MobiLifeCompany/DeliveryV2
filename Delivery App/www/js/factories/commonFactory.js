@@ -342,3 +342,15 @@ angular.module('delivery.factory', [])
     };
     return LOADERAPI;
 })
+
+.factory('connectionFactory', function ($http) {
+
+    var API = {
+        testConnection: function () {
+            img = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' + "?" + new Date().getTime();
+            return $http.get(img);
+        }
+    };
+
+    return API;
+})

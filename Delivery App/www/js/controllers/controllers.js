@@ -26,7 +26,7 @@ angular.module('delivery.controllers', [])
     });
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $cordovaToast, $cordovaNetwork, authFactory) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -178,11 +178,24 @@ angular.module('delivery.controllers', [])
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
-        
-        $rootScope.categoriesModal.show();
-        var isOffline = $cordovaNetwork.isOffline();
-        if (isOffline) {
-            $cordovaToast.show($translate.instant('INTERNET_CONN_MSG'), 'long', 'center');
-        }
+        connectionFactory.testConnection().success(function (data) {
+            $rootScope.categoriesModal.show();
+            $cordovaSplashscreen.hide();
+
+        }).error(function (err, statusCode) {
+            $cordovaSplashscreen.hide();
+            // Show a warning popup if no stable internet connection detected
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('NO_INTERNET'),
+                template: $translate.instant('INTERNET_CONN_MSG')
+            });
+
+            // Resolve the promise returned by the popup. exit the app on confirmation
+            alertPopup.then(function (res) {
+                if (res) {
+                    ionic.Platform.exitApp(); // stops the app
+                }
+            });
+        })
     });
 })
