@@ -227,9 +227,9 @@
         </div>
         <div class="list padding-left padding-right" ng-show="customerAddressess.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="customerAddress in customerAddressess">
-                <div style="position: absolute; top: 15px; right: 20px; z-index: 100;"><span style="font-size: 40px;" class="icon" ng-class="selectedAddressId == customerAddress.id ? 'assertive ion-ios-checkmark' : 'stable ion-ios-checkmark-outline'" ng-click="selectAddress(customerAddress.id)"></span></div>
+                <div style="position: absolute; top: 15px; right: 20px; z-index: 100;"><span style="font-size: 40px;" class="icon" ng-class="selectedAddressId == customerAddress.id ? 'assertive ion-ios-checkmark' : 'stable ion-ios-checkmark-outline'" ng-click="selectAddress(customerAddress)"></span></div>
                 <div class="list card" style="margin: 10px 0;">
-                    <div class="item item-body" ng-click="selectAddress(customerAddress.id)">
+                    <div class="item item-body" ng-click="selectAddress(customerAddress)">
                         <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{customerAddress.street}}<br />
                         <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}}, 
                         <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />

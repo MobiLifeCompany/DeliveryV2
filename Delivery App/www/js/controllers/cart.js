@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicHistory, $ionicFilterBar, $ionicActionSheet, $translate, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
 
     $scope.$on('$ionicView.enter', function () {
         $rootScope.showCartFabButton = false; //hide the cart button while in cart screen
@@ -55,10 +55,29 @@ angular.module('delivery.controllers')
     };
 
     $scope.confirmOrder = function () {
-        if($rootScope.isUserLoggedin)
-            $state.go('app.cart-addresses');
+        if ($scope.subtotal < $rootScope.cartShop.min_amount) {
+            
+            // Show a warning popup if subtotal is less than shop's min_delivery_amount
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('MIN_AMOUNT_REQUIRED'),
+                template: $translate.instant('MIN_AMOUNT_REQUIRED_MSG'),
+                okText: $translate.instant('CONTINUE')
+            });
+
+            // Resolve the promise returned by the popup. if user click continue, navigate back to shop-details
+            alertPopup.then(function (res) {
+                if (res) {
+                    $ionicHistory.goBack(-1);
+                }
+            });
+        }
+        else {
+            if($rootScope.isUserLoggedin)
+                $state.go('app.cart-addresses');
         else
             $state.go('app.cart-login');
+        }
     };
+
 
 });

@@ -5,7 +5,7 @@ angular.module('delivery.controllers')
 
     $scope.customerAddress = {};
     $rootScope.customerAddressess = [];
-    $rootScope.selectedAddressId = -1;
+    $scope.selectedAddressId = -1;
 
     // Will be fired when addresses opened from ion-view
     $scope.$on('$ionicView.enter', function () {
@@ -181,12 +181,15 @@ angular.module('delivery.controllers')
         $scope.map = map;
     };
 
-    $scope.selectAddress = function (customerAddressId) {
-        if ($rootScope.selectedAddressId == customerAddressId) {
-            $rootScope.selectedAddressId = -1; // to unset the checkbox if clicked while it's already checked
+    $scope.selectAddress = function (customerAddress) {
+        if ($scope.selectedAddressId == customerAddress.id) {
+            $scope.selectedAddressId = -1; // to unset the checkbox if clicked while it's already checked
+            $rootScope.cartAddress = null;
         }
-        else
-            $rootScope.selectedAddressId = customerAddressId;
+        else {
+            $scope.selectedAddressId = customerAddress.id;
+            $rootScope.cartAddress = customerAddress;
+       }
     };
  
 });

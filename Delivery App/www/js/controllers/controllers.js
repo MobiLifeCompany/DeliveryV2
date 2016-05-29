@@ -45,6 +45,8 @@ angular.module('delivery.controllers', [])
     $rootScope.showCartFabButton = false;
     $rootScope.cartItems = [];
     $rootScope.cartShop = null;
+    $rootScope.cartAddress = null;
+    $rootScope.cartNote = { text: "" };
 
     //Get saved pereferences from localStorage
     if (authFactory.isLoggedIn()) {

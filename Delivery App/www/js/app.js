@@ -111,6 +111,16 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         }
     })
 
+    .state('app.order-confirmation', {
+        url: '/order-confirmation',
+        views: {
+            'order': {
+                templateUrl: 'templates/order-confirmation.html',
+                controller: 'orderConfirmationCtrl'
+            }
+        }
+    })
+
     .state('app.old-orders', {
         url: '/old-orders',
         views: {
