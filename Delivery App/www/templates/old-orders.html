@@ -5,6 +5,38 @@
         <button class="button button-icon button-clear ion-search"></button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="false">
-        
+        <div ng-show="oldOrders.length == 0">
+            <div class="icon ion-ios-filing-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
+            <h5 class="stable text-center" translate="NO_OLD_ORDERS"></h5>
+        </div>
+
+        <div class="list padding-left padding-right" ng-show="oldOrders.length > 0">
+            <div class="item" style="padding: 0px;" ng-repeat="oldOrder in oldOrders">
+                <div class="list card" style="margin: 5px 0;">
+                    <div class="item item-body" style="padding: 5px;">
+                        <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span><span class="pull-right balanced">{{'TOTAL' | translate}}: {{oldOrder.total}}</span></h3>
+                        <h4 style="color: black;"><strong>{{'ADDRESS_STREET' | translate}}: </strong>{{oldOrder.customer_address.street}}, <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{oldOrder.customer_address.building}}, <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{oldOrder.customer_address.phone}}<br />
+                        <span class="assertive-900">{{'DETAILS' | translate}}: </span><span ng-repeat="item in oldOrder.items">{{item.quantity}} {{item.name}}, </span></h4>
+                        <h4 style="color: black;" ng-switch="oldOrder.order_status"><span>{{'ORDER_STATUS' | translate}}: </span>
+                            <span ng-switch-when="FINISHED" class="balanced">{{'ORDER_FINISHED' | translate}}</span>
+                            <span ng-switch-when="PENDING" class="assertive">{{'ORDER_PENDING' | translate}}</span>
+                            <span ng-switch-when="PREPARED" class="energized">{{'ORDER_PREPARED' | translate}}</span>
+                        </h4>
+                    </div>
+                    <div>
+                        <button class="button button-balanced button-small button-block" translate="ORDER_REPEAT" ng-click="repeatOrder(oldOrder)" ng-show="oldOrder.order_status == 'FINISHED'"></button>
+                        <button class="button button-positive button-small button-block" translate="FOLLOW_ORDER" ng-click="" ng-show="oldOrder.order_status == 'PREPARED'"></button>
+                    </div>
+                    <!--<div class="item tabs tabs-secondary tabs-icon-left">
+                        <a class="tab-item balanced" style="font-size: 16px;" ng-click="" ng-show="oldOrder.order_status == 'FINISHED'">
+                            <i class="icon ion-edit"></i><i> {{'ORDER_REPEAT' | translate}}</i>
+                        </a>
+                        <a class="tab-item" ng-click="" ng-show="oldOrder.order_status == 'PREPARED'">
+                            <i class="icon ion-ios-trash"></i><i> {{'FOLLOW_ORDER' | translate}}</i>
+                        </a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
