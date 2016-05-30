@@ -29,7 +29,8 @@
   <ion-side-menu side="left">
     <ion-header-bar class="expanded">
         <img src="img/delivery_logo.png" class="avatar motion spin fade">
-        <div class="menu-bottom" translate="APPLICATION_NAME">
+        <div class="menu-bottom" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
+            {{'WELCOME' | translate}} <span class="assertive">{{fullName}}</span> {{'IN' | translate}} {{'APPLICATION_NAME' | translate}}
         </div>
     </ion-header-bar>
     <ion-content overflow-scroll="false" class="stable-bg has-expanded-header">

@@ -18,6 +18,8 @@
   "PASSWORD": "كلمة المرور",
   "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
   "REGISTER_NOW": "سجل الآن",
+  "WELCOME": "مرحباً",
+  "IN":  "في",
   "FULL_NAME": "الاسم الكامل",
   "CREATE_ACCOUNT": "إنشاء حساب",
   "VALIDATION_REQUIRED": "حقل مطلوب",

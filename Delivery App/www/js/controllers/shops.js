@@ -5,6 +5,7 @@ angular.module('delivery.controllers')
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
     $rootScope.masteriesCheckList = [];
+    $rootScope.shopsOffers = [];
 
     $rootScope.loadShops = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
@@ -33,6 +34,18 @@ angular.module('delivery.controllers')
      })
     };
 
+    $rootScope.loadShopsOffers = function () {
+        shopsFactory.getOffers().success(function (data) {
+            try{
+                $rootScope.shopsOffers = data;
+            } catch (e) {
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
+            }
+        }).error(function (err, statusCode) {
+            deliveryLoader.toggleLoadingWithMessage(err.message);
+        })
+    };
+    $rootScope.loadShopsOffers();
     $scope.done_loading = true;
 
     //set the default order criteria to 'rating' And filtering

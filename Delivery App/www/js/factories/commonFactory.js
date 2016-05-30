@@ -34,6 +34,9 @@ angular.module('delivery.factory', [])
     var API = {
         get: function () {
             return $http.get(baseURL + '/businesses/' + $rootScope.selectedCategory.id + '/areas/' + $rootScope.selectedArea.id + '/shops?lang=' + $rootScope.lang);
+        },
+        getOffers: function () {
+            return $http.get(baseURL + '/offers?lang=' + $rootScope.lang);
         }
     };
 

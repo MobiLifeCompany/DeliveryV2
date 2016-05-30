@@ -132,10 +132,10 @@
 
             </ion-modal-view>
         </script>
-        <ion-slide-box class="" auto-play="true" does-continue="true" slide-interval="2000">
-            <ion-slide class="dl-promotion-slider"><img src="img/promotions/promotion1.jpg" /></ion-slide>
-            <ion-slide class="dl-promotion-slider"><img src="img/promotions/promotion2.jpg" /></ion-slide>
-            <ion-slide class="dl-promotion-slider"><img src="img/promotions/promotion1.jpg" /></ion-slide>
+        <ion-slide-box class="" auto-play="true" does-continue="true" slide-interval="2000" >
+            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
+                   <img src="{{shopOffer.photo}}" />
+            </ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">
             <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#/app/shop-details/{{shop.id}}">

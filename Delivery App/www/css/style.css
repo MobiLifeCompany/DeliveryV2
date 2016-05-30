@@ -564,3 +564,15 @@ input::-webkit-inner-spin-button {
     font-weight: 400;
     line-height: 30px !important;
 }
+
+.right_to_left  {
+  direction: rtl !important;
+  text-align: right !important;
+  float:right;
+}
+
+.left_to_right  {
+  direction: ltr !important;
+  text-align: left !important;
+  float:left;
+}

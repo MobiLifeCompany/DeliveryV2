@@ -23,7 +23,7 @@
                     <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
                         <form name="Cform">
                             <div class="list">
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
                                     <input type="number" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
                                 </label>
@@ -37,7 +37,7 @@
                                         {{'VALIDATION_MOBILE_MATCH' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
                                     <input type="email" name="cemail" placeholder="youremail@email.com" ng-model="customerAddress.email">
                                 </label>
@@ -51,7 +51,7 @@
                                         {{'VALIDATION_EMAIL_MATCH' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.street.length >= 8"></i> {{'ADDRESS_STREET' | translate}}</span>
                                     <input type="text" name="cstreet" placeholder="{{'ADDRESS_STREET' | translate}}" ng-model="customerAddress.street" required min="8">
                                 </label>
@@ -65,7 +65,7 @@
                                         {{'VALIDATION_MIN_8' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.building.length >= 8"></i> {{'ADDRESS_BUILDING' | translate}}</span>
                                     <input type="text" name="cbuilding" placeholder="{{'ADDRESS_BUILDING' | translate}}" ng-model="customerAddress.building" required min="8">
                                 </label>
@@ -79,7 +79,7 @@
                                         {{'VALIDATION_MIN_8' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.floor.length >= 1"></i> {{'ADDRESS_FLOOR' | translate}}</span>
                                     <input type="text" name="cfloor" placeholder="{{'ADDRESS_FLOOR' | translate}}" ng-model="customerAddress.floor" required min="1">
                                 </label>
@@ -93,7 +93,7 @@
                                         {{'VALIDATION_MIN_1' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
                                     <input type="text" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
                                 </label>
@@ -116,10 +116,10 @@
                         <div class="h1 title" translate="NEW"></div>
                     </div>
 
-                    <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content">
+                    <ion-content overflow-scroll="false" class="has-header dl-sort-action-sheet-content" >
                         <form name="Cform">
                             <div class="list">
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
                                     <input type="number" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
                                 </label>
@@ -133,7 +133,7 @@
                                         {{'VALIDATION_MOBILE_MATCH' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px; float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'" >
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
                                     <input type="email" name="cemail"  placeholder="youremail@email.com" ng-model="customerAddress.email">
                                 </label>
@@ -147,7 +147,7 @@
                                         {{'VALIDATION_EMAIL_MATCH' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.street.length >= 8"></i> {{'ADDRESS_STREET' | translate}}</span>
                                     <input type="text" name="cstreet" placeholder="{{'ADDRESS_STREET' | translate}}" ng-model="customerAddress.street" required min="8">
                                 </label>
@@ -161,7 +161,7 @@
                                         {{'VALIDATION_MIN_8' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.building.length >= 8"></i> {{'ADDRESS_BUILDING' | translate}}</span>
                                     <input type="text" name="cbuilding" placeholder="{{'ADDRESS_BUILDING' | translate}}" ng-model="customerAddress.building" required min="8">
                                 </label>
@@ -175,7 +175,7 @@
                                         {{'VALIDATION_MIN_8' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.floor.length >= 2"></i> {{'ADDRESS_FLOOR' | translate}}</span>
                                     <input type="text" name="cfloor" placeholder="{{'ADDRESS_FLOOR' | translate}}" ng-model="customerAddress.floor" required min="2">
                                 </label>
@@ -189,7 +189,7 @@
                                         {{'VALIDATION_MIN_1' | translate}}
                                     </div>
                                 </div>
-                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;">
+                                <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                                     <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
                                     <input type="text" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
                                 </label>
@@ -217,7 +217,7 @@
                 </ion-modal-view>
             </script>
 
-            <div class="bar bar-subheader bar-energized static text-center">
+            <div class="bar bar-subheader bar-energized static text-center" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                 <h5 class="title"><span translate="YOU_ARE_IN"></span><span> {{selectedCity.name}}, {{selectedArea.name}}</span></h5>
             </div>
             <div class="bar bar-subheader bar-stable static text-center">
@@ -230,7 +230,7 @@
             <div class="list padding-left padding-right" ng-show="customerAddressess.length > 0">
                 <div class="item" style="padding: 0px;" ng-repeat="customerAddress in customerAddressess">
                     <div class="list card" style="margin: 10px 0;">
-                        <div class="item item-body" ng-click="selectAddress(customerAddress.id)">
+                        <div class="item item-body" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'" ng-click="selectAddress(customerAddress.id)">
                             <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{customerAddress.street}}<br />
                             <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}},
                             <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />
