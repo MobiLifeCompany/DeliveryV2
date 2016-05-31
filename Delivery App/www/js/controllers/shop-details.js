@@ -7,7 +7,8 @@ angular.module('delivery.controllers')
     $rootScope.selectedShop={};
     $scope.categories = [];
 
-    $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
+    $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId === "" ? $rootScope.shopId : $stateParams.shopId);
+  
     
     $scope.$on('$ionicView.enter', function () {
         if ($rootScope.cartItems.length > 0)
@@ -208,4 +209,15 @@ angular.module('delivery.controllers')
             }
         }
     };
+
+    $scope.checkItemCount = function (itemId) {
+        var itemQty = 1;
+        for (i = 0; i < $rootScope.cartItems.length; i++) {
+            if ($rootScope.cartItems[i].id == itemId) {
+                itemQty = $rootScope.cartItems[i].quantity;
+            }
+        }
+
+        return itemQty;
+    }
 });

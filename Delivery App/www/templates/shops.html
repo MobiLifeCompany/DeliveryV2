@@ -133,9 +133,9 @@
             </ion-modal-view>
         </script>
         <ion-slide-box class="" auto-play="true" does-continue="true" slide-interval="2000" >
-            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
-                   <img src="{{shopOffer.photo}}" />
-            </ion-slide>
+           <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
+                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer.item,shopOffer.shop)"/>
+           </ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">
             <a class="item item-icon-right" style="border-bottom: 1px solid silver; padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#/app/shop-details/{{shop.id}}">
@@ -188,5 +188,36 @@
             </a>
         </div>
     </div>
+
+    <script id="item-details-modal.html" type="text/ng-template">
+        <ion-modal-view class="ion-nifty-modal">
+            <div class="ion-modal-content-custom">
+                <ion-content overflow-scroll="false">
+                    <div class="list card light-bg">
+                        <div class="item item-thumbnail-left" style="margin-top: 10px;">
+                            <img src="{{selectedItem.photo}}">
+                            <h2 class="assertive">{{selectedItem.name}}</h2>
+                            <h4><span translate="PRICE"></span><span> {{selectedItem.price}}</span></h4>
+                            <p style="padding: 10px 0px; border-top: 1px solid silver;">
+                                <div style="text-align: center;" translate="QUANTITY"></div>
+                                <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
+                            </p>
+                        </div>
+                        <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
+                            {{selectedItem.description}}
+                        </div>
+                        <div class="item tabs tabs-secondary tabs-icon-left">
+                            <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
+                                <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                            </a>
+                            <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
+                                <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>
+                            </a>
+                        </div>
+                    </div>
+                </ion-content>
+            </div>
+        </ion-modal-view>
+    </script>
 
 </ion-view>

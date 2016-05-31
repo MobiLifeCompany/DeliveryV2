@@ -69,6 +69,7 @@ angular.module('delivery.factory', [])
     var shopDetails = {};
     var SAPI = {
         get: function (shopId) {
+            shopsArray = $rootScope.shops;
             for (i = 0; i < shopsArray.length; i++) {
                 if (shopsArray[i].id == shopId) {
                     shopDetails = shopsArray[i];

@@ -41,6 +41,7 @@ angular.module('delivery.controllers')
         $rootScope.showMainView = true;
 
         //load required shops by business category and selected delivered area 
+        //
         $rootScope.loadShops();
 
         $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
