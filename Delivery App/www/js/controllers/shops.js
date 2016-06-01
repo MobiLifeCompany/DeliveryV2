@@ -38,7 +38,7 @@ angular.module('delivery.controllers')
     $rootScope.loadShopsOffers = function () {
         shopsFactory.getOffers().success(function (data) {
             try{
-                $scope.shopsOffers = data;
+               $scope.shopsOffers = data;
             } catch (e) {
                 deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
             }

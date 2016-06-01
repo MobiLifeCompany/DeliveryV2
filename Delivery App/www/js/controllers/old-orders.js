@@ -1,49 +1,24 @@
 angular.module('delivery.controllers')
 
-.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, shopDetailsFactory) {
-    $scope.oldOrders = [{
-        "customer_id": 4, "shop_id": 1, "customer_address_id": "1", "order_status": "PREPARED", "total": "2900", "qty": 2, "cancel_reason": null, "note": "ffff",
-        "shop":
-        {
-            "id": 1, "name": "MacDonalds"
-        },
-        "customer_address":
-        {
-            "id": 1, "street": "Alquatly street", "building": "build-four", "floor": "2", "details": "eretertertert", "latitude": "123", "longitude": "123", "is_default": true,
-            "city":
-            {
-                "id": 3, "country_id": 1, "name": "Hama"
-            },
-            "area":
-            {
-                "id": 3, "city_id": 3, "name": "Sahat al-assi"
+.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader, shopDetailsFactory, customerFactory) {
+
+    $scope.loadOldOrders = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        customerFactory.getCustomerOrders().success(function (data) {
+            try {
+                $scope.oldOrders = data;
+            } catch (e) {
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
             }
-        },
-        "items":
-            [{ "id": 1, "name": "broasted", "quantity": 2, "price": 1000 }, { "id": 2, "name": "Crispy strips", "quantity": 1, "price": 900 }, { "id": 3, "name": "Cheese burger", "quantity": 2, "price": 1800 }]
-    },
-    {
-        "customer_id": 4, "shop_id": 1, "customer_address_id": "1", "order_status": "FINISHED", "total": "3500", "qty": 3, "cancel_reason": null, "note": "ffff",
-        "shop":
-        {
-            "id": 1, "name": "Pizza hut"
-        },
-        "customer_address":
-        {
-            "id": 1, "street": "al-wadi street", "building": "bld-556", "floor": "1", "details": "eretertertert", "latitude": "123", "longitude": "123", "is_default": true,
-            "city":
-            {
-                "id": 3, "country_id": 1, "name": "Hama"
-            },
-            "area":
-            {
-                "id": 3, "city_id": 3, "name": "Alshareaa"
-            }
-        },
-        "items":
-            [{ "id": 1, "name": "medium pizza", "quantity": 2, "price": 1000 }, { "id": 2, "name": "special pizza", "quantity": 1, "price": 900 }]
-    }
-    ];
+            deliveryLoader.hideLoading();
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            deliveryLoader.toggleLoadingWithMessage(err.message);
+        })
+    };
+
+  
+    $scope.loadOldOrders();
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {
@@ -72,7 +47,7 @@ angular.module('delivery.controllers')
                         $rootScope.cartItems = [];
                         // Fill cart with the order's items
                         for (i = 0; i < order.items.length; i++) {
-                            $rootScope.cartItems.push({ id: order.items[i].id, name: order.items[i].name, description: '', photo: '', quantity: order.items[i].quantity, price: order.items[i].price });
+                            $rootScope.cartItems.push({ id: order.items[i].item.id, name: order.items[i].item.name, description: order.items[i].item.description, photo: order.items[i].item.photo, quantity: order.items[i].qty, price: order.items[i].item_price });
                         }
                         $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
                         $rootScope.cartShop = shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
@@ -83,13 +58,13 @@ angular.module('delivery.controllers')
             else{
                 // Fill cart with the order's items
                 for (i = 0; i < order.items.length; i++) {
-                    $rootScope.cartItems.push({ id: order.items[i].id, name: order.items[i].name, description: '', photo: '', quantity: order.items[i].quantity, price: order.items[i].price });
+                    $rootScope.cartItems.push({ id: order.items[i].item.id, name: order.items[i].item.name, description: order.items[i].item.description, photo: order.items[i].item.photo, quantity: order.items[i].qty, price: order.items[i].item_price });
                 }
                 $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
                 $rootScope.cartShop = shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
                 $state.go('app.cart');
             }
-        }
+        } 
     };
 
 });

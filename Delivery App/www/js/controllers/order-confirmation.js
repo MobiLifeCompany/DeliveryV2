@@ -6,6 +6,7 @@ angular.module('delivery.controllers')
     $scope.showSubmissionResult = false;
     $scope.appRating = 0;
     var customerOrder = {};
+    $scope.orderInfo = {};
 
     $scope.$on('$ionicView.enter', function () {
         $scope.submitOrder();
@@ -27,12 +28,15 @@ angular.module('delivery.controllers')
         customerOrder.note = $rootScope.cartNote.text;
         customerOrder.shop_id = $rootScope.cartShop.id;
         customerOrder.customer_address_id = $rootScope.selectedAddressId;
-        
+        customerOrder.delivery_charge = $rootScope.cartShop.delivery_charge;
+
         deliveryLoader.showLoading($translate.instant('LOADING'));
         customerFactory.createCustomerOrder(customerOrder).success(function (data) {
          try {
                 deliveryLoader.hideLoading();
-                // On success:
+             // On success:
+                $scope.orderInfo.shopId = $rootScope.cartShop.id;
+                $scope.orderInfo.order_id = data.id;
                 $scope.orderSubmittedSuccessfully = true;
                 //clear history and cache of the entire ionicHistory stack views, used to set the app to start state and ready to another new order
                 $ionicHistory.clearHistory();
@@ -58,13 +62,27 @@ angular.module('delivery.controllers')
             $scope.orderSubmittedSuccessfully = false;
             deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ORDER'));
         });
-       
-
-        // On fail:
-        //$scope.orderSubmittedSuccessfully = false;
-
-
+    
         $scope.showSubmissionResult = true;
     };
 
+
+    $scope.sendRating = function (appRating) {
+        $scope.orderInfo.rate = appRating;
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        customerFactory.sendCustomerRating($scope.orderInfo).success(function (data) {
+            try {
+                deliveryLoader.hideLoading();
+                deliveryLoader.toggleLoadingWithMessage($translate.instant('RATING_SUCCESS_MSG'));
+                $rootScope.showMainView = true;
+
+            } catch (e) {
+                deliveryLoader.hideLoading();
+                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
+            }
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            deliveryLoader.toggleLoadingWithMessage($translate.instant('LOADING'));
+        });
+    }
 });

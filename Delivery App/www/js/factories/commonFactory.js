@@ -127,7 +127,7 @@ angular.module('delivery.factory', [])
             return LSFactory.set(customerKey, customer);
         },
 
-        deleteAuth: function () {
+        deleteCustomer: function () {
             LSFactory.delete(customerKey);
         }
 
@@ -233,7 +233,11 @@ angular.module('delivery.factory', [])
                 return $http.post(baseURL + '/customers', customer);
             },
             updateProfile: function (customer) {
-                return $http.put(baseURL + '/customers', customer);
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                
+                return $http.put(baseURL + '/customers/'+customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerAddress: function (customerAddress) {
                 var customerId = -1;
@@ -291,7 +295,13 @@ angular.module('delivery.factory', [])
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
                 return $http.get(baseURL + '/customers/' + customerId + '/orders', { headers: { 'auth-token': customerAuthToken } });
-            }
+             },
+             sendCustomerRating: function (rateInfo) {
+                 var customerAuthToken = '';
+                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) 
+                     customerAuthToken = authFactory.getCustomer().auth_token;
+                 return $http.post(baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo,{ headers: { 'auth-token': customerAuthToken } });
+             }
         };
 
         return customerAPI;

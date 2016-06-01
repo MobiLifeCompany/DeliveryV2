@@ -80,7 +80,7 @@ angular.module('delivery.controllers', [])
         // Resolve the promise returned by the popup, then logout the user if user confirm
         confirmPopup.then(function (res) {
             if (res) {
-                authFactory.deleteAuth();
+                authFactory.deleteCustomer();
                 $rootScope.isUserLoggedin = false;
                 $rootScope.userName = '';
                 $rootScope.categoriesModal.show();

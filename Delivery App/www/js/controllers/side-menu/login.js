@@ -42,7 +42,7 @@ angular.module('delivery.controllers')
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             $rootScope.isAuthenticated = false;
-            authFactory.deleteAuth();
+            authFactory.deleteCustomer();
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'LOGIN'));
         });
@@ -66,7 +66,7 @@ angular.module('delivery.controllers')
             $state.go('app.cart-addresses');
         }).error(function (err, statusCode) {
             $rootScope.isAuthenticated = false;
-            authFactory.deleteAuth();
+            authFactory.deleteCustomer();
             deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(statusCode + ": " + err);
         });

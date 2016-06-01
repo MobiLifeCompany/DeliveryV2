@@ -17,8 +17,15 @@
                 <i ng-click="appRating = 5" ng-class="appRating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
             </div>
             <div class="text-center padding">
-                <button class="button icon-left ion-android-send button-positive button-small" ng-click="sendRating()" translate="SEND"></button>
+                <button class="button icon-left ion-android-send button-positive button-small" ng-click="sendRating(appRating)" translate="SEND"></button>
             </div>
+
+            <hr />
+
+            <div class="text-center padding">
+                <button class="button icon-left ion-android-send button-balanced button-small" ui-sref="app.shops" translate="CONTINUE_SHOPPING"></button>
+            </div>
+
         </div>
         <div ng-show="!orderSubmittedSuccessfully && showSubmissionResult">
             <div class="padding">
