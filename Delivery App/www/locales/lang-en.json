@@ -142,6 +142,12 @@
   "LOGIN_ERROR_MSG": "Error In Login, please check your information",
   "ADDRESS_ERROR_MSG": "Error In Customer Addresses, please check your information",
   "PROFILE_ERROR_MSG": "Error In Customer Information, please check your information",
-  "ORDER_ERROR_MSG": "Error In Order creation, please check with Your admin",
+  "ORDER_ERROR_MSG": "Error In Order creation, please check with System Administrator",
+  "CONTACTUS_ERROR_MSG": "Error In Sending Contact us Information, please check with System Administrator",
+  "ERROR": "Error",
+  "CONTACTUS_MSG": "Contact Us Info",
+  "CONTACTUS_SUCCESS_MSG": "Thanks for your Suggestion",
+  "PROFILE_SUCCESS_MSG" : "Your profile updated Successfully",
+  "MESSAGE" :  "Message",
   "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area"
 }

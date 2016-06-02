@@ -323,6 +323,8 @@ angular.module('delivery.factory', [])
                     return $translate.instant('PROFILE_ERROR_MSG');
                 } else if ((errorCode === 404 || errorCode === 401) && requestType === "ORDER") {
                     return $translate.instant('ORDER_ERROR_MSG');
+                }else if ((errorCode === 404 || errorCode === 401) && requestType === "CONTACTUS") {
+                    return $translate.instant('CONTACTUS_ERROR_MSG');
                 }
                 else if (errorCode === 500 )
                     return $translate.instant('COMMON_ERROR_MSG');
@@ -364,6 +366,16 @@ angular.module('delivery.factory', [])
             img = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' + "?" + new Date().getTime();
             return $http.get(img);
         }
+    };
+
+    return API;
+})
+.factory('utilitiesFactory', function ($http) {
+
+    var API = {
+            sendContactUsInfo: function (contactUsInfo) {
+                return $http.post(baseURL + '/contact' , contactUsInfo);
+            }
     };
 
     return API;

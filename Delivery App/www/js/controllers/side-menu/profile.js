@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ProfileCtrl', function ($scope, $rootScope, $state, $ionicLoading, $timeout, $translate, customerFactory, authFactory, deliveryLoader) {
+.controller('ProfileCtrl', function ($scope, $rootScope, $ionicPopup, $ionicLoading, $timeout, $translate, customerFactory, authFactory, deliveryLoader) {
 
     $scope.customer = authFactory.getCustomer();
     $scope.customer.phone = Number($scope.customer.phone);
@@ -21,7 +21,14 @@ angular.module('delivery.controllers')
             authFactory.deleteCustomer();
             authFactory.setCustomer(data);
             deliveryLoader.hideLoading();
-            //$state.go('app.shops');
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('PROFILE'),
+                template: $translate.instant('PROFILE_SUCCESS_MSG'),
+            });
+            alertPopup.then(function (res) {
+                $scope.customer = {};
+                $scope.close();
+            });
 
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();

@@ -1,9 +1,58 @@
 <ion-modal-view ng-controller="ContactUsCtrl">
-  <ion-header-bar class="bar-assertive">
-    <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
-    <h1 class="title" translate="CONTACT_US"></h1>
-  </ion-header-bar>
-  <ion-content>
-    
-  </ion-content>
+    <ion-header-bar class="bar-assertive">
+        <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
+        <h1 class="title" translate="CONTACT_US"></h1>
+    </ion-header-bar>
+
+    <ion-content overflow-scroll="false">
+        <div class="text-center padding-top" style="height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
+            <img src="img/delivery_logo.png" style="vertical-align: middle;">
+        </div>
+        <div class="padding-left padding-right">
+            <form name="Cform">
+                <div class="list">
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'" ng-show="isUserLoggedin == false">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="contactUsInfo.name.length >= 3"></i> {{'USERNAME' | translate}}</span>
+                        <input type="text" ng-model="contactUsInfo.name" placeholder="{{'USERNAME' | translate}}" required min="3">
+                    </label>
+                    <div class="error-container" ng-hide="isUserLoggedin == true || contactUsInfo.name.length >= 3">
+                        <div class="error" ng-hide="contactUsInfo.name.length > 0">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_REQUIRED' | translate}}
+                        </div>
+                        <div class="error" ng-show="contactUsInfo.name.length < 3">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MIN_3' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
+                        <input type="email" name="cemail" ng-model="contactUsInfo.email" placeholder="{{'EMAIL' | translate}}">
+                    </label>
+                    <div class="error-container" ng-hide="Cform.cemail.$valid">
+                        <div class="error" ng-hide="Cform.cemail.$valid">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_EMAIL_MATCH' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
+                        <input type="number" name="cphone" ng-model="contactUsInfo.phone" ng-minlength="10" ng-maxlength="10" placeholder="{{'Mobile' | translate}}" only-num>
+                    </label>
+                    <div class="error-container" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                        <div class="error" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
+                            <i class="ion-information-circled"></i>
+                            {{'VALIDATION_MOBILE_MATCH' | translate}}
+                        </div>
+                    </div>
+                    <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ></i> {{'MESSAGE' | translate}}</span>
+                        <input type="text" name="cMessage" ng-model="contactUsInfo.message"  placeholder="{{'MESSAGE' | translate}}" only-num>
+                    </label>
+                </div>
+
+                <button class="button button-small button-balanced button-block" ng-disabled="(isUserLoggedin == false)?(!contactUsInfo.name) || (((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)) || !Cform.cemail.$valid : ((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty) || !Cform.cemail.$valid " ng-click="sendContactUsInfo()" type="submit" translate="SEND"></button>
+            </form>
+        </div>
+    </ion-content>
 </ion-modal-view>
