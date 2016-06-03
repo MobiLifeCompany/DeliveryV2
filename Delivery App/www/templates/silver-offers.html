@@ -1,10 +1,60 @@
 <ion-view view-title="{{'SILVER_OFFERS' | translate}}">
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-pricetags"></button>
         <button class="button button-icon button-clear ion-search"></button>
     </ion-nav-buttons>
-    <ion-content overflow-scroll="false">
+    <ion-content overflow-scroll="false" class="stable-bg">
+        
+        <script id="item-details-modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal">
+                <div class="ion-modal-content-custom">
+                    <ion-content overflow-scroll="false">
+                        <div class="list card light-bg">
+                            <div class="item item-thumbnail-left" style="margin-top: 10px;">
+                                <img src="{{selectedItem.photo}}">
+                                <h2 class="assertive">{{selectedItem.name}}</h2>
+                                <h4><span translate="PRICE"></span><span> {{selectedItem.price}}</span></h4>
+                                <p style="padding: 10px 0px; border-top: 1px solid silver;">
+                                    <div style="text-align: center;" translate="QUANTITY"></div>
+                                    <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
+                                </p>
+                            </div>
+                            <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
+                                {{selectedItem.description}}
+                            </div>
+                            <div class="item tabs tabs-secondary tabs-icon-left">
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
+                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                                </a>
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
+                                    <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+        </script>
 
+        <div ng-show="shopsOffers.length == 0">
+            <div class="icon ion-ios-filing-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
+            <h5 class="stable text-center" translate="NO_SILVER_OFFERS"></h5>
+        </div>
+
+        <div class="list" ng-show="shopsOffers.length > 0">
+            <div class="item" style="padding: 0px;" ng-repeat="shopOffer in shopsOffers">
+                <div class="list card" style="margin: 5px;" ng-click="showItemDetails(shopOffer.item,shopOffer.shop)">
+                    <img style="position: absolute; top: 0px; right: 0px; opacity: 0.3; height: 100%; border-bottom-left-radius: 50px; border-top-left-radius: 50px;" src="{{shopOffer.shop.photo}}" />
+                    <div class="silver-promotion-triangle"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
+                    <a class="item item-thumbnail-left" >
+                        <img src="{{shopOffer.item.photo}}">
+                        <h2 class="assertive-900">{{shopOffer.shop.name}}</h2>
+                        <p>{{shopOffer.name}}</p>
+                        <p style="font-size: 12px; color: black; white-space: normal;"><strong>{{'OFFER_DETAILS' | translate}}: </strong>{{shopOffer.short_description}}</p>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

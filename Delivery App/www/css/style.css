@@ -363,6 +363,28 @@ i.dl-menu-item-icon.icon {
     border-top: 500px solid #ffc900;
 }
 
+.silver-promotion-triangle {
+    width: 0;
+    height: 0;
+    padding-left:40px;
+    padding-top: 40px;
+    overflow: hidden;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.silver-promotion-triangle:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left:-500px;
+    margin-top:-500px;
+    
+    border-left: 500px solid transparent;
+    border-top: 500px solid #ffc900;
+}
+
 /*
   For a bottom modal box (not fullscreen), use the following CSS
 */

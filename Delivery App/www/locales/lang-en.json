@@ -41,6 +41,8 @@
   "YOU_ARE_IN": "You are in: ",
   "ORDER": "Order",
   "SILVER_OFFERS": "Silver Offers",
+  "NO_SILVER_OFFERS": "No silver offers!",
+  "OFFER_DETAILS": "Offer details",
   "OLD_ORDERS": "Old Orders",
   "NO_OLD_ORDERS": "You don't have any old orders yet!",
   "ORDER_FINISHED": "Finished",

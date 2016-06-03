@@ -41,6 +41,8 @@
   "YOU_ARE_IN": "أنت في المنطقة التالية: ",
   "ORDER": "الطلبية",
   "SILVER_OFFERS": "العروض الفضية",
+  "NO_SILVER_OFFERS": "لا يوجد عروض فضية!",
+  "OFFER_DETAILS": "تفاصيل العرض",
   "OLD_ORDERS": "الطلبات السابقة",
   "NO_OLD_ORDERS": "ليس لديك أي طلبات سابقة بعد!",
   "ORDER_FINISHED": "منتهية",
