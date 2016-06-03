@@ -9,6 +9,11 @@ angular.module('delivery.controllers')
     $scope.data = {
         showEdit: false
     };
+
+    $scope.changeStatus = function (){
+        $scope.data.showEdit = !$scope.data.showEdit;
+        return $scope.data.showEdit;
+    }
     
     //increaseAmount: increase the item quantity counter label when click on '+' button
     $scope.increaseAmount = function (item) {
@@ -55,7 +60,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.confirmOrder = function () {
-        if ($scope.subtotal < $rootScope.cartShop.min_amount) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 if ($scope.subtotal < $rootScope.cartShop.min_amount) {
             
             // Show a warning popup if subtotal is less than shop's min_delivery_amount
             var alertPopup = $ionicPopup.alert({

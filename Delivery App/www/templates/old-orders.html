@@ -1,11 +1,11 @@
 <ion-view view-title="{{'OLD_ORDERS' | translate}}">
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-refresh"></button>
-        <button class="button button-icon button-clear ion-search"></button>
+        <button class="button button-icon button-clear ion-refresh" ng-click="loadOldOrders()"></button>
+        <!-- <button class="button button-icon button-clear ion-search"></button> -->
     </ion-nav-buttons>
     <ion-content overflow-scroll="false">
-        <div ng-show="oldOrders.length == 0">
+        <div ng-show="!isUserLoggedin || oldOrders.length == 0">
             <div class="icon ion-ios-filing-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
             <h5 class="stable text-center" translate="NO_OLD_ORDERS"></h5>
         </div>

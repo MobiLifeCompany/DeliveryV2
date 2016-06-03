@@ -1,24 +1,34 @@
 angular.module('delivery.controllers')
 
-.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader, shopDetailsFactory, customerFactory) {
+.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader,errorCodeMessageFactory, shopDetailsFactory, customerFactory) {
+
+    // Load shop offers on enter
+    $scope.$on('$ionicView.enter', function () {
+        if ($rootScope.isUserLoggedin == true)
+            $scope.loadOldOrders();
+    });
 
     $scope.loadOldOrders = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-        customerFactory.getCustomerOrders().success(function (data) {
-            try {
-                $scope.oldOrders = data;
-            } catch (e) {
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
-            }
-            deliveryLoader.hideLoading();
+       deliveryLoader.showLoading($translate.instant('LOADING'));
+       customerFactory.getCustomerOrders().success(function (data) {
+           try {
+               $scope.oldOrders = data;
+               deliveryLoader.hideLoading();
+           }catch (e) {
+               deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
+               deliveryLoader.hideLoading();
+           }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(err.message);
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('ERROR'),
+                template: errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'),
+            });
         })
     };
 
-  
-    $scope.loadOldOrders();
+    if ($rootScope.isUserLoggedin == true)
+        $scope.loadOldOrders();
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {

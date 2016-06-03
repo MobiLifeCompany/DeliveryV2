@@ -145,6 +145,7 @@
   "ADDRESS_ERROR_MSG": "Error In Customer Addresses, please check your information",
   "PROFILE_ERROR_MSG": "Error In Customer Information, please check your information",
   "ORDER_ERROR_MSG": "Error In Order creation, please check with System Administrator",
+  "OLD_ORDER_ERROR_MSG": "Error In Old Orders Loading, please check with System Administrator",
   "CONTACTUS_ERROR_MSG": "Error In Sending Contact us Information, please check with System Administrator",
   "ERROR": "Error",
   "CONTACTUS_MSG": "Contact Us Info",

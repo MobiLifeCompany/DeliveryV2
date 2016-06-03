@@ -325,8 +325,9 @@ angular.module('delivery.factory', [])
                     return $translate.instant('ORDER_ERROR_MSG');
                 }else if ((errorCode === 404 || errorCode === 401) && requestType === "CONTACTUS") {
                     return $translate.instant('CONTACTUS_ERROR_MSG');
-                }
-                else if (errorCode === 500 )
+                }else if ((errorCode === 404) && requestType === "OLD_ORDERS") {
+                    return $translate.instant('OLD_ORDER_ERROR_MSG');
+                }else if (errorCode === 500 )
                     return $translate.instant('COMMON_ERROR_MSG');
             }
         };

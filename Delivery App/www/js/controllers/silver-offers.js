@@ -10,13 +10,22 @@ angular.module('delivery.controllers')
     });
 
     $scope.loadShopsOffers = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
         shopsFactory.getOffers().success(function (data) {
             try {
-                $scope.shopsOffers = data;
+                var silverOffers = [];
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].offer_type === 'SILVER')
+                        silverOffers.push(data[i]);
+                }
+                $scope.shopsOffers = silverOffers;
+                deliveryLoader.hideLoading();
             } catch (e) {
+                deliveryLoader.hideLoading();
                 deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             deliveryLoader.toggleLoadingWithMessage(err.message);
         })
     };

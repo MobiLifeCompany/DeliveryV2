@@ -1,7 +1,8 @@
 <ion-view view-title="{{'SILVER_OFFERS' | translate}}">
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-search"></button>
+        <!-- <button class="button button-icon button-clear ion-search"></button> -->
+        <button class="button button-icon button-clear ion-refresh" ng-click="loadShopsOffers()"></button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="false" class="stable-bg">
         

@@ -38,7 +38,12 @@ angular.module('delivery.controllers')
     $rootScope.loadShopsOffers = function () {
         shopsFactory.getOffers().success(function (data) {
             try{
-               $scope.shopsOffers = data;
+                var silverOffers = [];
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].offer_type === 'GOLDEN')
+                        silverOffers.push(data[i]);
+                }
+                $scope.shopsOffers = silverOffers;
             } catch (e) {
                 deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
             }

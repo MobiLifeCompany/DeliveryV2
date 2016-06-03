@@ -1,7 +1,7 @@
 <ion-view view-title="{{'YOUR_CART' | translate}}">
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear" ng-class="data.showEdit == true ? 'ion-checkmark' : 'ion-edit'" ng-click="data.showEdit = !data.showEdit"></button>
+        <button class="button button-icon button-clear" ng-class="data.showEdit == true ? 'ion-checkmark' : 'ion-edit'" ng-click="changeStatus()"></button>
     </ion-nav-buttons>
     
     <ion-content overflow-scroll="false">
@@ -10,12 +10,23 @@
                 <h5 class="title">{{cartShop.name}}</h5>
             </div>
             <div class="padding">
-                <ion-list show-delete="data.showEdit">
+                <ion-list>
                     <ion-item ng-repeat="item in cartItems" style="border-bottom: 1px solid silver; padding-left: 0px;" class="item-remove-animate">
-                        <span style="border-top: 6px solid transparent;" class="pull-left">{{item.name}}</span>
-                        <span class="pull-right"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="decreseAmount(item)"></i><span id="{{item.id}}" class="quantity-badge">{{item.quantity}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="increaseAmount(item)"></i><span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span><span>{{calculatePrice(item)}}</span></span>
-                        <ion-delete-button class="ion-trash-a button-clear" style="padding: 15px 0px 0px 0px;" ng-click="removeItem(item)">
-                        </ion-delete-button>
+                        <span style="border-top: 6px solid transparent;" class="pull-left">{{item.name}} X {{item.price}}</span>
+                        <span class="pull-right">
+                            <i class="icon ion-minus-circled energized" style="font-size: xx-large;  display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="decreseAmount(item)">
+                            </i>
+                            <span id="{{item.id}}" class="quantity-badge">{{item.quantity}}</span>
+                            <i class="icon ion-plus-circled energized" style="font-size: xx-large;   display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="increaseAmount(item)">
+                            </i>
+                            <span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span>
+                             <span>{{calculatePrice(item)}}</span>
+                        </span>
+                        <span class="pull-left">
+                            <i class="icon ion-trash-a energized" style="padding: 0px 14px 0px 0px; font-size: xx-large;   display:inline-block;" ng-show="data.showEdit" ng-click="removeItem(item)">
+                            </i>
+                        </span>
+                
                     </ion-item>
                 </ion-list>
                 <div class="" style="border-bottom: 1px solid silver;">
