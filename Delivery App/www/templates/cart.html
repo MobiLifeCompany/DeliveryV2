@@ -20,7 +20,7 @@
                             <i class="icon ion-plus-circled energized" style="font-size: xx-large;   display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="increaseAmount(item)">
                             </i>
                             <span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span>
-                             <span>{{calculatePrice(item)}}</span>
+                             <span>{{calculatePrice(item)}} {{currency}}</span>
                         </span>
                         <span class="pull-left">
                             <i class="icon ion-trash-a energized" style="padding: 0px 14px 0px 0px; font-size: xx-large;   display:inline-block;" ng-show="data.showEdit" ng-click="removeItem(item)">
@@ -30,11 +30,11 @@
                     </ion-item>
                 </ion-list>
                 <div class="" style="border-bottom: 1px solid silver;">
-                    <h5><span class="assertive" translate="SUBTOTAL"></span><span class="pull-right">{{calculateSubtotal()}}$</span></h5>
-                    <h5><span class="assertive" translate="DELIVERY_FEE"></span><span class="pull-right">{{cartShop.delivery_charge}}</span></h5>
+                    <h5><span class="assertive" translate="SUBTOTAL"></span><span class="pull-right">{{calculateSubtotal()}} {{currency}}</span></h5>
+                    <h5><span class="assertive" translate="DELIVERY_FEE"></span><span class="pull-right">{{cartShop.delivery_charge}} {{currency}}</span></h5>
                 </div>
                 <div class="" style="border-bottom: 1px solid silver;">
-                    <h5><span class="balanced" translate="TOTAL"></span><span class="pull-right">{{calculateTotal()}}$</span></h5>
+                    <h5><span class="balanced" translate="TOTAL"></span><span class="pull-right">{{calculateTotal()}} {{currency}}</span></h5>
                 </div>
 
                 <button class="button button-balanced button-small button-block" translate="CONFIRM_YOUR_ORDER" ng-click="confirmOrder()"></button>

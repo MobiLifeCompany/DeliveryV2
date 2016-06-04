@@ -161,7 +161,7 @@
                                 <li class="assertive" style="display: inline-block; font-size: small;" ng-repeat="mastery in shop.masteries">{{mastery}}<span ng-if="$index < shop.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
                             </ul>
                         </div>
-                        <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.min_amount}} SY</h5></div>
+                        <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.min_amount}} {{currency}}</h5></div>
                         <div style="float: left; width: 50%;"><h5 translate="DELIVERY_TIME"></h5><h5>{{shop.estimation_time}}</h5></div>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                         <div class="item item-thumbnail-left" style="margin-top: 10px;">
                             <img src="{{selectedItem.photo}}">
                             <h2 class="assertive">{{selectedItem.name}}</h2>
-                            <h4><span translate="PRICE"></span><span> {{selectedItem.price}}</span></h4>
+                            <h4><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                             <p style="padding: 10px 0px; border-top: 1px solid silver;">
                                 <div style="text-align: center;" translate="QUANTITY"></div>
                                 <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>

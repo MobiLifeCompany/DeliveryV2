@@ -38,6 +38,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 
     // for Syria the coutnry id = 1
     $rootScope.countryId = 1;
+    $rootScope.currency = 'SYP';
     storageUtilityFactory.setCountry($rootScope.countryId);
 }])
 
