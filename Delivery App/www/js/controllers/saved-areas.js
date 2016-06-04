@@ -8,6 +8,7 @@ angular.module('delivery.controllers')
 
     $scope.savedAreas = storageUtilityFactory.getCustomerAddresses();
     $scope.uniqueAreas = [];
+
     // Get only unique values for savedAreas to prevent dubplication in the areas list
     var areaExists = false;
     for (i = 0; i < $scope.savedAreas.length; i++) {

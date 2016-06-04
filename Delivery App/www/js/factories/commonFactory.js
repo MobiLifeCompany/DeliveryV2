@@ -61,7 +61,7 @@ angular.module('delivery.factory', [])
             return resultArray;
         }
     }
-    
+
 })
 
 .factory('shopDetailsFactory', function ($rootScope, $http) {
@@ -79,7 +79,7 @@ angular.module('delivery.factory', [])
             return shopDetails;
         },
         getShopItemsCategories: function () {
-               return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items');
+            return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items');
         }
     }
     return SAPI;
@@ -87,27 +87,27 @@ angular.module('delivery.factory', [])
 
 .factory('LSFactory', function () {
 
-        var LSAPI = {
+    var LSAPI = {
 
-            clear: function () {
-                return localStorage.clear();
-            },
+        clear: function () {
+            return localStorage.clear();
+        },
 
-            get: function (key) {
-                return JSON.parse(localStorage.getItem(key));
-            },
+        get: function (key) {
+            return JSON.parse(localStorage.getItem(key));
+        },
 
-            set: function (key, data) {
-                return localStorage.setItem(key, JSON.stringify(data));
-            },
+        set: function (key, data) {
+            return localStorage.setItem(key, JSON.stringify(data));
+        },
 
-            delete: function (key) {
-                return localStorage.removeItem(key);
-            }
+        delete: function (key) {
+            return localStorage.removeItem(key);
+        }
 
-        };
+    };
 
-        return LSAPI;
+    return LSAPI;
 
 })
 
@@ -220,13 +220,13 @@ angular.module('delivery.factory', [])
     };
     return UtilityAPI;
 })
-.factory('customerFactory', 
+.factory('customerFactory',
     function ($http, $rootScope, storageUtilityFactory, authFactory) {
-        
+
         var customerAPI = {
 
             login: function (customer) {
-               return $http.post(baseURL + '/customers/login', customer);
+                return $http.post(baseURL + '/customers/login', customer);
             },
 
             register: function (customer) {
@@ -236,16 +236,16 @@ angular.module('delivery.factory', [])
                 var customerAuthToken = '';
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                     customerAuthToken = authFactory.getCustomer().auth_token;
-                
-                return $http.put(baseURL + '/customers/'+customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
+
+                return $http.put(baseURL + '/customers/' + customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerAddress: function (customerAddress) {
                 var customerId = -1;
                 var customerAuthToken = '';
-                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()){
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
-                    }
+                }
                 return $http.post(baseURL + '/customers/' + customerId + '/addresses', customerAddress, { headers: { 'auth-token': customerAuthToken } });
             },
 
@@ -287,7 +287,7 @@ angular.module('delivery.factory', [])
                 }
                 return $http.post(baseURL + '/customers/' + customerId + '/orders', customerOrder, { headers: { 'auth-token': customerAuthToken } });
             },
-             getCustomerOrders: function () {
+            getCustomerOrders: function () {
                 var customerId = -1;
                 var customerAuthToken = '';
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) {
@@ -295,13 +295,13 @@ angular.module('delivery.factory', [])
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
                 return $http.get(baseURL + '/customers/' + customerId + '/orders', { headers: { 'auth-token': customerAuthToken } });
-             },
-             sendCustomerRating: function (rateInfo) {
-                 var customerAuthToken = '';
-                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer()) 
-                     customerAuthToken = authFactory.getCustomer().auth_token;
-                 return $http.post(baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo,{ headers: { 'auth-token': customerAuthToken } });
-             }
+            },
+            sendCustomerRating: function (rateInfo) {
+                var customerAuthToken = '';
+                if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
+                    customerAuthToken = authFactory.getCustomer().auth_token;
+                return $http.post(baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo, { headers: { 'auth-token': customerAuthToken } });
+            }
         };
 
         return customerAPI;
@@ -310,30 +310,30 @@ angular.module('delivery.factory', [])
 .factory('errorCodeMessageFactory', function ($translate) {
 
     var errorCodeMessageAPI = {
-            getErrorMessage: function (errorCode, requestType) {
-                if (errorCode === 500 > -1 && requestType === "BUSINESS") {
-                    return "";
-                } else if (errorCode === 422 && requestType === "REGISTER") {
-                    return $translate.instant('REGISTER_ERROR_MSG');
-                } else if ((errorCode === 404 || errorCode === 401) && requestType === "LOGIN") {
-                    return $translate.instant('LOGIN_ERROR_MSG');
-                } else if ((errorCode === 404 || errorCode === 401) && requestType === "ADDRESS") {
-                    return $translate.instant('ADDRESS_ERROR_MSG');
-                } else if ((errorCode === 404 || errorCode === 401) && requestType === "PROFILE") {
-                    return $translate.instant('PROFILE_ERROR_MSG');
-                } else if ((errorCode === 404 || errorCode === 401) && requestType === "ORDER") {
-                    return $translate.instant('ORDER_ERROR_MSG');
-                }else if ((errorCode === 404 || errorCode === 401) && requestType === "CONTACTUS") {
-                    return $translate.instant('CONTACTUS_ERROR_MSG');
-                }else if ((errorCode === 404) && requestType === "OLD_ORDERS") {
-                    return $translate.instant('OLD_ORDER_ERROR_MSG');
-                }else if (errorCode === 500 )
-                    return $translate.instant('COMMON_ERROR_MSG');
-            }
-        };
+        getErrorMessage: function (errorCode, requestType) {
+            if (errorCode === 500 > -1 && requestType === "BUSINESS") {
+                return "";
+            } else if (errorCode === 422 && requestType === "REGISTER") {
+                return $translate.instant('REGISTER_ERROR_MSG');
+            } else if ((errorCode === 404 || errorCode === 401) && requestType === "LOGIN") {
+                return $translate.instant('LOGIN_ERROR_MSG');
+            } else if ((errorCode === 404 || errorCode === 401) && requestType === "ADDRESS") {
+                return $translate.instant('ADDRESS_ERROR_MSG');
+            } else if ((errorCode === 404 || errorCode === 401) && requestType === "PROFILE") {
+                return $translate.instant('PROFILE_ERROR_MSG');
+            } else if ((errorCode === 404 || errorCode === 401) && requestType === "ORDER") {
+                return $translate.instant('ORDER_ERROR_MSG');
+            } else if ((errorCode === 404 || errorCode === 401) && requestType === "CONTACTUS") {
+                return $translate.instant('CONTACTUS_ERROR_MSG');
+            } else if ((errorCode === 404) && requestType === "OLD_ORDERS") {
+                return $translate.instant('OLD_ORDER_ERROR_MSG');
+            } else if (errorCode === 500)
+                return $translate.instant('COMMON_ERROR_MSG');
+        }
+    };
     return errorCodeMessageAPI;
 })
-.factory('deliveryLoader',  function ($ionicLoading, $timeout) {
+.factory('deliveryLoader', function ($ionicLoading, $timeout) {
     var LOADERAPI = {
         showLoading: function (text) {
             text = text || 'Loading...';
@@ -360,12 +360,32 @@ angular.module('delivery.factory', [])
     return LOADERAPI;
 })
 
-.factory('connectionFactory', function ($http) {
+.factory('connectionFactory', function ($http, $ionicPopup, $translate) {
 
     var API = {
         testConnection: function () {
             img = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' + "?" + new Date().getTime();
             return $http.get(img);
+        },
+        exitApplication: function () {
+            // Show a warning popup if no stable internet connection detected
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('NO_INTERNET'),
+                template: $translate.instant('INTERNET_CONN_MSG')
+            });
+
+            // Resolve the promise returned by the popup. exit the app on confirmation
+            alertPopup.then(function (res) {
+                if (res) {
+                    ionic.Platform.exitApp(); // stops the app
+                }
+            });
+        }, showAlertPopup: function (titleHeader,content) {
+            // Show a warning popup if no stable internet connection detected
+            var alertPopup = $ionicPopup.alert({
+                title: titleHeader,
+                template: content
+            });
         }
     };
 
@@ -374,9 +394,9 @@ angular.module('delivery.factory', [])
 .factory('utilitiesFactory', function ($http) {
 
     var API = {
-            sendContactUsInfo: function (contactUsInfo) {
-                return $http.post(baseURL + '/contact' , contactUsInfo);
-            }
+        sendContactUsInfo: function (contactUsInfo) {
+            return $http.post(baseURL + '/contact', contactUsInfo);
+        }
     };
 
     return API;

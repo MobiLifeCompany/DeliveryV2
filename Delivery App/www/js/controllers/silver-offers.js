@@ -1,12 +1,16 @@
 angular.module('delivery.controllers')
 
-.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPlatform, shopsFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPlatform, shopsFactory, connectionFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.shopsOffers = [];
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
-        $scope.loadShopsOffers();
+        connectionFactory.testConnection().success(function (data) {
+            $scope.loadShopsOffers();
+        }).error(function (err, statusCode) {
+            connectionFactory.exitApplication();
+        })
     });
 
     $scope.loadShopsOffers = function () {
@@ -22,11 +26,11 @@ angular.module('delivery.controllers')
                 deliveryLoader.hideLoading();
             } catch (e) {
                 deliveryLoader.hideLoading();
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(err.message);
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
         })
     };
 
@@ -37,12 +41,14 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal = modal;
     });
 
-    $scope.showItemDetails = function (item, shop) {
-        $scope.selectedItem = item;
-        $scope.shopDetails = shop;
-        var selectedItemQuantity = 1;
-        $scope.itemDetailsModal.show();
-        document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
+    $scope.showItemDetails = function (item, shop, clickable) {
+        if (clickable) {
+            $scope.selectedItem = item;
+            $scope.shopDetails = shop;
+            var selectedItemQuantity = 1;
+            $scope.itemDetailsModal.show();
+            document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
+        }
     };
 
     $scope.closeItemDetails = function () {
@@ -69,7 +75,6 @@ angular.module('delivery.controllers')
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
-        shop.is_open = true;
         if (!shop.is_open) {
 
             var alertPopup = $ionicPopup.alert({

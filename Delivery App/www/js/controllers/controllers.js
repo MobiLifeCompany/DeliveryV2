@@ -108,7 +108,7 @@ angular.module('delivery.controllers', [])
     /// <summary>showProfile: Show the profile modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showProfile = function () {
-        $scope.customer = authFactory.getCustomer();
+        $rootScope.customerProfile = authFactory.getCustomer();
         $rootScope.profileModal.show();
     }
 
@@ -178,24 +178,7 @@ angular.module('delivery.controllers', [])
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
-        connectionFactory.testConnection().success(function (data) {
-            $rootScope.categoriesModal.show();
-            $cordovaSplashscreen.hide();
-
-        }).error(function (err, statusCode) {
-            $cordovaSplashscreen.hide();
-            // Show a warning popup if no stable internet connection detected
-            var alertPopup = $ionicPopup.alert({
-                title: $translate.instant('NO_INTERNET'),
-                template: $translate.instant('INTERNET_CONN_MSG')
-            });
-
-            // Resolve the promise returned by the popup. exit the app on confirmation
-            alertPopup.then(function (res) {
-                if (res) {
-                    ionic.Platform.exitApp(); // stops the app
-                }
-            });
-        })
+        $rootScope.categoriesModal.show();
+        $cordovaSplashscreen.hide();
     });
 })

@@ -1,7 +1,7 @@
 angular.module('delivery.controllers')
 
 
-.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $translate, $ionicPopup, $ionicHistory, $ionicModal, storageUtilityFactory, customerFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('AddressesCtrl', function ($scope, $rootScope, $http, $ionicLoading, $timeout, $translate, $ionicPopup, $ionicHistory, $ionicModal, connectionFactory, storageUtilityFactory, customerFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.customerAddress = {};
     $rootScope.customerAddressess = [];
@@ -11,13 +11,13 @@ angular.module('delivery.controllers')
     $scope.$on('$ionicView.enter', function () {
         $scope.getCustomerAddress(); //load customer addresses from server
         // remove the 'login view' from history after user login successfully, so clicking back wouldn't get him back to 'Login' again
-        if($ionicHistory.backTitle() == $translate.instant('LOGIN'))
+        if ($ionicHistory.backTitle() == $translate.instant('LOGIN'))
             $ionicHistory.removeBackView();
     })
 
     // Will be fired when addresses opened from ion-modal-view
     $rootScope.$on('modal.shown', function (event, modal) {
-        if(modal.id == '4')
+        if (modal.id == '4')
             $scope.getCustomerAddress(); //load customer addresses from server
     });
 
@@ -66,26 +66,29 @@ angular.module('delivery.controllers')
     });
 
     $rootScope.getCustomerAddress = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
-        customerFactory.getCustomerAddressess().success(function (data) {
-            try {
+        connectionFactory.testConnection().success(function (data) {
+            deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
+            customerFactory.getCustomerAddressess().success(function (data) {
+                try {
+                    var filteredAddresses = [];
+                    for (i = 0; i < data.length; i++)
+                        if (data[i].area.id === $rootScope.selectedArea.id && data[i].city.id === $rootScope.selectedCity.id)
+                            filteredAddresses.push(data[i]);
 
-                var filteredAddresses = [];
-                for (i = 0; i < data.length; i++) 
-                    if(data[i].area.id === $rootScope.selectedArea.id && data[i].city.id === $rootScope.selectedCity.id)
-                        filteredAddresses.push(data[i]);
-                
-                $rootScope.customerAddressess = filteredAddresses;
-                storageUtilityFactory.deleteCustomerAddresses();
-                storageUtilityFactory.setCustomerAddresses(data);
+                    $rootScope.customerAddressess = filteredAddresses;
+                    storageUtilityFactory.deleteCustomerAddresses();
+                    storageUtilityFactory.setCustomerAddresses(data);
+                    deliveryLoader.hideLoading();
+                } catch (e) {
+                    connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ADDRESS'));
+                }
+            }).error(function (err, statusCode) {
                 deliveryLoader.hideLoading();
-            } catch (e) {
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(404, 'ADDRESS'));
-            }
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            });
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
-        });
+            connectionFactory.exitApplication();
+        })
     };
 
     $scope.showEditAddressModal = function (customerAddress) {
@@ -100,38 +103,46 @@ angular.module('delivery.controllers')
     $scope.closeCreateAddressModal = function () {
         $scope.addressCreateModal.hide();
     };
-    
+
     $scope.showCreateAddressModal = function () {
         $scope.addressCreateModal.show();
     };
 
     $scope.createAddress = function () {
-        deliveryLoader.showLoading($translate.instant('CREATE_ADDRESSES'));
-        $scope.customerAddress.city_id = $rootScope.selectedCity.id;
-        $scope.customerAddress.area_id= $rootScope.selectedArea.id;
-        $scope.customerAddress.latitude= 0;
-        $scope.customerAddress.longitude= 0;
-        $scope.customerAddress.is_default = false;
-        customerFactory.createCustomerAddress($scope.customerAddress).success(function (data) {
-            $scope.closeCreateAddressModal();
-            deliveryLoader.hideLoading();
-            $rootScope.customerAddressess.push($scope.customerAddress);
+        connectionFactory.testConnection().success(function (data) {
+            deliveryLoader.showLoading($translate.instant('CREATE_ADDRESSES'));
+            $scope.customerAddress.city_id = $rootScope.selectedCity.id;
+            $scope.customerAddress.area_id = $rootScope.selectedArea.id;
+            $scope.customerAddress.latitude = 0;
+            $scope.customerAddress.longitude = 0;
+            $scope.customerAddress.is_default = false;
+            customerFactory.createCustomerAddress($scope.customerAddress).success(function (data) {
+                $scope.closeCreateAddressModal();
+                deliveryLoader.hideLoading();
+                $rootScope.customerAddressess.push($scope.customerAddress);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            });
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
-        });
+            connectionFactory.exitApplication();
+        })
     };
     $scope.updateAddress = function () {
-        deliveryLoader.showLoading($translate.instant('UPDATE_ADDRESSES'));
-        customerFactory.updateCustomerAddress($scope.customerAddress).success(function (data) {
-            $scope.closeEditAddressModal();
-            deliveryLoader.hideLoading();
-            $scope.getCustomerAddress();
-            $scope.customerAddress = {};
+        connectionFactory.testConnection().success(function (data) {
+            deliveryLoader.showLoading($translate.instant('UPDATE_ADDRESSES'));
+            customerFactory.updateCustomerAddress($scope.customerAddress).success(function (data) {
+                $scope.closeEditAddressModal();
+                deliveryLoader.hideLoading();
+                $scope.getCustomerAddress();
+                $scope.customerAddress = {};
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            });
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
-        });
+            connectionFactory.exitApplication();
+        })
     };
     $scope.deleteAddress = function (customerAddressId) {
         deliveryLoader.showLoading($translate.instant('DELETE_ADDRESSES'));
@@ -140,25 +151,28 @@ angular.module('delivery.controllers')
             $scope.getCustomerAddress();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
         });
     };
 
     $scope.deleteAddressPopup = function (customerAddressId) {
-        // Show a confirmation popup
-        var confirmPopup = $ionicPopup.confirm({
-            title: $translate.instant('DELETE'),
-            template: $translate.instant('ADDRESS_CONFIRMATION_MSG'),
-            cancelText: $translate.instant('NO'),
-            okText: $translate.instant('YES')
-        });
-
-        // Resolve the promise returned by the popup, then logout the user if user confirm
-        confirmPopup.then(function (res) {
-            if (res) {
-                $scope.deleteAddress(customerAddressId);
-            }
-        });
+        connectionFactory.testConnection().success(function (data) {
+            // Show a confirmation popup
+            var confirmPopup = $ionicPopup.confirm({
+                title: $translate.instant('DELETE'),
+                template: $translate.instant('ADDRESS_CONFIRMATION_MSG'),
+                cancelText: $translate.instant('NO'),
+                okText: $translate.instant('YES')
+            });
+            // Resolve the promise returned by the popup, then logout the user if user confirm
+            confirmPopup.then(function (res) {
+                if (res) {
+                    $scope.deleteAddress(customerAddressId);
+                }
+            });
+        }).error(function (err, statusCode) {
+            connectionFactory.exitApplication();
+        })
     };
 
     //showMap: Show a map of the selected address with position marker, will be called from the 'mapModal' when it's shown
@@ -189,7 +203,7 @@ angular.module('delivery.controllers')
         else {
             $rootScope.selectedAddressId = customerAddress.id;
             $rootScope.cartAddress = customerAddress;
-       }
+        }
     };
- 
+
 });

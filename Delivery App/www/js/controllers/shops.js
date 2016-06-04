@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, connectionFactory, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
@@ -11,33 +11,32 @@ angular.module('delivery.controllers')
     $rootScope.loadShops = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
         shopsFactory.get().success(function (data) {
-         try {
-                 $rootScope.shops = data;
-                 if ($rootScope.shops.length > 0) {
-                     $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
-
-                     //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
-                     for (i = 0; i < $rootScope.masteriesArray.length; i++) {
-                         $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
-                     }
-                     $scope.noShopsFound = false;
-                 }
-                 else
-                     $scope.noShopsFound = true;
-             } catch (e) {
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500,''));
+            try{
+                $rootScope.shops = data;
+                if ($rootScope.shops.length > 0) {
+                    $rootScope.masteriesArray = mastriesFactory.get($rootScope.shops);
+                    //prepare masteries filter array, add 'checked' parameter to original 'masteriesArray' for binding it to checkboxes
+                    for (i = 0; i < $rootScope.masteriesArray.length; i++) {
+                        $rootScope.masteriesCheckList.push({ name: $rootScope.masteriesArray[i].name, checked: false });
+                    }
+                    $scope.noShopsFound = false;
+                }
+                else
+                    $scope.noShopsFound = true;
+            } catch (e) {
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
-        deliveryLoader.hideLoading();
-     }).error(function (err, statusCode) {
-         deliveryLoader.hideLoading();
-         deliveryLoader.toggleLoadingWithMessage(err.message);
-         $scope.noShopsFound = true;
-     })
+            deliveryLoader.hideLoading();
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+            $scope.noShopsFound = true;
+        })
     };
 
     $rootScope.loadShopsOffers = function () {
         shopsFactory.getOffers().success(function (data) {
-            try{
+            try {
                 var silverOffers = [];
                 for (i = 0; i < data.length; i++) {
                     if (data[i].offer_type === 'GOLDEN')
@@ -45,13 +44,19 @@ angular.module('delivery.controllers')
                 }
                 $scope.shopsOffers = silverOffers;
             } catch (e) {
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
-            deliveryLoader.toggleLoadingWithMessage(err.message);
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
         })
     };
-    $rootScope.loadShopsOffers();
+
+    connectionFactory.testConnection().success(function (data) {
+      $rootScope.loadShopsOffers();
+    }).error(function (err, statusCode) {
+        connectionFactory.exitApplication();
+    })
+    
     $scope.done_loading = true;
 
     //set the default order criteria to 'rating' And filtering
@@ -62,8 +67,12 @@ angular.module('delivery.controllers')
 
     // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
     $scope.$on('$ionicView.loaded', function () {
-        if ($rootScope.showMainView)
-            $rootScope.loadShops();
+        connectionFactory.testConnection().success(function (data) {
+            if ($rootScope.showMainView)
+                $rootScope.loadShops();
+        }).error(function (err, statusCode) {
+            connectionFactory.exitApplication();
+        })
     });
 
     $scope.changeAddress = function () {
@@ -199,12 +208,14 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal = modal;
     });
 
-    $scope.showItemDetails = function (item,shop) {
-        $scope.selectedItem = item;
-        $scope.shopDetails = shop;
-        var selectedItemQuantity = 1;
-        $scope.itemDetailsModal.show();
-        document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
+    $scope.showItemDetails = function (item, shop, clickable) {
+        if (clickable) {
+            $scope.selectedItem = item;
+            $scope.shopDetails = shop;
+            var selectedItemQuantity = 1;
+            $scope.itemDetailsModal.show();
+            document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
+        }
     };
 
     $scope.closeItemDetails = function () {
@@ -225,13 +236,12 @@ angular.module('delivery.controllers')
     $scope.decreseQuantityFromModal = function (itemId) {
         var selectedItem = document.getElementById('selectedItemId');
         if (parseInt(selectedItem.innerHTML) > 1) {
-             selectedItem.innerHTML = parseInt(selectedItem.innerHTML) - 1;
+            selectedItem.innerHTML = parseInt(selectedItem.innerHTML) - 1;
         }
     };
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
-        shop.is_open = true;
         if (!shop.is_open) {
 
             var alertPopup = $ionicPopup.alert({
@@ -290,7 +300,6 @@ angular.module('delivery.controllers')
                 itemQty = $rootScope.cartItems[i].quantity;
             }
         }
-
         return itemQty;
     }
 

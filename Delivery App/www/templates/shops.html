@@ -134,7 +134,7 @@
         </script>
         <ion-slide-box class="" auto-play="true" does-continue="true" slide-interval="2000" >
            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
-                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer.item,shopOffer.shop)"/>
+                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer.item,shopOffer.shop,shopOffer.clickable)"/>
            </ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true">

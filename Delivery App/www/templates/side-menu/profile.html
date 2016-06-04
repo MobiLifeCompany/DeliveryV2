@@ -12,64 +12,64 @@
             <form name="Cform">
                 <div class="list">
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
-                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.username.length >= 3"></i> {{'USERNAME' | translate}}</span>
-                        <input type="text" ng-model="customer.username" placeholder="{{'USERNAME' | translate}}" required min="3">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerProfile.username.length >= 3"></i> {{'USERNAME' | translate}}</span>
+                        <input type="text" ng-model="customerProfile.username" placeholder="{{'USERNAME' | translate}}" required min="3">
                     </label>
-                    <div class="error-container" ng-hide="customer.username.length >= 3">
-                        <div class="error" ng-hide="customer.username.length > 0">
+                    <div class="error-container" ng-hide="customerProfile.username.length >= 3">
+                        <div class="error" ng-hide="customerProfile.username.length > 0">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_REQUIRED' | translate}}
                         </div>
-                        <div class="error" ng-show="customer.username.length < 3">
+                        <div class="error" ng-show="customerProfile.username.length < 3">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_MIN_3' | translate}}
                         </div>
                     </div>
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
-                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.full_name.length >= 3"></i> {{'FULL_NAME' | translate}}</span>
-                        <input type="text" ng-model="customer.full_name" placeholder="{{'FULL_NAME' | translate}}" required min="3">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerProfile.full_name.length >= 3"></i> {{'FULL_NAME' | translate}}</span>
+                        <input type="text" ng-model="customerProfile.full_name" placeholder="{{'FULL_NAME' | translate}}" required min="3">
                     </label>
-                    <div class="error-container" ng-hide="customer.full_name.length >= 3">
-                        <div class="error" ng-hide="customer.full_name.length > 0">
+                    <div class="error-container" ng-hide="customerProfile.full_name.length >= 3">
+                        <div class="error" ng-hide="customerProfile.full_name.length > 0">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_REQUIRED' | translate}}
                         </div>
-                        <div class="error" ng-show="customer.full_name.length < 3">
+                        <div class="error" ng-show="customerProfile.full_name.length < 3">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_MIN_3' | translate}}
                         </div>
                     </div>
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
-                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password.length >= 8"></i> {{'PASSWORD' | translate}}</span>
-                        <input type="password" ng-model="customer.password" placeholder="{{'PASSWORD' | translate}}" required min="8">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerProfile.password.length >= 8"></i> {{'PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customerProfile.password" placeholder="{{'PASSWORD' | translate}}" required min="8">
                     </label>
-                    <div class="error-container" ng-hide="customer.password.length >= 8">
-                        <div class="error" ng-hide="customer.password.length > 0">
+                    <div class="error-container" ng-hide="customerProfile.password.length >= 8">
+                        <div class="error" ng-hide="customerProfile.password.length > 0">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_REQUIRED' | translate}}
                         </div>
-                        <div class="error" ng-show="customer.password.length < 8">
+                        <div class="error" ng-show="customerProfile.password.length < 8">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_MIN_8' | translate}}
                         </div>
                     </div>
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
-                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customer.password_confirmation == customer.password"></i> {{'CONFIRM_PASSWORD' | translate}}</span>
-                        <input type="password" ng-model="customer.password_confirmation" placeholder="{{'CONFIRM_PASSWORD' | translate}}" required min="8" pw-check="password">
+                        <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="customerProfile.password_confirmation == customerProfile.password"></i> {{'CONFIRM_PASSWORD' | translate}}</span>
+                        <input type="password" ng-model="customerProfile.password_confirmation" placeholder="{{'CONFIRM_PASSWORD' | translate}}" required min="8" pw-check="password">
                     </label>
-                    <div class="error-container" ng-hide="customer.password == customer.password_confirmation && customer.password_confirmation.length > 0">
-                        <div class="error" ng-hide="customer.password_confirmation.length > 0">
+                    <div class="error-container" ng-hide="customerProfile.password == customerProfile.password_confirmation && customerProfile.password_confirmation.length > 0">
+                        <div class="error" ng-hide="customerProfile.password_confirmation.length > 0">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_REQUIRED' | translate}}
                         </div>
-                        <div class="error" ng-show="customer.password != customer.password_confirmation && customer.password && customer.password_confirmation">
+                        <div class="error" ng-show="customerProfile.password != customerProfile.password_confirmation && customerProfile.password && customerProfile.password_confirmation">
                             <i class="ion-information-circled"></i>
                             {{'VALIDATION_PASSWORD_DONT_MATCH' | translate}}
                         </div>
                     </div>
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                         <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="Cform.cemail.$valid"></i> {{'EMAIL' | translate}}</span>
-                        <input type="email" name="cemail" ng-model="customer.email" placeholder="{{'EMAIL' | translate}}" >
+                        <input type="email" name="cemail" ng-model="customerProfile.email" placeholder="{{'EMAIL' | translate}}" >
                     </label>
                     <div class="error-container" ng-hide="Cform.cemail.$valid">
                         <div class="error" ng-hide="Cform.cemail.$valid">
@@ -79,7 +79,7 @@
                     </div>
                     <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                         <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
-                        <input type="number" name="cphone" ng-model="customer.phone" ng-minlength="10" ng-maxlength="10" placeholder="{{'Mobile' | translate}}" only-num>
+                        <input type="number" name="cphone" ng-model="customerProfile.phone" ng-minlength="10" ng-maxlength="10" placeholder="{{'Mobile' | translate}}" only-num>
                     </label>
                     <div class="error-container" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"  >
                         <div class="error" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
@@ -89,12 +89,12 @@
                     </div>
                         <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
                             <span class="input-label assertive-900"><i class="icon ion-checkmark" style="color: green;"></i> {{'GENDER' | translate}}</span>
-                            <ion-radio ng-model="customer.gender" ng-value="'F'">{{'FEMALE' | translate}}</ion-radio>
-                            <ion-radio ng-model="customer.gender" ng-value="'M'">{{'MALE' | translate}}</ion-radio>
+                            <ion-radio ng-model="customerProfile.gender" ng-value="'F'">{{'FEMALE' | translate}}</ion-radio>
+                            <ion-radio ng-model="customerProfile.gender" ng-value="'M'">{{'MALE' | translate}}</ion-radio>
                         </label>
                     </div>
 
-                <button class="button button-small button-balanced button-block" ng-disabled="!customer.username || !customer.full_name || !customer.password_confirmation ||!customer.password || (customer.password != customer.password_confirmation) || (((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)) || !Cform.cemail.$valid " ng-click="updateProfile()" type="submit" translate="UPDATE_ACCOUNT"></button>
+                <button class="button button-small button-balanced button-block" ng-disabled="!customerProfile.username || !customerProfile.full_name || !customerProfile.password_confirmation ||!customerProfile.password || (customerProfile.password != customerProfile.password_confirmation) || (((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)) || !Cform.cemail.$valid " ng-click="updateProfile()" type="submit" translate="UPDATE_ACCOUNT"></button>
             </form>
         </div>
     </ion-content>
