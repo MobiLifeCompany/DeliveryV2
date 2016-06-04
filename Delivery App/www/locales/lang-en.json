@@ -55,6 +55,7 @@
   "CONFIRM_EMPTY_CART_MSG": "Your cart already contains some items, do you want to remove them and add the selected order?",
   "PROFILE": "Profile",
   "ADDRESSES": "Addresses",
+  "PHONE": "Phone",
   "ADD_NEW_ADDRESSES": "New",
   "ADDRESS_PHONE": "Phone(Mobile Or Ground)",
   "ADDRESS_EMAIL": "Email",
@@ -152,5 +153,8 @@
   "CONTACTUS_SUCCESS_MSG": "Thanks for your Suggestion",
   "PROFILE_SUCCESS_MSG" : "Your profile updated Successfully",
   "MESSAGE" :  "Message",
-  "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area"
+  "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area",
+  "SHOP_NOT_SUBSCRIBED": "Shop not subscribed!",
+  "SHOP_NOT_SUBSCRIBED_MSG": "Unfortunately this shop isn't supscribed in our service",
+  "CALL_NOW": "Call Now"
 }

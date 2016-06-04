@@ -55,6 +55,7 @@
   "CONFIRM_EMPTY_CART_MSG": "تحتوي سلة التسوق حاليا على بعض المواد, هل ترفب يإفراغ محتواها و إضافة محتويات هذه الطلبية؟",
   "PROFILE": "الملف الشخصي",
   "ADDRESSES": "العناوين",
+  "PHONE": "الهاتف",
   "ADD_NEW_ADDRESSES": "جديد",
   "ADDRESS_PHONE": "رقم الهاتف الأرضي أو الموبايل",
   "ADDRESS_EMAIL": "الإيميل",
@@ -151,5 +152,8 @@
   "CONTACTUS_SUCCESS_MSG": "شكراً لك على اقتراحك",
   "PROFILE_SUCCESS_MSG" : "تم تعديل ملفك بنجاح",
   "MESSAGE" :  "الرسالة",
-  "NO_SHOPS_IN_SELECTED_AREA":  "لا يوجد متاجر في هذه المنطقة"
+  "NO_SHOPS_IN_SELECTED_AREA": "لا يوجد متاجر في هذه المنطقة",
+    "SHOP_NOT_SUBSCRIBED": "المتجر غير مشترك!",
+  "SHOP_NOT_SUBSCRIBED_MSG": "للأسف هذا المتجر غير مشترك في خدماتنا",
+  "CALL_NOW": "اتصل الآن"
 }
