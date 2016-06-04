@@ -44,7 +44,7 @@
 
         <div class="list" ng-show="shopsOffers.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="shopOffer in shopsOffers">
-                <div class="list card" style="margin: 5px;" ng-click="showItemDetails(shopOffer.item,shopOffer.shop)">
+                <div class="list card" style="margin: 5px;" ng-click="showItemDetails(shopOffer.item,shopOffer.shop,shopOffer.clickable)">
                     <img style="position: absolute; top: 0px; right: 0px; opacity: 0.3; height: 100%; border-bottom-left-radius: 50px; border-top-left-radius: 50px;" src="{{shopOffer.shop.photo}}" />
                     <div class="silver-promotion-triangle"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
                     <a class="item item-thumbnail-left" >

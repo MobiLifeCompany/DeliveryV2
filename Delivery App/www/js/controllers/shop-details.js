@@ -1,29 +1,36 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
 
 
     $scope.shopDetails = [];
-    $rootScope.selectedShop={};
+    $rootScope.selectedShop = {};
     $scope.categories = [];
 
     $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId === "" ? $rootScope.shopId : $stateParams.shopId);
-  
-    
+
+
     $scope.$on('$ionicView.enter', function () {
         if ($rootScope.cartItems.length > 0)
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     })
 
-    deliveryLoader.showLoading($translate.instant('LOADING'));
-    shopDetailsFactory.getShopItemsCategories().success(function (data) {
-        $scope.categories = data;
-       deliveryLoader.hideLoading();
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        deliveryLoader.toggleLoadingWithMessage(deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode)));
-    })
+    $scope.loadShopItemsCategories = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        shopDetailsFactory.getShopItemsCategories().success(function (data) {
+            $scope.categories = data;
+            deliveryLoader.hideLoading();
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            deliveryLoader.toggleLoadingWithMessage(deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode)));
+        })
+    }
 
+    connectionFactory.testConnection().success(function (data) {
+        $scope.loadShopItemsCategories();
+    }).error(function (err, statusCode) {
+        connectionFactory.exitApplication();
+    })
 
     // toggleCategory if given category is the selected category, deselect it. else, select the given category
     $scope.toggleCategory = function (category) {
@@ -118,10 +125,10 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal.remove();
     });
 
-    $scope.getCurrentDeliverHour = function (){
+    $scope.getCurrentDeliverHour = function () {
         days = $scope.shopDetails.delivery_hours;
-        var weekDays = ["sat","sun","mon","tue","wed","thu","fri"];
-        var d=new Date();
+        var weekDays = ["sat", "sun", "mon", "tue", "wed", "thu", "fri"];
+        var d = new Date();
         dayNumber = d.getDay();
         for (i = 0; i < days.length; i++) {
             if (days[i].day == weekDays[dayNumber]) {
@@ -138,10 +145,10 @@ angular.module('delivery.controllers')
 
     //decreseAmount: decrease the item quantity counter label when click on '-' button
     $scope.decreseQuantity = function (itemQuantity) {
-            var item = document.getElementById(itemQuantity);
-            if (parseInt(item.innerHTML) > 1) {
-                item.innerHTML = parseInt(item.innerHTML) - 1;
-            }
+        var item = document.getElementById(itemQuantity);
+        if (parseInt(item.innerHTML) > 1) {
+            item.innerHTML = parseInt(item.innerHTML) - 1;
+        }
     };
 
     //increaseAmountFromModal: increase the item quantity counter on 'itemDetailsModal' when click on '+' button
@@ -176,7 +183,7 @@ angular.module('delivery.controllers')
         }
         //
         else {
-            shop.is_open = true;
+
             if (!shop.is_open) {
 
                 var alertPopup = $ionicPopup.alert({

@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('orderConfirmationCtrl', function ($scope, $rootScope, $state, $ionicLoading, $ionicNavBarDelegate, $timeout, $http, $translate, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, shopDetailsFactory, customerFactory, deliveryLoader, storageUtilityFactory, authFactory) {
+.controller('orderConfirmationCtrl', function ($scope, $rootScope, $state, $ionicLoading, $ionicNavBarDelegate, $timeout, $http, $translate, $ionicPlatform, $ionicHistory, $ionicFilterBar, $ionicActionSheet, connectionFactory, ionicMaterialInk, shopDetailsFactory, customerFactory, deliveryLoader, storageUtilityFactory, authFactory) {
 
     $scope.orderSubmittedSuccessfully = false;
     $scope.showSubmissionResult = false;
@@ -9,14 +9,18 @@ angular.module('delivery.controllers')
     $scope.orderInfo = {};
 
     $scope.$on('$ionicView.enter', function () {
-        $scope.submitOrder();
+        connectionFactory.testConnection().success(function (data) {
+            $scope.submitOrder();
+        }).error(function (err, statusCode) {
+            connectionFactory.exitApplication();
+        })
     });
 
     $scope.$on('$ionicView.leave', function () {
         $ionicNavBarDelegate.showBackButton(true);
     });
 
-    $scope.submitOrder = function(){
+    $scope.submitOrder = function () {
         //// Todo: place backend API call here to submit the order
         customerOrder.items = $rootScope.cartItems;
         for (i = 0; i < $rootScope.cartItems.length; i++) {
@@ -32,9 +36,9 @@ angular.module('delivery.controllers')
 
         deliveryLoader.showLoading($translate.instant('LOADING'));
         customerFactory.createCustomerOrder(customerOrder).success(function (data) {
-         try {
+            try {
                 deliveryLoader.hideLoading();
-             // On success:
+                // On success:
                 $scope.orderInfo.shopId = $rootScope.cartShop.id;
                 $scope.orderInfo.order_id = data.id;
                 $scope.orderSubmittedSuccessfully = true;
@@ -55,34 +59,39 @@ angular.module('delivery.controllers')
                     });
                 $ionicNavBarDelegate.showBackButton(false);
             } catch (e) {
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
             }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             $scope.orderSubmittedSuccessfully = false;
-            deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode, 'ORDER'));
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ORDER'));
         });
-    
+
         $scope.showSubmissionResult = true;
     };
 
 
     $scope.sendRating = function (appRating) {
-        $scope.orderInfo.rate = appRating;
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-        customerFactory.sendCustomerRating($scope.orderInfo).success(function (data) {
-            try {
-                deliveryLoader.hideLoading();
-                deliveryLoader.toggleLoadingWithMessage($translate.instant('RATING_SUCCESS_MSG'));
-                $rootScope.showMainView = true;
+        connectionFactory.testConnection().success(function (data) {
+            $scope.orderInfo.rate = appRating;
+            deliveryLoader.showLoading($translate.instant('LOADING'));
+            customerFactory.sendCustomerRating($scope.orderInfo).success(function (data) {
+                try {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.showAlertPopup($translate.instant('RATE'), $translate.instant('RATING_SUCCESS_MSG'));
+                    $rootScope.showMainView = true;
 
-            } catch (e) {
+                } catch (e) {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
+                }
+            }).error(function (err, statusCode) {
                 deliveryLoader.hideLoading();
-                deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
-            }
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), statusCode);
+            });
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage($translate.instant('LOADING'));
-        });
+            connectionFactory.exitApplication();
+        })
+
     }
 });

@@ -1,7 +1,7 @@
 angular.module('delivery.controllers')
 
-.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, authFactory, storageUtilityFactory, businessCategoriesFactory,deliveryLoader) {
-   
+.controller('CategoriesCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, connectionFactory, authFactory, storageUtilityFactory, businessCategoriesFactory, deliveryLoader) {
+
     $scope.categories = [];
     $scope.done_loading = true;
 
@@ -19,15 +19,15 @@ angular.module('delivery.controllers')
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(err.message);
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), $translate.instant('COMMON_ERROR_MSG'));
         })
     }
-   
-   
+
+
     /// <summary>setCategory: Add the selected category to $rootScope and redirect user to next page based on saved pereferences</summary>
     /// <param name="i" type="integer">The id of the selected category</param>
     $rootScope.setCategory = function (category) {
-        
+
         $rootScope.selectedCategory = category;
         storageUtilityFactory.setSelectedCategory(category);
 
@@ -41,7 +41,7 @@ angular.module('delivery.controllers')
                 $rootScope.savedAreasModal.show();
             });
         }
-        //Else if the user is not logged in redirect him\her to 'select cities' modal
+            //Else if the user is not logged in redirect him\her to 'select cities' modal
         else {
             $ionicModal.fromTemplateUrl('templates/cities.html', {
                 scope: $rootScope,
@@ -58,5 +58,12 @@ angular.module('delivery.controllers')
         }, 500);
     };
 
-    $rootScope.loadCategories();
+    
+    /////////////////////// functions calls on load//////////////////////
+    connectionFactory.testConnection().success(function (data) {
+        $rootScope.loadCategories();
+    }).error(function (err, statusCode) {
+        connectionFactory.exitApplication();
+    })
+
 });

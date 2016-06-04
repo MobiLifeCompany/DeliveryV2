@@ -1,39 +1,44 @@
 angular.module('delivery.controllers')
 
-.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader,errorCodeMessageFactory, shopDetailsFactory, customerFactory) {
+.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader, errorCodeMessageFactory, connectionFactory, shopDetailsFactory, customerFactory) {
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
-        if ($rootScope.isUserLoggedin == true)
-            $scope.loadOldOrders();
+        connectionFactory.testConnection().success(function (data) {
+            if ($rootScope.isUserLoggedin == true)
+                $scope.loadOldOrders();
+        }).error(function (err, statusCode) {
+            connectionFactory.exitApplication();
+        })
     });
 
     $scope.loadOldOrders = function () {
-       deliveryLoader.showLoading($translate.instant('LOADING'));
-       customerFactory.getCustomerOrders().success(function (data) {
-           try {
-               $scope.oldOrders = data;
-               deliveryLoader.hideLoading();
-           }catch (e) {
-               deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(500, ''));
-               deliveryLoader.hideLoading();
-           }
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        customerFactory.getCustomerOrders().success(function (data) {
+            try {
+                $scope.oldOrders = data;
+                deliveryLoader.hideLoading();
+            } catch (e) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
+            }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
-            var alertPopup = $ionicPopup.alert({
-                title: $translate.instant('ERROR'),
-                template: errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'),
-            });
+            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'));
         })
     };
 
-    if ($rootScope.isUserLoggedin == true)
-        $scope.loadOldOrders();
+    connectionFactory.testConnection().success(function (data) {
+        if ($rootScope.isUserLoggedin == true)
+            $scope.loadOldOrders();
+    }).error(function (err, statusCode) {
+        connectionFactory.exitApplication();
+    })
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {
         var shopDetails = shopDetailsFactory.get(order.shop.id);
-        
+
         if (!shopDetails.is_open) {
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('SHOP_CLOSED'),
@@ -65,7 +70,7 @@ angular.module('delivery.controllers')
                     }
                 });
             }
-            else{
+            else {
                 // Fill cart with the order's items
                 for (i = 0; i < order.items.length; i++) {
                     $rootScope.cartItems.push({ id: order.items[i].item.id, name: order.items[i].item.name, description: order.items[i].item.description, photo: order.items[i].item.photo, quantity: order.items[i].qty, price: order.items[i].item_price });
@@ -74,7 +79,7 @@ angular.module('delivery.controllers')
                 $rootScope.cartShop = shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
                 $state.go('app.cart');
             }
-        } 
+        }
     };
 
 });
