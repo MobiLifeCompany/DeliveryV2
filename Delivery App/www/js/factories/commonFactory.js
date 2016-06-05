@@ -64,7 +64,7 @@ angular.module('delivery.factory', [])
 
 })
 
-.factory('shopDetailsFactory', function ($rootScope, $http) {
+.factory('shopDetailsFactory', function ($rootScope, $http,storageUtilityFactory) {
     var shopsArray = $rootScope.shops;
     var shopDetails = {};
     var SAPI = {
@@ -79,7 +79,7 @@ angular.module('delivery.factory', [])
             return shopDetails;
         },
         getShopItemsCategories: function () {
-            return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items');
+            return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items?lang=' + storageUtilityFactory.getSelectedLanguage());
         }
     }
     return SAPI;
