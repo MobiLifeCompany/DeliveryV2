@@ -64,6 +64,7 @@ angular.module('delivery.controllers')
     $scope.descending = true;
     $scope.isMasteryFilterSet = false;
     $scope.isAdvanceFilterSet = false;
+    $scope.advanceFilter = {minDeliveryValue: 10000, deliveryTime: 120, rating: 5, showClosed: true, promotionOnly: false};
 
     // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
     $scope.$on('$ionicView.loaded', function () {
@@ -166,29 +167,38 @@ angular.module('delivery.controllers')
     };
 
     $scope.closeAdvanceFilter = function () {
-        $scope.filterModal.hide();
+        $scope.advanceFilterModal.hide();
     };
 
     /// <summary>filterFunction: filter the shops list according to mastery filter & advance filters</summary>
     $scope.filterFunction = function (element) {
         var matchFilter = false;
+        //Apply advance filter first
+        if (element.min_amount <= $scope.advanceFilter.minDeliveryValue &&
+            parseInt(element.estimation_time) <= $scope.advanceFilter.deliveryTime &&
+            (element.rating == 0 || element.rating >= $scope.advanceFilter.rating) &&
+            ($scope.advanceFilter.showClosed == true || $scope.advanceFilter.showClosed == false && element.is_open == true) &&
+            ($scope.advanceFilter.promotionOnly == false || $scope.advanceFilter.promotionOnly == true && element.promotion_note != null)) {
 
-        //loop through the masteryCheckList to see if any mastery is checked
-        for (i = 0; i < $scope.masteriesCheckList.length; i++) {
-            if ($scope.masteriesCheckList[i].checked)
-                $scope.isMasteryFilterSet = true;
-        }
-        //if any mastery had been checked '$scope.isMasteryFilterSet == true'  -> filter the list
-        if ($scope.isMasteryFilterSet) {
+            // Then apply mastery filter
+            //loop through the masteryCheckList to see if any mastery is checked
             for (i = 0; i < $scope.masteriesCheckList.length; i++) {
-                if ($scope.masteriesCheckList[i].checked) {
-                    if ((element.masteries.indexOf($scope.masteriesCheckList[i].name) > -1))
-                        matchFilter = true;
+                if ($scope.masteriesCheckList[i].checked)
+                    $scope.isMasteryFilterSet = true;
+            }
+            //if any mastery had been checked '$scope.isMasteryFilterSet == true'  -> filter the list
+            if ($scope.isMasteryFilterSet) {
+                for (i = 0; i < $scope.masteriesCheckList.length; i++) {
+                    if ($scope.masteriesCheckList[i].checked) {
+                        if ((element.masteries.indexOf($scope.masteriesCheckList[i].name) > -1))
+                            matchFilter = true;
+                    }
                 }
             }
+            else
+                matchFilter = true;
         }
-        else
-            matchFilter = true;
+        
 
         return matchFilter;
     };
@@ -199,6 +209,12 @@ angular.module('delivery.controllers')
             $scope.masteriesCheckList[i].checked = false;
             $scope.filterModal.hide();
         }
+    }
+
+    $scope.clearAdvanceFilter = function () {
+        $scope.isAdvanceFilterSet = false;
+        $scope.advanceFilter = { minDeliveryValue: 10000, deliveryTime: 120, rating: 5, showClosed: true, promotionOnly: false };
+        $scope.advanceFilterModal.hide();
     }
 
     //Create 'item details' modal to display information about the selected item

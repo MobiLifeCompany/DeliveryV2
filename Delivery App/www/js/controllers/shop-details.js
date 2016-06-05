@@ -173,7 +173,7 @@ angular.module('delivery.controllers')
         // Check if the shop is subscribed
         if (!shop.subscribed) {
             var notSubscribedPopup = $ionicPopup.show({
-                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{shopDetails.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{shopDetails.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{shopDetails.phone}}0944222444</p><a href="tel:{{shopDetails.phone}}0944222444" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a></div>',
+                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{shopDetails.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{shopDetails.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{shopDetails.phone}}</p><a href="tel:{{shopDetails.phone}}" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a></div>',
                 title: $translate.instant('SHOP_NOT_SUBSCRIBED'),
                 subTitle: $translate.instant('SHOP_NOT_SUBSCRIBED_MSG'),
                 scope: $scope,
