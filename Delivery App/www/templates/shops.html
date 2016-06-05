@@ -68,13 +68,13 @@
                 <div class="bar bar-header bar-assertive" style="position: static;">
                     <div class="buttons buttons-left header-item">
                         <span class="left-buttons">
-                            <button class="button button-icon button-clear ion-ios-close-outline"></button>
+                            <button class="button button-icon button-clear ion-ios-close-outline" ng-click="clearAdvanceFilter()"></button>
                         </span>
                     </div>
                     <div class="h1 title" translate="ADVANCE_FILTER"></div>
                     <div class="buttons buttons-right header-item">
                         <span class="right-buttons">
-                            <button class="button button-icon button-clear ion-ios-checkmark-outline"></button>
+                            <button class="button button-icon button-clear ion-ios-checkmark-outline" ng-click="closeAdvanceFilter()"></button>
                         </span>
                     </div>
                 </div>
@@ -82,46 +82,46 @@
                 <ion-content class="has-header dl-sort-action-sheet-content" overflow-scroll="false">
                         <ion-list>
                             <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
-                                <div translate="MIN_DELIVERY_AMOUNT"></div>
+                                <div ng-switch="advanceFilter.minDeliveryValue"><span translate="MIN_DELIVERY_AMOUNT"></span><span ng-switch-when="10000">: {{'ALL' | translate}}</span><span ng-switch-default>: {{advanceFilter.minDeliveryValue}} {{currency}}</span></div>
                                 <div class="range range-positive">
-                                    <i>1</i>
-                                    <input type="range" name="volume" min="0" max="100" value="33">
-                                    <i>All</i>
+                                    <i>500 {{currency}}</i>
+                                    <input type="range" name="deliveryAmount" ng-model="advanceFilter.minDeliveryValue" min="500" max="10000" step="500">
+                                    <i>{{'ALL' | translate}}</i>
                                 </div>
                             </div>
                             <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
-                                <div translate="DELIVERY_TIME"></div>
+                                <div ng-switch="advanceFilter.deliveryTime"><span translate="DELIVERY_TIME"></span><span ng-switch-when="120">: {{'ALL' | translate}}</span><span ng-switch-default>: {{advanceFilter.deliveryTime}} {{'MINUTE_SHORT' | translate}}</span></div>
                                 <div class="range range-positive">
-                                    <i>15min</i>
-                                    <input type="range" name="volume" min="0" max="100" value="33">
-                                    <i>All</i>
+                                    <i>15 min</i>
+                                    <input type="range" name="deliveryTime" ng-model="advanceFilter.deliveryTime" min="15" max="120" step="15">
+                                    <i>{{'ALL' | translate}}</i>
                                 </div>
                             </div>
                             <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
-                                <span>Rating</span>
+                                <span>{{'RATING' | translate}}</span>
                                 <div class="button-bar bar-assertive">
-                                    <a class="button button-raised">1</a>
-                                    <a class="button button-raised ink-dark">2</a>
-                                    <a class="button button-raised ink-dark">3</a>
-                                    <a class="button button-raised ink-dark">4</a>
-                                    <a class="button button-raised ink-dark">5</a>
+                                    <a class="button button-raised ink-dark" ng-click="advanceFilter.rating = 1" ng-class="advanceFilter.rating == 1 ? 'button-energized' : ''">1</a>
+                                    <a class="button button-raised ink-dark" ng-click="advanceFilter.rating = 2" ng-class="advanceFilter.rating == 2 ? 'button-energized' : ''">2</a>
+                                    <a class="button button-raised ink-dark" ng-click="advanceFilter.rating = 3" ng-class="advanceFilter.rating == 3 ? 'button-energized' : ''">3</a>
+                                    <a class="button button-raised ink-dark" ng-click="advanceFilter.rating = 4" ng-class="advanceFilter.rating == 4 ? 'button-energized' : ''">4</a>
+                                    <a class="button button-raised ink-dark" ng-click="advanceFilter.rating = 5" ng-class="advanceFilter.rating == 5 ? 'button-energized' : ''">5</a>
                                 </div>
                             </div>
 
 
                                 <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
-                                    <span>Show closed resturants</span>
+                                    <span>{{'SHOW_CLOSED_RESTURANTS' | translate}}</span>
                                     <label class="toggle toggle-assertive pull-right">
-                                        <input type="checkbox">
+                                        <input type="checkbox" ng-model="advanceFilter.showClosed">
                                         <div class="track">
                                             <div class="handle"></div>
                                         </div>
                                     </label>
                                 </div>
                                 <div class="item" style="border-bottom: 1px solid silver; padding-left: 16px;">
-                                    <span>Show resturants with promotions only</span>
+                                    <span>{{'RESTURANTS_WITH_PROMOTIONS' | translate}}</span>
                                     <label class="toggle toggle-assertive pull-right">
-                                        <input type="checkbox">
+                                        <input type="checkbox" ng-model="advanceFilter.promotionOnly">
                                         <div class="track">
                                             <div class="handle"></div>
                                         </div>
@@ -162,7 +162,7 @@
                             </ul>
                         </div>
                         <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.min_amount}} {{currency}}</h5></div>
-                        <div style="float: left; width: 50%;"><h5 translate="DELIVERY_TIME"></h5><h5>{{shop.estimation_time}}</h5></div>
+                        <div style="float: left; width: 50%;"><h5 translate="DELIVERY_TIME"></h5><h5>{{shop.delivery_expected_time}} {{'MINUTE_SHORT' | translate}}</h5></div>
                     </div>
                 </div>
                 <i class="icon ion-chevron-right stable dl-menu-item-icon"></i>
