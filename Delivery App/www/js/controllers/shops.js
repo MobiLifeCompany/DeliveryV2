@@ -64,7 +64,7 @@ angular.module('delivery.controllers')
     $scope.descending = true;
     $scope.isMasteryFilterSet = false;
     $scope.isAdvanceFilterSet = false;
-    $scope.advanceFilter = {minDeliveryValue: 10000, deliveryTime: 120, rating: 5, showClosed: true, promotionOnly: false};
+    $scope.advanceFilter = {minDeliveryValue: 10000, deliveryTime: 120, rating: 0, showClosed: true, promotionOnly: false};
 
     // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
     $scope.$on('$ionicView.loaded', function () {
@@ -176,7 +176,7 @@ angular.module('delivery.controllers')
         //Apply advance filter first
         if (element.min_amount <= $scope.advanceFilter.minDeliveryValue &&
             parseInt(element.estimation_time) <= $scope.advanceFilter.deliveryTime &&
-            (element.rating == 0 || element.rating >= $scope.advanceFilter.rating) &&
+            ($scope.advanceFilter.rating == 0 || element.rating <= $scope.advanceFilter.rating) &&
             ($scope.advanceFilter.showClosed == true || $scope.advanceFilter.showClosed == false && element.is_open == true) &&
             ($scope.advanceFilter.promotionOnly == false || $scope.advanceFilter.promotionOnly == true && element.promotion_note != null)) {
 
@@ -213,7 +213,7 @@ angular.module('delivery.controllers')
 
     $scope.clearAdvanceFilter = function () {
         $scope.isAdvanceFilterSet = false;
-        $scope.advanceFilter = { minDeliveryValue: 10000, deliveryTime: 120, rating: 5, showClosed: true, promotionOnly: false };
+        $scope.advanceFilter = { minDeliveryValue: 10000, deliveryTime: 120, rating: 0, showClosed: true, promotionOnly: false };
         $scope.advanceFilterModal.hide();
     }
 
