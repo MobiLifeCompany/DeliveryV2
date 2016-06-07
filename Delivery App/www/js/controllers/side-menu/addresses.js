@@ -66,9 +66,8 @@ angular.module('delivery.controllers')
     });
 
     $rootScope.getCustomerAddress = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOADING_ADDRESSES'));
-            customerFactory.getCustomerAddressess().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            customerFactory.getCustomerAddressess(deliveryLoader).success(function (data) {
                 try {
                     var filteredAddresses = [];
                     for (i = 0; i < data.length; i++)
@@ -80,6 +79,7 @@ angular.module('delivery.controllers')
                     storageUtilityFactory.setCustomerAddresses(data);
                     deliveryLoader.hideLoading();
                 } catch (e) {
+                    deliveryLoader.hideLoading();
                     connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ADDRESS'));
                 }
             }).error(function (err, statusCode) {
@@ -87,6 +87,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     };
@@ -109,38 +110,38 @@ angular.module('delivery.controllers')
     };
 
     $scope.createAddress = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('CREATE_ADDRESSES'));
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $scope.customerAddress.city_id = $rootScope.selectedCity.id;
             $scope.customerAddress.area_id = $rootScope.selectedArea.id;
             $scope.customerAddress.latitude = 0;
             $scope.customerAddress.longitude = 0;
             $scope.customerAddress.is_default = false;
-            customerFactory.createCustomerAddress($scope.customerAddress).success(function (data) {
+            customerFactory.createCustomerAddress($scope.customerAddress,deliveryLoader).success(function (data) {
                 $scope.closeCreateAddressModal();
-                deliveryLoader.hideLoading();
                 $rootScope.customerAddressess.push($scope.customerAddress);
+                deliveryLoader.hideLoading();
             }).error(function (err, statusCode) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     };
     $scope.updateAddress = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('UPDATE_ADDRESSES'));
-            customerFactory.updateCustomerAddress($scope.customerAddress).success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            customerFactory.updateCustomerAddress($scope.customerAddress,deliveryLoader).success(function (data) {
                 $scope.closeEditAddressModal();
-                deliveryLoader.hideLoading();
                 $scope.getCustomerAddress();
                 $scope.customerAddress = {};
+                deliveryLoader.hideLoading();
             }).error(function (err, statusCode) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     };

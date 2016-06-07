@@ -9,7 +9,7 @@ angular.module('delivery.controllers')
     /// <summary>setArea: add the selected area to '$rootScope' and 'localStorage' then redirect the user to main view</summary>
     /// <param name="i" type="integer">The id of the selected area</param>
     $scope.setArea = function (area) {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $rootScope.selectedArea = area;
             storageUtilityFactory.setSelectedArea(area);
 
@@ -18,11 +18,12 @@ angular.module('delivery.controllers')
             $rootScope.showMainView = true;
 
             //load required shops by business category and selected delivered area 
-            $rootScope.loadShops();
+            $rootScope.loadShops(deliveryLoader);
 
             //this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
             $ionicSlideBoxDelegate.update();
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
 

@@ -8,8 +8,16 @@ angular.module('delivery.controllers')
     $rootScope.shopsOffers = [];
     //$rootScope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
 
-    $rootScope.loadShops = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
+    $scope.$on('$ionicView.enter', function () {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            $rootScope.loadShops(deliveryLoader);
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+            connectionFactory.exitApplication();
+        })
+    });
+
+    $rootScope.loadShops = function (deliveryLoader) {
         shopsFactory.get().success(function (data) {
             try{
                 $rootScope.shops = data;
@@ -34,7 +42,7 @@ angular.module('delivery.controllers')
         })
     };
 
-    $rootScope.loadShopsOffers = function () {
+    $rootScope.loadShopsOffers = function (deliveryLoader) {
         shopsFactory.getOffers().success(function (data) {
             try {
                 var silverOffers = [];
@@ -43,17 +51,21 @@ angular.module('delivery.controllers')
                         silverOffers.push(data[i]);
                 }
                 $scope.shopsOffers = silverOffers;
+                deliveryLoader.hideLoading();
             } catch (e) {
+                deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
         })
     };
 
-    connectionFactory.testConnection().success(function (data) {
-      $rootScope.loadShopsOffers();
+    connectionFactory.testConnection(deliveryLoader).success(function (data) {
+      $rootScope.loadShopsOffers(deliveryLoader);
     }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
         connectionFactory.exitApplication();
     })
     
@@ -68,10 +80,13 @@ angular.module('delivery.controllers')
 
     // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
     $scope.$on('$ionicView.loaded', function () {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             if ($rootScope.showMainView)
-                $rootScope.loadShops();
+                $rootScope.loadShops(deliveryLoader);
+            else
+                deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     });

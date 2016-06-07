@@ -24,9 +24,8 @@ angular.module('delivery.controllers')
     /// <summary>doLogin: Perform the login action when the user submits the login form, and save user data to '$rootScope' and 'localStorage'</summary>
     /// <param>No parameters</param>
     $scope.doLogin = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOGIN'));
-            customerFactory.login($scope.loginData).success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            customerFactory.login($scope.loginData,deliveryLoader).success(function (data) {
                 try {
                     $rootScope.isAuthenticated = true;
                     $rootScope.isUserLoggedin = true;
@@ -36,11 +35,12 @@ angular.module('delivery.controllers')
                     data.password = $scope.loginData.password;
                     data.password_confirmation = $scope.loginData.password;
                     authFactory.setCustomer(data);
+                    deliveryLoader.hideLoading();
                     $scope.closeLogin();
                 } catch (e) {
+                    deliveryLoader.hideLoading();
                     connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(401, 'LOGIN'));
                 }
-                deliveryLoader.hideLoading();
             }).error(function (err, statusCode) {
                 $rootScope.isAuthenticated = false;
                 authFactory.deleteCustomer();
@@ -48,6 +48,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'LOGIN'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
 
@@ -55,9 +56,8 @@ angular.module('delivery.controllers')
 
     /// <summary>loginFromCart: Perform the login action when the user checkout and he is not logged in</summary>
     $scope.loginFromCart = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOGIN'));
-            customerFactory.login($scope.loginData).success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            customerFactory.login($scope.loginData,deliveryLoader).success(function (data) {
                 $rootScope.isAuthenticated = true;
                 $rootScope.isUserLoggedin = true;
                 $rootScope.currentCustomerId = data.id;
@@ -77,6 +77,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), statusCode + ": " + err);
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     }

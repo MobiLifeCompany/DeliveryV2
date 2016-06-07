@@ -13,10 +13,9 @@ angular.module('delivery.controllers')
     }
 
     $scope.register = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOADING'));
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $scope.customer.lang = $rootScope.lang;
-            customerFactory.register($scope.customer).success(function (data) {
+            customerFactory.register($scope.customer, deliveryLoader).success(function (data) {
                 deliveryLoader.hideLoading();
                 $rootScope.registerModal.hide();
             }).error(function (err, statusCode) {
@@ -24,6 +23,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('REGISTER'), errorCodeMessageFactory.getErrorMessage(statusCode, 'REGISTER'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
 

@@ -24,6 +24,7 @@
                         <ion-item>
                             <div style="text-align: center;">
                                 <h2>{{shopDetails.address}}</h2>
+                                <h2>{{shopDetails.phone}}</h2>
                                 <ul>
                                     <li class="assertive" style="display: inline-block; font-size: small;" ng-repeat="mastery in shopDetails.masteries">{{mastery}}<span ng-if="$index < shopDetails.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
                                 </ul>
@@ -40,7 +41,7 @@
                         </ion-item>
                         <ion-item style="text-align: center;">
                             <ul  ng-repeat="dayHour in shopDetails.delivery_hours">
-                                <li>{{dayHour.day}}: {{dayHour.open}}</li>
+                                <li>{{getDayName(dayHour.day)}}: {{dayHour.open}}</li>
                             </ul>
                         </ion-item>
                         <ion-item class="item-divider" style="text-align: center;" translate="REVIEWS">
@@ -122,10 +123,14 @@
                         <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="MIN_DELIVERY_AMOUNT"></h6><h6 style="margin: 0px;">{{shopDetails.min_amount}} {{currency}}</h6></div>
                         <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_TIME"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_expected_time}} {{'MINUTE_SHORT' | translate}}</h6></div>
                     </div>
-                    <div style="margin-top: 40px;">
+                    <div style="margin-top: 40px;margin-bottom: 75px;">
                         <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_charge}} {{currency}}</h6></div>
                         <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{getCurrentDeliverHour()}}</h6></div>
                     </div>
+                    <div>
+                       <h6>{{'PHONE' | translate}} : {{shopDetails.phone}}</h6>
+                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -12,8 +12,7 @@ angular.module('delivery.controllers')
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
-    $rootScope.loadCategories = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
+    $rootScope.loadCategories = function (deliveryLoader) {
         businessCategoriesFactory.get().success(function (data) {
             $scope.categories = data;
             deliveryLoader.hideLoading();
@@ -60,9 +59,10 @@ angular.module('delivery.controllers')
 
     
     /////////////////////// functions calls on load//////////////////////
-    connectionFactory.testConnection().success(function (data) {
-        $rootScope.loadCategories();
+    connectionFactory.testConnection(deliveryLoader).success(function (data) {
+        $rootScope.loadCategories(deliveryLoader);
     }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
         connectionFactory.exitApplication();
     })
 

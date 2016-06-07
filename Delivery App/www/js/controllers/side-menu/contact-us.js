@@ -11,11 +11,10 @@ angular.module('delivery.controllers')
     };
 
     $scope.sendContactUsInfo = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOADING'));
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             if ($rootScope.isUserLoggedin == true)
                 $scope.contactUsInfo.name = authFactory.getCustomer().full_name;
-            utilitiesFactory.sendContactUsInfo($scope.contactUsInfo).success(function (data) {
+            utilitiesFactory.sendContactUsInfo($scope.contactUsInfo,deliveryLoader).success(function (data) {
                 deliveryLoader.hideLoading();
                 var alertPopup = $ionicPopup.alert({
                     title: $translate.instant('CONTACTUS_MSG'),
@@ -30,6 +29,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'CONTACTUS'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
 

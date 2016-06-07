@@ -6,15 +6,15 @@ angular.module('delivery.controllers')
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection().success(function (data) {
-            $scope.loadShopsOffers();
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            $scope.loadShopsOffers(deliveryLoader);
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     });
 
-    $scope.loadShopsOffers = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
+    $scope.loadShopsOffers = function (deliveryLoader) {
         shopsFactory.getOffers().success(function (data) {
             try {
                 var silverOffers = [];

@@ -4,17 +4,19 @@ angular.module('delivery.controllers')
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             if ($rootScope.isUserLoggedin == true)
-                $scope.loadOldOrders();
+                $scope.loadOldOrders(deliveryLoader);
+            else
+                deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     });
 
-    $scope.loadOldOrders = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-        customerFactory.getCustomerOrders().success(function (data) {
+    $scope.loadOldOrders = function (deliveryLoader) {
+        customerFactory.getCustomerOrders(deliveryLoader).success(function (data) {
             try {
                 $scope.oldOrders = data;
                 deliveryLoader.hideLoading();
@@ -27,13 +29,6 @@ angular.module('delivery.controllers')
             connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'));
         })
     };
-
-    connectionFactory.testConnection().success(function (data) {
-        if ($rootScope.isUserLoggedin == true)
-            $scope.loadOldOrders();
-    }).error(function (err, statusCode) {
-        connectionFactory.exitApplication();
-    })
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {
