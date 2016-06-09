@@ -6,8 +6,7 @@ angular.module('delivery.controllers')
     $scope.done_loading = true;
     $rootScope.selectedCity = {};
 
-    $rootScope.loadCities = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
+    $rootScope.loadCities = function (deliveryLoader) {
         citiesFactory.get().success(function (data) {
             $scope.cities = data.cities;
             deliveryLoader.hideLoading();
@@ -40,20 +39,22 @@ angular.module('delivery.controllers')
     /// <summary>prevStep: Redirect the user back to 'select categories' modal</summary>
     /// <param>no parameters</param>
     $scope.prevStep = function () {
-        connectionFactory.testConnection().success(function (data) {
-            $rootScope.loadCategories();
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            $rootScope.loadCategories(deliveryLoader);
             $rootScope.categoriesModal.show();
             $rootScope.citiesModal.hide();
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     }
 
 
     /////////////////////// functions calls on load//////////////////////
-    connectionFactory.testConnection().success(function (data) {
-        $rootScope.loadCities();
+    connectionFactory.testConnection(deliveryLoader).success(function (data) {
+        $rootScope.loadCities(deliveryLoader);
     }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
         connectionFactory.exitApplication();
     })
 });

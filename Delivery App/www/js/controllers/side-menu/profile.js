@@ -11,9 +11,8 @@ angular.module('delivery.controllers')
     };
 
     $scope.updateProfile = function () {
-        connectionFactory.testConnection().success(function (data) {
-            deliveryLoader.showLoading($translate.instant('LOADING'));
-            customerFactory.updateProfile($scope.customer).success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            customerFactory.updateProfile($scope.customer, deliveryLoader).success(function (data) {
                 $rootScope.currentCustomerId = data.id;
                 $rootScope.currentCustomerUserName = data.username;
                 $rootScope.currentCustomerAuthToken = data.auth_token;
@@ -36,6 +35,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('PROFILE'), errorCodeMessageFactory.getErrorMessage(statusCode, 'PROFILE'));
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
        

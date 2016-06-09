@@ -17,6 +17,7 @@ angular.module('delivery.controllers')
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     })
 
+
     $scope.showFilterBar = function () {
         filterBarInstance = $ionicFilterBar.show({
             items: $scope.items,
@@ -31,8 +32,9 @@ angular.module('delivery.controllers')
         });
     };
 
-    $scope.loadShopItemsCategories = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
+
+    $scope.loadShopItemsCategories = function (deliveryLoader) {
+    deliveryLoader.showLoading($translate.instant('LOADING'));
         shopDetailsFactory.getShopItemsCategories().success(function (data) {
             $scope.categories = data;
             for (i = 0; i < $scope.categories.length; i++) {
@@ -45,9 +47,10 @@ angular.module('delivery.controllers')
         })
     }
 
-    connectionFactory.testConnection().success(function (data) {
-        $scope.loadShopItemsCategories();
+    connectionFactory.testConnection(deliveryLoader).success(function (data) {
+        $scope.loadShopItemsCategories(deliveryLoader);
     }).error(function (err, statusCode) {
+        deliveryLoader.hideLoading();
         connectionFactory.exitApplication();
     })
 
@@ -154,6 +157,23 @@ angular.module('delivery.controllers')
                 return days[i].open;
             }
         }
+        return "";
+    }
+    $scope.getDayName = function (dayName) {
+        if (dayName === 'sat')
+            return $translate.instant('SATURDAY');
+        else if (dayName === 'sun')
+            return $translate.instant('SUNDAY');
+        else if (dayName === 'mon')
+            return $translate.instant('MONDAY');
+        else if (dayName === 'tue')
+            return $translate.instant('TUESDAY');
+        else if (dayName === 'wed')
+            return $translate.instant('WEDNESDAY');
+        else if (dayName === 'thu')
+            return $translate.instant('THURSDAY');
+        else if (dayName === 'fri')
+            return $translate.instant('FRIDAY');
         return "";
     }
     //increaseAmount: increase the item quantity counter label when click on '+' button

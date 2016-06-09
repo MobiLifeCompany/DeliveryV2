@@ -9,9 +9,10 @@ angular.module('delivery.controllers')
     $scope.orderInfo = {};
 
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection().success(function (data) {
-            $scope.submitOrder();
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            $scope.submitOrder(deliveryLoader);
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
     });
@@ -20,7 +21,7 @@ angular.module('delivery.controllers')
         $ionicNavBarDelegate.showBackButton(true);
     });
 
-    $scope.submitOrder = function () {
+    $scope.submitOrder = function (deliveryLoader) {
         //// Todo: place backend API call here to submit the order
         customerOrder.items = $rootScope.cartItems;
         for (i = 0; i < $rootScope.cartItems.length; i++) {
@@ -34,10 +35,8 @@ angular.module('delivery.controllers')
         customerOrder.customer_address_id = $rootScope.selectedAddressId;
         customerOrder.delivery_charge = $rootScope.cartShop.delivery_charge;
 
-        deliveryLoader.showLoading($translate.instant('LOADING'));
         customerFactory.createCustomerOrder(customerOrder).success(function (data) {
             try {
-                deliveryLoader.hideLoading();
                 // On success:
                 $scope.orderInfo.shopId = $rootScope.cartShop.id;
                 $scope.orderInfo.order_id = data.id;
@@ -59,7 +58,9 @@ angular.module('delivery.controllers')
                         $rootScope.fullName = authFactory.getCustomer().full_name;
                     });
                 $ionicNavBarDelegate.showBackButton(false);
+                deliveryLoader.hideLoading();
             } catch (e) {
+                deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
             }
         }).error(function (err, statusCode) {
@@ -71,15 +72,13 @@ angular.module('delivery.controllers')
     };
 
     $scope.sendRating = function (appRating) {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $scope.orderInfo.rate = appRating;
-            deliveryLoader.showLoading($translate.instant('LOADING'));
-            customerFactory.sendCustomerRating($scope.orderInfo).success(function (data) {
+            customerFactory.sendCustomerRating($scope.orderInfo, deliveryLoader).success(function (data) {
                 try {
                     deliveryLoader.hideLoading();
                     connectionFactory.showAlertPopup($translate.instant('RATE'), $translate.instant('RATING_SUCCESS_MSG'));
                     $rootScope.showMainView = true;
-
                 } catch (e) {
                     deliveryLoader.hideLoading();
                     connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(404, 'ORDER'));
@@ -89,6 +88,7 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), statusCode);
             });
         }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
 

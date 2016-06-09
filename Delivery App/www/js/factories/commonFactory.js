@@ -363,7 +363,8 @@ angular.module('delivery.factory', [])
 .factory('connectionFactory', function ($http, $ionicPopup, $translate) {
 
     var API = {
-        testConnection: function () {
+        testConnection: function (deliveryLoader) {
+            deliveryLoader.showLoading($translate.instant('LOADING'));
             img = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' + "?" + new Date().getTime();
             return $http.get(img);
         },
