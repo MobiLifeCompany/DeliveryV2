@@ -58,6 +58,12 @@ angular.module('delivery.controllers')
         }, 500);
     };
 
+    $scope.showMainScreen = function () {
+        $rootScope.showMainView = true;
+        $timeout(function () {
+            $rootScope.categoriesModal.hide();
+        }, 500);
+    };
     
     /////////////////////// functions calls on load//////////////////////
     connectionFactory.testConnection().success(function (data) {

@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, connectionFactory, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPopover, $state, $ionicHistory, $ionicSlideBoxDelegate, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, ionicMaterialInk, connectionFactory, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
@@ -43,6 +43,7 @@ angular.module('delivery.controllers')
                         silverOffers.push(data[i]);
                 }
                 $scope.shopsOffers = silverOffers;
+                $ionicSlideBoxDelegate.update();
             } catch (e) {
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
@@ -76,6 +77,30 @@ angular.module('delivery.controllers')
         })
     });
 
+
+    // Create options popover
+    $ionicPopover.fromTemplateUrl('options-popover.html', {
+        scope: $scope
+    }).then(function (popover) {
+        $scope.optionsPopover = popover;
+    });
+
+    $scope.closePopover = function () {
+        $scope.optionsPopover.hide();
+    };
+
+    $scope.openPopover = function () {
+        $scope.optionsPopover.show();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function () {
+        $scope.optionsPopover.remove();
+    });
+
+    $scope.showPopover = function () {
+        $scope.openPopover();
+    };
+
     $scope.changeAddress = function () {
         $rootScope.showMainView = false // hide the main screen while changing address
         if ($rootScope.isUserLoggedin) {
@@ -98,6 +123,11 @@ angular.module('delivery.controllers')
         }
     };
 
+    $scope.changeCategory = function () {
+        $rootScope.showMainView = false // hide the main screen while changing address
+        $rootScope.categoriesModal.show();
+    };
+
     $scope.showFilterBar = function () {
         filterBarInstance = $ionicFilterBar.show({
             items: $scope.shops,
@@ -105,6 +135,13 @@ angular.module('delivery.controllers')
                 $scope.shops = filteredItems;
             },
             filterProperties: 'name'
+        });
+    };
+
+    $rootScope.goBackToShops = function () {
+        $state.go('app.shops'); //go back to start view 'shops'
+        $ionicHistory.nextViewOptions({
+            historyRoot: true
         });
     };
 

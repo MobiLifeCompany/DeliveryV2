@@ -1,10 +1,21 @@
 <ion-view view-title="{{selectedArea.name}}">
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-location" ng-click="changeAddress()"></button>
-        <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
+        <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()" ng-show="isCategorySelected"></button>
+        <button class="button button-icon button-clear ion-android-more-vertical" ng-click="showPopover()"></button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="false" class="has-footer">
+        <!-- Options Popover -->
+        <script id="options-popover.html" type="text/ng-template">
+            <ion-popover-view style="height: 110px;">
+                <ion-content overflow-scroll="false">
+                    <ion-list>
+                        <ion-item ng-click="changeCategory(); closePopover();" translate="CHANGE_CATEGORY"></ion-item>
+                        <ion-item ng-click="changeAddress(); closePopover();" translate="CHANGE_ADDRESS"></ion-item>
+                    </ion-list>
+                </ion-content>
+            </ion-popover-view>
+        </script>
         <!--'Sort By' modal template-->
         <script id="sort-modal.html" type="text/ng-template">
             <ion-modal-view class="dl-sort-action-sheet">
@@ -152,13 +163,14 @@
                             <i ng-class="shop.rating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             <i ng-class="shop.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                         </div>
-                        <img src="img/subscribed.png" style="position: absolute; bottom: 10%; right: 10%; opacity: 0.6; height: 50%; z-index: 9999;" ng-show="shop.subscribed"/>
+                        <img src="img/subscribed.png" style="position: absolute; bottom: 10%; right: 10%; opacity: 0.6; height: 50%; z-index: 9999;" ng-show="shop.subscribed && lang == 'en'"/>
+                        <img src="img/subscribed_ar.png" style="position: absolute; bottom: 10%; right: 10%; opacity: 0.6; height: 50%; z-index: 9999;" ng-show="shop.subscribed && lang == 'ar'" />
                     </div>
-                    <div style="float: left; padding: 5px 10px; width: 75%;">
+                    <div style="float: left; padding: 5px 10px; width: 75%; overflow: hidden;">
                         <div>
                             <h2>{{shop.name}}</h2>
                             <ul>
-                                <li class="assertive" style="display: inline-block; font-size: small;" ng-repeat="mastery in shop.masteries">{{mastery}}<span ng-if="$index < shop.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
+                                <li class="assertive" style="display: inline-block; font-size: x-small;" ng-repeat="mastery in shop.masteries">{{mastery}}<span ng-if="$index < shop.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
                             </ul>
                         </div>
                         <div style="float: left; width: 50%;"><h5 translate="MIN_DELIVERY_AMOUNT"></h5><h5>{{shop.min_amount}} {{currency}}</h5></div>
@@ -173,7 +185,7 @@
         <div ng-show="noShopsFound" class="padding">
             <div class="icon ion-sad-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
             <h4 class="stable text-center" translate="NO_SHOPS_IN_SELECTED_AREA"></h4>
-            <button class="button icon-left ion-location button-balanced button-block" ng-click="changeAddress()" translate="PICK_A_NEW_ADDRESS"></button>
+            <button class="button icon-left ion-location button-balanced button-small button-block" ng-click="changeAddress()" translate="PICK_A_NEW_ADDRESS"></button>
         </div>
     </ion-content>
     <div class="bar bar-footer" ng-show="!noShopsFound">

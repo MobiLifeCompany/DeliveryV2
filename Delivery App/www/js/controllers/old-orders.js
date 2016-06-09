@@ -35,6 +35,10 @@ angular.module('delivery.controllers')
         connectionFactory.exitApplication();
     })
 
+    // Get shop photo
+    $scope.getShopPhoto = function (shopId) {
+        return shopDetailsFactory.get(shopId).photo;
+    }
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {
         var shopDetails = shopDetailsFactory.get(order.shop.id);

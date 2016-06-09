@@ -16,6 +16,7 @@ angular.module('delivery.controllers')
             // Hide the modal and show the main view
             $rootScope.areasModal.hide();
             $rootScope.showMainView = true;
+            $rootScope.isCategorySelected = true;
 
             //load required shops by business category and selected delivered area 
             $rootScope.loadShops();

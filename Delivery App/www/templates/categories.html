@@ -1,29 +1,18 @@
 <ion-modal-view ng-controller="CategoriesCtrl">
     <ion-header-bar class="bar-assertive">
-        <button class="button button-icon button-clear"><span class="icon ion-grid"></span></button>
+        <button class="button button-icon ion-close button-clear" ng-click="showMainScreen()"></button>
         <h1 class="title" translate="CATEGORIES"></h1>
     </ion-header-bar>
     <ion-content overflow-scroll="false">
         <div class="bar bar-subheader bar-energized static text-center">
             <h4 class="title"><span translate="SELECT_CATEGORY"></span></h4>
         </div>
+
         <div class="padding">
-            <div class="row" ng-repeat="category in categories" ng-if="$index % 4 === 0">
-                <a class="col col-25 dl-category" ng-if="$index < categories.length" width="25%" ng-click="setCategory(categories[$index])">
-                    <img class="button button-fab" ng-src="{{categories[$index].photo}}" width="100%" />
-                    <p>{{categories[$index].name}}</p>
-                </a>
-                <a class="col col-25 dl-category" ng-if="$index + 1 < categories.length" width="25%" ng-click="setCategory(categories[$index + 1])">
-                    <img class="button button-fab" ng-src="{{categories[$index + 1].photo}}" width="100%" />
-                    <p>{{categories[$index + 1].name}}</p>
-                </a>
-                <a class="col col-25 dl-category" ng-if="$index + 2 < categories.length" width="25%" ng-click="setCategory(categories[$index + 2])">
-                    <img class="button button-fab" ng-src="{{categories[$index + 2].photo}}" width="100%" />
-                    <p>{{categories[$index + 2].name}}</p>
-                </a>
-                <a class="col col-25 dl-category" ng-if="$index + 3 < categories.length" width="25%" ng-click="setCategory(categories[$index + 3])">
-                    <img class="button button-fab" ng-src="{{categories[$index + 3].photo}}" width="100%" />
-                    <p>{{categories[$index + 3].name}}</p>
+            <div class="list" ng-repeat="category in categories" style="display: inline-block; width: 33%;">
+                <a class="item" ng-click="setCategory(category)" style="width: 100%; padding: 10px; text-align: center;" >
+                    <img src="{{category.photo}}" style="width: 90%; border-radius: 50%;"/>
+                    <h3 style="height: 35px; text-decoration: none; white-space: normal; word-wrap: normal;">{{category.name}}</h3>
                 </a>
             </div>
         </div>

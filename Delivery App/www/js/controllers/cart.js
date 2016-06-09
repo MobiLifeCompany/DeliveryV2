@@ -55,34 +55,41 @@ angular.module('delivery.controllers')
         return total;
     };
 
-    $scope.goBackHome = function () {
-        $ionicHistory.goBack(-100); //go back to start view 'shops', use this method instead of 'ui-serf' to clear the ionic view history and show the side menu icon on nav-bar
-    };
-
     $scope.confirmOrder = function () {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 if ($scope.subtotal < $rootScope.cartShop.min_amount) {
-            
-            // Show a warning popup if subtotal is less than shop's min_delivery_amount
-            var alertPopup = $ionicPopup.alert({
-                title: $translate.instant('MIN_AMOUNT_REQUIRED'),
-                template: $translate.instant('MIN_AMOUNT_REQUIRED_MSG'),
-                okText: $translate.instant('CONTINUE')
-            });
-
-            // Resolve the promise returned by the popup. if user click continue, navigate back to shop-details
-            alertPopup.then(function (res) {
-                if (res) {
-                    $ionicHistory.goBack(-1);
-                }
+        // Check if the shop is subscribed
+        if (!$rootScope.cartShop.subscribed) {
+            var notSubscribedPopup = $ionicPopup.show({
+                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{cartShop.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{cartShop.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{cartShop.phone}}</p><a href="tel:{{cartShop.phone}}" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a></div>',
+                title: $translate.instant('SHOP_NOT_SUBSCRIBED'),
+                subTitle: $translate.instant('SHOP_NOT_SUBSCRIBED_MSG'),
+                scope: $scope,
+                buttons: [
+                  { text: 'Cancel' },
+                ]
             });
         }
         else {
-            if($rootScope.isUserLoggedin)
-                $state.go('app.cart-addresses');
-        else
-            $state.go('app.cart-login');
+            if ($scope.subtotal < $rootScope.cartShop.min_amount) {
+                // Show a warning popup if subtotal is less than shop's min_delivery_amount
+                var alertPopup = $ionicPopup.alert({
+                    title: $translate.instant('MIN_AMOUNT_REQUIRED'),
+                    template: $translate.instant('MIN_AMOUNT_REQUIRED_MSG'),
+                    okText: $translate.instant('CONTINUE')
+                });
+
+                // Resolve the promise returned by the popup. if user click continue, navigate back to shop-details
+                alertPopup.then(function (res) {
+                    if (res) {
+                        $ionicHistory.goBack(-1);
+                    }
+                });
+            }
+            else {
+                if ($rootScope.isUserLoggedin)
+                    $state.go('app.cart-addresses');
+                else
+                    $state.go('app.cart-login');
+            }
         }
     };
-
-
 });

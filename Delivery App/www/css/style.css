@@ -4,16 +4,6 @@
     font-weight: bold;
 }
 
-h4 {
-    color: #116262;
-    font-size: 22px;
-    margin-bottom: 16px;
-}
-
-h4:first-child {
-    border-top: none;
-    padding-top: initial;
-}
 
 .title-bordered {
     border-top: solid 2px #bbb;
@@ -253,9 +243,8 @@ body {
   transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
 
 
-.dl-category {
-    text-align: center;
-    text-decoration: none;
+.dl-category-name {
+    height: 35px; text-align: center; text-decoration: none; white-space: normal; word-wrap: normal;
 }
 
 .dl-text-left {

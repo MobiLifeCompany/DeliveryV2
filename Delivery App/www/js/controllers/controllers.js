@@ -1,10 +1,14 @@
 angular.module('delivery.controllers', [])
 
 .controller('LanguageSwitchController',
-  function ($scope, $rootScope, $translate, $ionicPlatform, storageUtilityFactory) {
+  function ($scope, $rootScope, $translate, $ionicPlatform, $window, storageUtilityFactory) {
     $scope.changeLanguage = function(langKey) {
         $translate.use(langKey);
         storageUtilityFactory.setSelectedLanguage(langKey);
+    };
+
+    $scope.refreshState = function () {
+        $window.location.reload();
     };
 
     $rootScope.$on('$translateChangeSuccess', function(event, data) {
@@ -37,6 +41,9 @@ angular.module('delivery.controllers', [])
 
     // showMainView: control the visibility of the main app screen, initial value = false, true when an address has been choosen
     $rootScope.showMainView = false;
+    $rootScope.isCategorySelected = false;
+    $rootScope.showMenuButton = true;
+    $rootScope.showBackButton = false;
 
     //Define application-wide variables here
     $rootScope.isUserLoggedin = false;
@@ -58,13 +65,18 @@ angular.module('delivery.controllers', [])
     //////  Create the side menu functions and modals /////
     ///////////////////////////////////////////////////////
 
-    // Create the login modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/login.html', {
-        id: '1',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.loginModal = modal;
-    });
+    /// <summary>showLogin: Show the login modal when the corresponding sidemenu item is clicked</summary>
+    /// <param>No parameters</param>
+    $rootScope.showLogin = function () {
+        // Create the login modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/login.html', {
+            id: '1',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.loginModal = modal;
+            $rootScope.loginModal.show();
+        });
+    };
 
     /// <summary>logout: Logout cuurent user when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
@@ -89,79 +101,91 @@ angular.module('delivery.controllers', [])
         });
     };
 
-    // Create the register modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/register.html', {
-        id: '2',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.registerModal = modal;
-    });
+    /// <summary>showRegister: Show the register modal when the corresponding sidemenu item is clicked</summary>
+    /// <param>No parameters</param>
+    $rootScope.showRegister = function () {
+        // Create the register modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/register.html', {
+            id: '2',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.registerModal = modal;
+            $rootScope.registerModal.show();
+        });
+    };
     
-
-    // Create the profile modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/profile.html', {
-        id: '3',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.profileModal = modal;
-    });
     /// <summary>showProfile: Show the profile modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showProfile = function () {
-        $rootScope.customerProfile = authFactory.getCustomer();
-        $rootScope.profileModal.show();
+        // Create the profile modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/profile.html', {
+            id: '3',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.profileModal = modal;
+            $rootScope.customerProfile = authFactory.getCustomer();
+            $rootScope.profileModal.show();
+        });
     }
 
-    // Create the addresses modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/addresses.html', {
-        id: '4',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.addressesModal = modal;
-    });
     /// <summary>showAddresses: Show the addresses modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAddresses = function () {
-        $rootScope.addressesModal.show();
+        // Create the addresses modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/addresses.html', {
+            id: '4',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.addressesModal = modal;
+            $rootScope.addressesModal.show();
+        });
     }
 
-    // Create the contact us modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/contact-us.html', {
-        id: '5',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.contactUsModal = modal;
-    });
+    
     /// <summary>showContactUs: Show the contact us modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showContactUs = function () {
-        $rootScope.contactUsModal.show();
+        // Create the contact us modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/contact-us.html', {
+            id: '5',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.contactUsModal = modal;
+            $rootScope.contactUsModal.show();
+        });
     }
     
-    // Create the help modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/help.html', {
-        id: '6',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.helpModal = modal;
-    });
     /// <summary>showHelp: Show the help modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showHelp = function () {
-        $rootScope.helpModal.show();
+        // Create the help modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/help.html', {
+            id: '6',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.helpModal = modal;
+            $rootScope.helpModal.show();
+        });
     }
 
-    // Create the about modal
-    $ionicModal.fromTemplateUrl('templates/side-menu/about.html', {
-        id: '7',
-        scope: $rootScope
-    }).then(function (modal) {
-        $rootScope.aboutModal = modal;
-    });
     /// <summary>showAbout: Show the about modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAbout = function () {
-        $rootScope.aboutModal.show();
+        // Create the about modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/about.html', {
+            id: '7',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.aboutModal = modal;
+            $rootScope.aboutModal.show();
+        });
+    }
+
+    /// <summary>exitApp: exit the application when the corresponding sidemenu item is clicked</summary>
+    /// <param>No parameters</param>
+    $rootScope.exitApp = function () {
+        ionic.Platform.exitApp();
+        //$ionicPlatform.exitApp();
     }
     ///////////////////////////////////////////////////////
     ////////  End of side menu functions and modals ///////
@@ -171,14 +195,31 @@ angular.module('delivery.controllers', [])
     // Create the categories modal which should be the starting point in the app
     $ionicModal.fromTemplateUrl('templates/categories.html', {
         scope: $rootScope,
-        hardwareBackButtonClose: true,
+        hardwareBackButtonClose: false,
     }).then(function (modal) {
         $rootScope.categoriesModal = modal;
     });
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
-        $rootScope.categoriesModal.show();
-        $cordovaSplashscreen.hide();
+        connectionFactory.testConnection().success(function (data) {
+            $rootScope.categoriesModal.show();
+            $cordovaSplashscreen.hide();
+        }).error(function (err, statusCode) {
+            $cordovaSplashscreen.hide();
+
+            // Create the no connection modal which should be displayed when no internet connection
+            $ionicModal.fromTemplateUrl('templates/no-connection.html', {
+                scope: $rootScope,
+                hardwareBackButtonClose: false,
+            }).then(function (modal) {
+                $rootScope.noConnectionModal = modal;
+                $rootScope.noConnectionModal.show();
+            });
+
+            $cordovaSplashscreen.hide();
+            //connectionFactory.exitApplication();
+        })
+        
     });
 })

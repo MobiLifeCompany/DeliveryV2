@@ -10,21 +10,34 @@
       </ion-nav-buttons>
       
     </ion-nav-bar>
-    <button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-show="showCartFabButton" ui-sref="app.cart">
-        <span class="icon ion-ios-cart" style="margin-left: 15px; margin-top: 5px;"></span><span class="badge badge-assertive cart-badge">{{cartItems.length}}</span>
-    </button>
-      <ion-tabs class="tabs-striped tabs-color-assertive">
-          <ion-tab title="{{'SILVER_OFFERS' | translate}}" href="#/app/silver-offers">
-              <ion-nav-view name="silver-offers"></ion-nav-view>
-          </ion-tab>
-          <ion-tab title="{{'ORDER' | translate}}" href="#/app/shops">
-              <ion-nav-view name="order"></ion-nav-view>
-          </ion-tab>
-          <ion-tab title="{{'OLD_ORDERS' | translate}}" href="#/app/old-orders">
-              <ion-nav-view name="old-orders"></ion-nav-view>
-          </ion-tab>
-      </ion-tabs>
-  </ion-side-menu-content>
+      <div ng-show="isCategorySelected">
+          <button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-show="showCartFabButton" ui-sref="app.cart">
+              <span class="icon ion-ios-cart" style="margin-left: 15px; margin-top: 5px;"></span><span class="badge badge-assertive cart-badge">{{cartItems.length}}</span>
+          </button>
+          <ion-tabs class="tabs-striped tabs-color-assertive">
+              <ion-tab title="{{'SILVER_OFFERS' | translate}}" href="#/app/silver-offers">
+                  <ion-nav-view name="silver-offers"></ion-nav-view>
+              </ion-tab>
+              <ion-tab title="{{'ORDER' | translate}}" href="#/app/shops">
+                  <ion-nav-view name="order"></ion-nav-view>
+              </ion-tab>
+              <ion-tab title="{{'OLD_ORDERS' | translate}}" href="#/app/old-orders">
+                  <ion-nav-view name="old-orders"></ion-nav-view>
+              </ion-tab>
+          </ion-tabs>
+      </div>
+
+      <div ng-show="!isCategorySelected">
+          <div class="text-center padding-top" style="margin-top: 40px; height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
+              <img src="img/delivery_logo.png" style="vertical-align: middle;">
+          </div>
+          <div class="padding">
+              <h4 class="stable text-center" translate="NO_CATEGORY_SELECTED"></h4>
+              <div class="icon ion-ios-keypad-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
+              <button class="button icon-left ion-home button-balanced button-small button-block" ng-click="categoriesModal.show()" translate="SELECT_CATEGORY"></button>
+          </div>
+      </div>
+</ion-side-menu-content>
 
   <ion-side-menu side="left">
     <ion-header-bar class="expanded">
@@ -67,9 +80,13 @@
               <i class="icon ion-information-circled">
               </i><span translate="ABOUT"></span>
           </ion-item>
+          <ion-item nav-clear menu-close ng-click="exitApp()" class="item-icon-left">
+              <i class="icon ion-android-exit">
+              </i><span translate="EXIT"></span>
+          </ion-item>
           <ion-item ng-controller="LanguageSwitchController">
-              <button class="button button-positive button-small button-block" ng-show="lang == 'en'" ng-click="changeLanguage('ar')"><i translate="LANG_AR"></i></button>
-              <button class="button button-positive button-small button-block" ng-show="lang == 'ar'" ng-click="changeLanguage('en')"><i translate="LANG_EN"></i></button>
+              <button class="button button-positive button-small button-block" ng-show="lang == 'en'" ng-click="changeLanguage('ar'); refreshState();"><i translate="LANG_AR"></i></button>
+              <button class="button button-positive button-small button-block" ng-show="lang == 'ar'" ng-click="changeLanguage('en'); refreshState();"><i translate="LANG_EN"></i></button>
           </ion-item>
         
       </ion-list>

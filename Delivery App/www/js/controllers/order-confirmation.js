@@ -41,8 +41,9 @@ angular.module('delivery.controllers')
                 // On success:
                 $scope.orderInfo.shopId = $rootScope.cartShop.id;
                 $scope.orderInfo.order_id = data.id;
+                $scope.showSubmissionResult = true;
                 $scope.orderSubmittedSuccessfully = true;
-                //clear history and cache of the entire ionicHistory stack views, used to set the app to start state and ready to another new order
+                //clear cache of the entire ionicHistory stack views, used to set the app to start state and ready to another new order
                 $ionicHistory.clearHistory();
                 $ionicHistory.clearCache()
                     .then(function () {
@@ -63,13 +64,11 @@ angular.module('delivery.controllers')
             }
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
+            $scope.showSubmissionResult = true;
             $scope.orderSubmittedSuccessfully = false;
             connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ORDER'));
         });
-
-        $scope.showSubmissionResult = true;
     };
-
 
     $scope.sendRating = function (appRating) {
         connectionFactory.testConnection().success(function (data) {

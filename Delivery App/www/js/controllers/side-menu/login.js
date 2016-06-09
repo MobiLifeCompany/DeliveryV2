@@ -4,16 +4,11 @@ angular.module('delivery.controllers')
     // Form data for the login modal
     $scope.loginData = {};
 
-    /// <summary>showLogin: Show the login modal when the corresponding sidemenu item is clicked</summary>
-    /// <param>No parameters</param>
-    $rootScope.showLogin = function () {
-        $rootScope.loginModal.show();
-    };
 
     /// <summary>closeLogin: Close the login modal when user press back</summary>
     /// <param>No parameters</param>
     $scope.closeLogin = function () {
-        $rootScope.loginModal.hide();
+        $rootScope.loginModal.remove();
     };
 
     $scope.switchToRegister = function () {
@@ -66,7 +61,6 @@ angular.module('delivery.controllers')
                 data.password = $scope.loginData.password;
                 data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
-                $scope.closeLogin();
                 deliveryLoader.hideLoading();
                 // if login successed, go to 'cart-addresses' view to continue order checkout
                 $state.go('app.cart-addresses');

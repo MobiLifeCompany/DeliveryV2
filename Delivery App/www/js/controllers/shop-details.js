@@ -1,11 +1,13 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicFilterBar, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
 
 
     $scope.shopDetails = [];
     $rootScope.selectedShop = {};
     $scope.categories = [];
+    $scope.items = [];
+    $scope.isSearchApplied = false;
 
     $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId === "" ? $rootScope.shopId : $stateParams.shopId);
 
@@ -15,10 +17,27 @@ angular.module('delivery.controllers')
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     })
 
+    $scope.showFilterBar = function () {
+        filterBarInstance = $ionicFilterBar.show({
+            items: $scope.items,
+            update: function (filteredItems) {
+                $scope.items = filteredItems;
+                $scope.isSearchApplied = true;
+            },
+            cancel: function () {
+                $scope.isSearchApplied = false;
+            },
+            filterProperties: 'name'
+        });
+    };
+
     $scope.loadShopItemsCategories = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
         shopDetailsFactory.getShopItemsCategories().success(function (data) {
             $scope.categories = data;
+            for (i = 0; i < $scope.categories.length; i++) {
+                $scope.items = $scope.items.concat($scope.categories[i].items);
+            }
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
@@ -169,66 +188,49 @@ angular.module('delivery.controllers')
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
-        //shop.subscribed = true;
-        // Check if the shop is subscribed
-        if (!shop.subscribed) {
-            var notSubscribedPopup = $ionicPopup.show({
-                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{shopDetails.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{shopDetails.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{shopDetails.phone}}</p><a href="tel:{{shopDetails.phone}}" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a></div>',
-                title: $translate.instant('SHOP_NOT_SUBSCRIBED'),
-                subTitle: $translate.instant('SHOP_NOT_SUBSCRIBED_MSG'),
-                scope: $scope,
-                buttons: [
-                  { text: 'Cancel' },
-                ]
+        if (!shop.is_open) {
+
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('SHOP_CLOSED'),
+                template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
             });
         }
-        //
         else {
+            if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+                var isNewItem = true; // used to determine if the added item is new or allready in the cart
+                var quantity = document.getElementById(item.id).innerHTML;
+                $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
+                $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
+                for (i = 0; i < $rootScope.cartItems.length; i++) {
+                    if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
+                        $rootScope.cartItems[i].quantity = quantity;
+                        isNewItem = false;
+                        i = $rootScope.cartItems.length; //break the loop
+                    }
 
-            if (!shop.is_open) {
-
-                var alertPopup = $ionicPopup.alert({
-                    title: $translate.instant('SHOP_CLOSED'),
-                    template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
-                });
+                }
+                if (isNewItem) //all new item to cart
+                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
             }
             else {
-                if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
-                    var isNewItem = true; // used to determine if the added item is new or allready in the cart
-                    var quantity = document.getElementById(item.id).innerHTML;
-                    $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
-                    $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
-                    for (i = 0; i < $rootScope.cartItems.length; i++) {
-                        if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
-                            $rootScope.cartItems[i].quantity = quantity;
-                            isNewItem = false;
-                            i = $rootScope.cartItems.length; //break the loop
-                        }
+                // Show a warning popup if shop changed
+                var confirmPopup = $ionicPopup.confirm({
+                    title: $translate.instant('CHANGE_SHOP'),
+                    template: $translate.instant('CHANGE_SHOP_MSG'),
+                    cancelText: $translate.instant('NO'),
+                    okText: $translate.instant('YES')
+                });
 
-                    }
-                    if (isNewItem) //all new item to cart
+                // Resolve the promise returned by the popup, then empty the cart if user confirm
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
+                        $rootScope.cartShop = shop;
+                        $rootScope.cartItems = [];
+                        var quantity = document.getElementById(item.id).innerHTML;
                         $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
-                }
-                else {
-                    // Show a warning popup if shop changed
-                    var confirmPopup = $ionicPopup.confirm({
-                        title: $translate.instant('CHANGE_SHOP'),
-                        template: $translate.instant('CHANGE_SHOP_MSG'),
-                        cancelText: $translate.instant('NO'),
-                        okText: $translate.instant('YES')
-                    });
-
-                    // Resolve the promise returned by the popup, then empty the cart if user confirm
-                    confirmPopup.then(function (res) {
-                        if (res) {
-                            //if user click 'yes': empty the cart, change the cart shop and add the new item from the new shop
-                            $rootScope.cartShop = shop;
-                            $rootScope.cartItems = [];
-                            var quantity = document.getElementById(item.id).innerHTML;
-                            $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
-                        }
-                    });
-                }
+                    }
+                });
             }
         }
     };

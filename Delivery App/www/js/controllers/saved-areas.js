@@ -30,6 +30,7 @@ angular.module('delivery.controllers')
         // Hide the modal and show the main view
         $rootScope.savedAreasModal.hide();
         $rootScope.showMainView = true;
+        $rootScope.isCategorySelected = true;
         $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
     };
 
@@ -40,6 +41,7 @@ angular.module('delivery.controllers')
         // Hide the modal and show the main view
         $rootScope.savedAreasModal.hide();
         $rootScope.showMainView = true;
+        $rootScope.isCategorySelected = true;
 
         //load required shops by business category and selected delivered area 
         //

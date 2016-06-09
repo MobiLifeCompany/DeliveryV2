@@ -4,15 +4,16 @@
         <button class="button button-icon button-clear ion-refresh" ng-click="loadOldOrders()"></button>
         <!-- <button class="button button-icon button-clear ion-search"></button> -->
     </ion-nav-buttons>
-    <ion-content overflow-scroll="false">
+    <ion-content overflow-scroll="false" ng-class="!isUserLoggedin || oldOrders.length == 0 ? '' : 'stable-bg'">
         <div ng-show="!isUserLoggedin || oldOrders.length == 0">
-            <div class="icon ion-ios-filing-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
-            <h5 class="stable text-center" translate="NO_OLD_ORDERS"></h5>
+            <div class="icon ion-ios-filing-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
+            <h4 class="stable text-center" translate="NO_OLD_ORDERS"></h4>
         </div>
 
-        <div class="list padding-left padding-right" ng-show="oldOrders.length > 0">
+        <div class="list" ng-show="oldOrders.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="oldOrder in oldOrders">
-                <div class="list card" style="margin: 5px 0;">
+                <div class="list card" style="margin: 5px;">
+                    <img style="position: absolute; bottom: 0px; right: 0px; opacity: 0.4; height: 100%; max-height: 100px; border-top-left-radius: 50px; border-bottom-left-radius: 50px;" src="{{getShopPhoto(oldOrder.shop.id)}}" />
                     <div class="item item-body" style="padding: 5px;">
                         <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span><span class="pull-right balanced">{{'TOTAL' | translate}}: {{oldOrder.total}} {{currency}}</span></h3>
                         <h4 style="color: black;"><strong>{{'ADDRESS_STREET' | translate}}: </strong>{{oldOrder.customer_address.street}}, <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{oldOrder.customer_address.building}}, <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{oldOrder.customer_address.phone}}<br />
@@ -27,14 +28,6 @@
                         <button class="button button-balanced button-small button-block" translate="ORDER_REPEAT" ng-click="repeatOrder(oldOrder)" ng-show="oldOrder.order_status == 'CLOSED'"></button>
                         <button class="button button-positive button-small button-block" translate="FOLLOW_ORDER" ng-click="" ng-show="oldOrder.order_status == 'PREPARED'"></button>
                     </div>
-                    <!--<div class="item tabs tabs-secondary tabs-icon-left">
-                        <a class="tab-item balanced" style="font-size: 16px;" ng-click="" ng-show="oldOrder.order_status == 'FINISHED'">
-                            <i class="icon ion-edit"></i><i> {{'ORDER_REPEAT' | translate}}</i>
-                        </a>
-                        <a class="tab-item" ng-click="" ng-show="oldOrder.order_status == 'PREPARED'">
-                            <i class="icon ion-ios-trash"></i><i> {{'FOLLOW_ORDER' | translate}}</i>
-                        </a>
-                    </div>-->
                 </div>
             </div>
         </div>

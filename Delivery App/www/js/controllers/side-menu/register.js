@@ -5,12 +5,8 @@ angular.module('delivery.controllers')
     $scope.customer = {};
 
     $rootScope.closeRegister = function () {
-        $rootScope.registerModal.hide();
+        $rootScope.registerModal.remove();
     };
-
-    $rootScope.showRegister = function () {
-        $rootScope.registerModal.show();
-    }
 
     $scope.register = function () {
         connectionFactory.testConnection().success(function (data) {

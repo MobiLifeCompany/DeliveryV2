@@ -1,5 +1,9 @@
 <ion-view view-title="{{shopDetails.name}}">
-    
+    <search-bar></search-bar>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
+        <!--<button class="button button-icon button-clear ion-home" ng-click="goBackToShops()"></button>-->
+    </ion-nav-buttons>
     <ion-content overflow-scroll="false">
         <script id="shop-info-modal.html" type="text/ng-template">
             <ion-modal-view>
@@ -12,18 +16,18 @@
                     <div class="h1 title title-left light">{{shopDetails.name}}</div>
                     <div class="buttons buttons-right header-item">
                         <span class="right-buttons">
-                            <button class="button button-fab">
+                            <button class="button button-fab button-light">
                                 <img src="{{shopDetails.photo}}" style="width: 100%; height: 100%;"/>
                             </button>
                         </span>
                     </div>
                 </ion-header-bar>
                 <ion-content overflow-scroll="false">
-                    
                     <ion-list>
                         <ion-item>
-                            <div style="text-align: center;">
+                            <div style="text-align: center; margin-top: 10px;">
                                 <h2>{{shopDetails.address}}</h2>
+                                <h3>{{'PHONE' | translate}}: {{shopDetails.phone}}</h3>
                                 <ul>
                                     <li class="assertive" style="display: inline-block; font-size: small;" ng-repeat="mastery in shopDetails.masteries">{{mastery}}<span ng-if="$index < shopDetails.masteries.length - 1" style="margin: 0px 3px;">|</span></li>
                                 </ul>
@@ -95,6 +99,7 @@
                 </div>
             </ion-modal-view>
         </script>
+
         <div style="border-bottom: 1px solid silver; padding-bottom: 10px;" ng-click="showShopInfo()">
             <div class="promotion-triangle" ng-show="{{shopDetails.promotion_note}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
             <div class="is-open-triangle" ng-show="{{shopDetails.is_open}}"></div>
@@ -109,7 +114,8 @@
                         <i ng-class="shopDetails.rating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                         <i ng-class="shopDetails.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                     </div>
-                    <img src="img/subscribed.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed" />
+                    <img src="img/subscribed.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed && lang == 'en'" />
+                    <img src="img/subscribed_ar.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed && lang == 'ar'" />
                 </div>
                 <div style="float: left; padding: 5px 10px; width: 75%;">
                     <div>
@@ -150,7 +156,7 @@
 
         <!--Items Categories List-->
         <ion-list>
-            <div ng-repeat="category in categories">
+            <div ng-repeat="category in categories" ng-show="!isSearchApplied">
                 <ion-item class="item-icon-left" style="border-bottom: 2px solid silver; height: 35px; padding-top: 7px;" ng-click="toggleCategory(category)" ng-class="isCategoryShown(category) ? 'item-assertive' : 'item-stable'">
                     <i class="icon dl-menu-item-icon" ng-class="isCategoryShown(category) ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
                     <span>{{category.name}}</span>
@@ -163,7 +169,7 @@
                     <div style="width: 55%; float: left; padding: 5px 10px;" ng-click="showItemDetails(item)">
                         <h2 class="assertive">{{item.name}}</h2>
                         <h4 style="white-space: normal;">{{item.description}}</h4>
-                        <h5><span translate="PRICE"></span><span> {{item.price}} {{currency}}</span></h5>
+                        <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
                     </div>
                     <div style="width: 30%; float: left; padding: 5px 10px;">
                         <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id)"></i></div>
@@ -171,6 +177,23 @@
                     </div>
                 </ion-item>
             </div>
+            <!-- Show this list when searching for items is applied -->
+            <ion-list ng-show="isSearchApplied">
+                <ion-item ng-repeat="item in items" style="border-bottom: 1px solid silver; padding: 5px;">
+                    <div style="width: 15%; float: left; padding-top: 10px;" ng-click="showItemDetails(item)">
+                        <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
+                    </div>
+                    <div style="width: 55%; float: left; padding: 5px 10px;" ng-click="showItemDetails(item)">
+                        <h2 class="assertive">{{item.name}}</h2>
+                        <h4 style="white-space: normal;">{{item.description}}</h4>
+                        <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
+                    </div>
+                    <div style="width: 30%; float: left; padding: 5px 10px;">
+                        <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id)"></i></div>
+                        <div><button class="button button-positive button-small" style="width: 100%; font-size: xx-small; padding: 0px;" translate="ADD_TO_CART" ng-click="addToCart(item, shopDetails);"></button></div>
+                    </div>
+                </ion-item>
+            </ion-list>
         </ion-list>
     </ion-content>
   
