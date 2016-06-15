@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('AreasCtrl', function ($scope, $rootScope, $ionicLoading, $http, $timeout, $ionicFilterBar, $ionicSlideBoxDelegate, connectionFactory, storageUtilityFactory, areasFactory, deliveryLoader) {
+.controller('AreasCtrl', function ($scope, $rootScope, $ionicLoading, $http, $timeout, $ionicFilterBar, connectionFactory, storageUtilityFactory, areasFactory, deliveryLoader) {
 
     $rootScope.selectedArea = {};
     $scope.areas = $scope.selectedCity.areas;
@@ -21,8 +21,6 @@ angular.module('delivery.controllers')
             //load required shops by business category and selected delivered area 
             $rootScope.loadShops(deliveryLoader);
 
-            //this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
-            $ionicSlideBoxDelegate.update();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             connectionFactory.exitApplication();

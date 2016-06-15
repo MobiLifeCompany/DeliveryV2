@@ -30,7 +30,7 @@ angular.module('delivery.controllers')
         })
     };
 
-    connectionFactory.testConnection().success(function (data) {
+    connectionFactory.testConnection(deliveryLoader).success(function (data) {
         if ($rootScope.isUserLoggedin == true)
             $scope.loadOldOrders();
     }).error(function (err, statusCode) {

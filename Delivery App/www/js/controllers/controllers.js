@@ -30,7 +30,7 @@ angular.module('delivery.controllers', [])
     });
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -202,7 +202,7 @@ angular.module('delivery.controllers', [])
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $rootScope.categoriesModal.show();
             $cordovaSplashscreen.hide();
         }).error(function (err, statusCode) {

@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('SavedAreasCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $ionicModal, $ionicSlideBoxDelegate, deliveryLoader, storageUtilityFactory, authFactory) {
+.controller('SavedAreasCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $ionicModal, deliveryLoader, storageUtilityFactory, authFactory) {
 
     $rootScope.selectedCity = storageUtilityFactory.getSelectedCity();
     $rootScope.selectedArea =  storageUtilityFactory.getSelectedArea();
@@ -31,7 +31,6 @@ angular.module('delivery.controllers')
         $rootScope.savedAreasModal.hide();
         $rootScope.showMainView = true;
         $rootScope.isCategorySelected = true;
-        $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
     };
 
     $scope.selectSavedAddress = function (area) {
@@ -47,8 +46,6 @@ angular.module('delivery.controllers')
         //load required shops by business category and selected delivered area 
         //
         $rootScope.loadShops(deliveryLoader);
-
-        $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
     };
 
     $scope.selectNewAddress = function () {

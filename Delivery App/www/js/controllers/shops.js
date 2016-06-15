@@ -10,11 +10,22 @@ angular.module('delivery.controllers')
 
     $scope.$on('$ionicView.enter', function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
+            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+            $ionicSlideBoxDelegate.slide(0);
+            $ionicSlideBoxDelegate.start();
             $rootScope.loadShops(deliveryLoader);
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
+    });
+
+    $rootScope.$watch('isCategorySelected', function () {
+        $timeout(function () {
+            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+            $ionicSlideBoxDelegate.slide(0);
+            $ionicSlideBoxDelegate.start();
+        }, 1000);
     });
 
     $rootScope.loadShops = function (deliveryLoader) {
