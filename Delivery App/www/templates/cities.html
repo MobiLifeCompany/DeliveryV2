@@ -1,7 +1,8 @@
-<ion-modal-view ng-controller="CitiesCtrl">
+<ion-modal-view ng-controller="CitiesCtrl" dir="{{default_direction}}">
     <ion-header-bar class="bar-assertive">
-        <button class="button button-icon button-clear" ng-click="prevStep()"><span class="icon ion-chevron-left"></span></button>
-        <h1 class="title" translate="CITIES"></h1>
+        <h1 class="title title-right" translate="CITIES" ng-show="isRTL()"></h1>
+        <button class="button button-icon button-clear" ng-click="prevStep()"><span class="icon" ng-class="isRTL() ? 'ion-chevron-right' : 'ion-chevron-left'"></span></button>
+        <h1 class="title" translate="CITIES" ng-show="!isRTL()"></h1>
     </ion-header-bar>
     <ion-content overflow-scroll="false">
         <div class="dl-location-bar"><img src="img/location-bg.jpg"/></div>
@@ -9,8 +10,8 @@
             <h4 class="title"><span translate="SELECT_CITY"></span></h4>
         </div>
         <div class="list" ng-show="done_loading == true">
-            <a class="item item-icon-right" style="border-bottom: 1px solid silver;" ng-repeat="city in cities" ng-click="setCity(city)">
-                <i class="icon ion-chevron-right stable dl-menu-item-icon"></i><strong class="assertive"> {{ city.name }}</strong>
+            <a class="item dl-border-bottom-stable" ng-class="isRTL() ? 'item-icon-left text-right' : 'item-icon-right'" ng-repeat="city in cities" ng-click="setCity(city)">
+                <i class="icon stable dl-menu-item-icon" ng-class="isRTL() ? 'ion-chevron-left' : 'ion-chevron-right'"></i><strong class="assertive"> {{ city.name }}</strong>
             </a>
         </div>
     </ion-content>

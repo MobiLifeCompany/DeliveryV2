@@ -1,7 +1,7 @@
 <ion-view view-title="{{'ORDER_CHECKOUT' | translate}}">
     
-    <ion-content overflow-scroll="false">
-        <div>
+    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+        <div ng-class="{'text-right': isRTL()}">
             <div class="bar bar-subheader bar-energized static text-center">
                 <h5 class="title">{{cartShop.name}}</h5>
             </div>
@@ -13,16 +13,16 @@
                     </h5>
                     <ion-list>
                         <ion-item ng-repeat="item in cartItems" style="height: 30px !important; font-size: 12px; padding: 0px !important;">
-                            <span style="border-top: 6px solid transparent;" class="pull-left">{{item.name}}</span>
-                            <span class="pull-right"><span id="{{item.id}}" class="quantity-badge">{{item.quantity}}</span><span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span><span>{{calculatePrice(item)}} {{currency}}</span></span>
+                            <span style="border-top: 6px solid transparent;" class="pull-{{default_float}}">{{item.name}}</span>
+                            <span class="pull-{{opposite_float}}"><span id="{{item.id}}" class="quantity-badge">{{item.quantity}}</span><span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span><span>{{calculatePrice(item)}} {{currency}}</span></span>
                         </ion-item>
                     </ion-list>
                     <div style="border-bottom: 1px solid silver; border-top: 1px solid silver;">
-                        <h6><span translate="SUBTOTAL"></span><span class="pull-right">{{calculateSubtotal()}} {{currency}}</span></h6>
-                        <h6><span translate="DELIVERY_FEE"></span><span class="pull-right">{{cartShop.delivery_charge}} {{currency}}</span></h6>
+                        <h6><span translate="SUBTOTAL"></span><span class="pull-{{opposite_float}}">{{calculateSubtotal()}} {{currency}}</span></h6>
+                        <h6><span translate="DELIVERY_FEE"></span><span class="pull-{{opposite_float}}">{{cartShop.delivery_charge}} {{currency}}</span></h6>
                     </div>
                     <div>
-                        <h6><span class="balanced" translate="TOTAL"></span><span class="pull-right">{{calculateTotal()}} {{currency}}</span></h6>
+                        <h6><span class="balanced" translate="TOTAL"></span><span class="pull-{{opposite_float}}">{{calculateTotal()}} {{currency}}</span></h6>
                     </div>
                 </div>
                 <hr />

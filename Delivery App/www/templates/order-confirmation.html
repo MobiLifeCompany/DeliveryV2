@@ -1,7 +1,7 @@
 <ion-view view-title="{{'ORDER_CONFIRMATION' | translate}}">
 
-    <ion-content overflow-scroll="false">
-        <div ng-show="orderSubmittedSuccessfully && showSubmissionResult">
+    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+        <div ng-show="orderSubmittedSuccessfully && showSubmissionResult" ng-class="{'text-right': isRTL()}">
             <div class="padding" ui-sref="app.old-orders">
                 <div class="icon ion-thumbsup balanced" style="font-size: 100px; width: 100%; text-align: center;"></div>
                 <h4 class="balanced text-center" translate="ORDER_RECEIVED"></h4>
@@ -17,17 +17,17 @@
                 <i ng-click="appRating = 5" ng-class="appRating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
             </div>
             <div class="text-center padding">
-                <button class="button icon-left ion-android-send button-positive button-small" ng-click="sendRating(appRating)" translate="SEND"></button>
+                <button class="button icon-{{default_float}} ion-android-send button-positive button-small" ng-click="sendRating(appRating)" translate="SEND"></button>
             </div>
 
             <hr />
 
             <div class="text-center padding">
-                <button class="button icon-left ion-android-send button-balanced button-small" ng-click="goBackToShops()" translate="CONTINUE_SHOPPING"></button>
+                <button class="button button-balanced button-small" ng-click="goBackToShops()" translate="CONTINUE_SHOPPING"></button>
             </div>
 
         </div>
-        <div ng-show="!orderSubmittedSuccessfully && showSubmissionResult">
+        <div ng-show="!orderSubmittedSuccessfully && showSubmissionResult" ng-class="{'text-right': isRTL()}">
             <div class="padding">
                 <div class="icon ion-thumbsdown assertive-900" style="font-size: 100px; width: 100%; text-align: center;"></div>
                 <h4 class="assertive-900 text-center" translate="SOMETHING_WRONG"></h4>
@@ -35,7 +35,7 @@
             <hr />
             <div class="text-center padding">
                 <h5 class="assertive-900 text-center" translate="RETRY_ORDER_SUBMIT"></h5>
-                <button class="button icon-left ion-refresh button-positive button-small" ng-click="submitOrder()" translate="RETRY"></button>
+                <button class="button icon-{{default_float}} ion-refresh button-positive button-small" ng-click="submitOrder()" translate="RETRY"></button>
             </div>
         </div>
 </ion-content>

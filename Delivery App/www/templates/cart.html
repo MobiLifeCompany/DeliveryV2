@@ -4,16 +4,16 @@
         <button class="button button-icon button-clear" ng-class="data.showEdit == true ? 'ion-checkmark' : 'ion-edit'" ng-click="changeStatus()"></button>
     </ion-nav-buttons>
     
-    <ion-content overflow-scroll="false">
+    <ion-content overflow-scroll="false" dir="{{default_direction}}">
         <div ng-if="cartItems.length > 0">
             <div class="bar bar-subheader bar-stable static text-center">
                 <h5 class="title">{{cartShop.name}}</h5>
             </div>
-            <div class="padding">
+            <div class="padding" ng-class="{'text-right': isRTL()}">
                 <ion-list>
-                    <ion-item ng-repeat="item in cartItems" style="border-bottom: 1px solid silver; padding-left: 0px;" class="item-remove-animate">
-                        <span style="border-top: 6px solid transparent;" class="pull-left">{{item.name}} X {{item.price}} {{currency}}</span>
-                        <span class="pull-right">
+                    <ion-item ng-repeat="item in cartItems" style="padding-{{default_float}}: 0px;" class="item-remove-animate dl-border-bottom-stable">
+                        <span style="border-top: 6px solid transparent;" class="pull-{{default_float}}">{{item.name}} X {{item.price}} {{currency}}</span>
+                        <span class="pull-{{opposite_float}}">
                             <i class="icon ion-minus-circled energized" style="font-size: xx-large;  display:inline-block; vertical-align: middle;" ng-show="data.showEdit" ng-click="decreseAmount(item)">
                             </i>
                             <span id="{{item.id}}" class="quantity-badge">{{item.quantity}}</span>
@@ -22,29 +22,29 @@
                             <span translate="PRICE" style="margin: 0px 0px 0px 10px;"></span>
                              <span>{{calculatePrice(item)}} {{currency}}</span>
                         </span>
-                        <span class="pull-left">
+                        <span class="pull-{{default_float}}">
                             <i class="icon ion-trash-a energized" style="padding: 0px 14px 0px 0px; font-size: xx-large;   display:inline-block;" ng-show="data.showEdit" ng-click="removeItem(item)">
                             </i>
                         </span>
                 
                     </ion-item>
                 </ion-list>
-                <div class="" style="border-bottom: 1px solid silver;">
-                    <h5><span class="assertive" translate="SUBTOTAL"></span><span class="pull-right">{{calculateSubtotal()}} {{currency}}</span></h5>
-                    <h5><span class="assertive" translate="DELIVERY_FEE"></span><span class="pull-right">{{cartShop.delivery_charge}} {{currency}}</span></h5>
+                <div class="dl-border-bottom-stable">
+                    <h5><span class="assertive" translate="SUBTOTAL"></span><span class="pull-{{opposite_float}}">{{calculateSubtotal()}} {{currency}}</span></h5>
+                    <h5><span class="assertive" translate="DELIVERY_FEE"></span><span class="pull-{{opposite_float}}">{{cartShop.delivery_charge}} {{currency}}</span></h5>
                 </div>
-                <div class="" style="border-bottom: 1px solid silver;">
-                    <h5><span class="balanced" translate="TOTAL"></span><span class="pull-right">{{calculateTotal()}} {{currency}}</span></h5>
+                <div class="dl-border-bottom-stable">
+                    <h5><span class="balanced" translate="TOTAL"></span><span class="pull-{{opposite_float}}">{{calculateTotal()}} {{currency}}</span></h5>
                 </div>
 
                 <button class="button button-balanced button-small button-block" translate="CONFIRM_YOUR_ORDER" ng-click="confirmOrder()"></button>
                 <button class="button button-positive button-small button-block" ui-sref="app.shop-details" translate="CONTINUE_SHOPPING"></button>
             </div>
         </div>
-        <div ng-if="cartItems.length == 0" class="padding">
+        <div ng-if="cartItems.length == 0" class="padding" ng-class="{'text-right': isRTL()}">
             <div class="icon ion-ios-cart-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
             <h4 class="stable text-center" translate="YOUR_CART_IS_EMPTY"></h4>
-            <button class="button icon-left ion-home button-balanced button-small button-block" ng-click="goBackToShops()" translate="START_SHOPPING"></button>
+            <button class="button icon-{{default_float}} ion-home button-balanced button-small button-block" ng-click="goBackToShops()" translate="START_SHOPPING"></button>
         </div>
     </ion-content>
 </ion-view>

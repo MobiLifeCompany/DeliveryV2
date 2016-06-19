@@ -4,10 +4,10 @@
         <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
         <!--<button class="button button-icon button-clear ion-home" ng-click="goBackToShops()"></button>-->
     </ion-nav-buttons>
-    <ion-content overflow-scroll="false">
+    <ion-content overflow-scroll="false" dir="{{default_direction}}">
         <script id="shop-info-modal.html" type="text/ng-template">
             <ion-modal-view>
-                <ion-header-bar class="bar-assertive">
+                <ion-header-bar class="bar-assertive" ng-if="!isRTL()">
                     <div class="buttons buttons-left header-item">
                         <span class="left-buttons">
                             <button class="button button-icon button-clear ion-ios-arrow-left" ng-click="closeShopInfo()"></button>
@@ -22,7 +22,22 @@
                         </span>
                     </div>
                 </ion-header-bar>
-                <ion-content overflow-scroll="false">
+                <ion-header-bar class="bar-assertive" ng-if="isRTL()">
+                    <div class="buttons buttons-left header-item">
+                        <span class="left-buttons">
+                            <button class="button button-fab button-light">
+                                <img src="{{shopDetails.photo}}" style="width: 100%; height: 100%;" />
+                            </button>
+                        </span>
+                    </div>
+                    <div class="h1 title title-right light">{{shopDetails.name}}</div>
+                    <div class="buttons buttons-right header-item">
+                        <span class="right-buttons">
+                            <button class="button button-icon button-clear ion-ios-arrow-right" ng-click="closeShopInfo()"></button>
+                        </span>
+                    </div>
+                </ion-header-bar>
+                <ion-content overflow-scroll="false" class="has-header" dir="{{default_direction}}">
                     <ion-list>
                         <ion-item>
                             <div style="text-align: center; margin-top: 10px;">
@@ -43,7 +58,7 @@
                         <ion-item class="item-divider" style="text-align: center;" translate="OPENING_HOURS">
                         </ion-item>
                         <ion-item style="text-align: center;">
-                            <ul  ng-repeat="dayHour in shopDetails.delivery_hours">
+                            <ul ng-repeat="dayHour in shopDetails.delivery_hours">
                                 <li>{{getDayName(dayHour.day)}}: {{dayHour.open}}</li>
                             </ul>
                         </ion-item>
@@ -72,21 +87,21 @@
         <script id="item-details-modal.html" type="text/ng-template">
             <ion-modal-view class="ion-nifty-modal">
                 <div class="ion-modal-content-custom">
-                    <ion-content overflow-scroll="false">
+                    <ion-content overflow-scroll="false" dir="{{default_direction}}">
                         <div class="list card light-bg">
-                            <div class="item item-thumbnail-left" style="margin-top: 10px;">
+                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
                                 <img src="{{selectedItem.photo}}">
-                                <h2 class="assertive">{{selectedItem.name}}</h2>
-                                <h4><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
+                                <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedItem.name}}</h2>
+                                <h4 ng-class="isRTL() ? 'text-right' : ''"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                                 <p style="padding: 10px 0px; border-top: 1px solid silver;">
                                     <div style="text-align: center;" translate="QUANTITY"></div>
                                     <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
                                 </p>
                             </div>
-                            <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
+                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: auto;">
                                 {{selectedItem.description}}
                             </div>
-                            <div class="item tabs tabs-secondary tabs-icon-left">
+                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
                                 <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
                                     <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
                                 </a>
@@ -101,11 +116,11 @@
         </script>
 
         <div style="border-bottom: 1px solid silver; padding-bottom: 10px;" ng-click="showShopInfo()">
-            <div class="promotion-triangle" ng-show="{{shopDetails.promotion_note}}"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
-            <div class="is-open-triangle" ng-show="{{shopDetails.is_open}}"></div>
-            <div class="is-close-triangle" ng-hide="{{shopDetails.is_open}}"></div>
+            <div ng-class="isRTL() ? 'promotion-triangle-rtl' : 'promotion-triangle'" ng-show="{{shopDetails.promotion_note}}"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
+            <div ng-class="isRTL() ? 'is-open-triangle-rtl' : 'is-open-triangle'" ng-show="{{shopDetails.is_open}}"></div>
+            <div ng-class="isRTL() ? 'is-close-triangle-rtl' : 'is-close-triangle'" ng-hide="{{shopDetails.is_open}}"></div>
             <div style="overflow: auto;">
-                <div style="width: 25%; float: left; margin-top: 10px;">
+                <div style="width: 25%; float: {{default_float}}; margin-top: 10px;">
                     <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shopDetails.photo}}" style="width: 70%; height: 70%;" /></div>
                     <div style="text-align: center;">
                         <i ng-class="shopDetails.rating >= 1 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
@@ -115,9 +130,9 @@
                         <i ng-class="shopDetails.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                     </div>
                     <img src="img/subscribed.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed && lang == 'en'" />
-                    <img src="img/subscribed_ar.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed && lang == 'ar'" />
+                    <img src="img/subscribed_ar.png" style="opacity: 0.6; width: 80%; margin-right: 10%;" ng-show="shopDetails.subscribed && lang == 'ar'" />
                 </div>
-                <div style="float: left; padding: 5px 10px; width: 75%;">
+                <div style="float: {{default_float}}; padding: 5px 10px; width: 75%;">
                     <div>
                         <h5 style="margin-bottom: 0px;">{{shopDetails.name}}</h5>
                         <ul>
@@ -125,12 +140,12 @@
                         </ul>
                     </div>
                     <div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="MIN_DELIVERY_AMOUNT"></h6><h6 style="margin: 0px;">{{shopDetails.min_amount}} {{currency}}</h6></div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_TIME"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_expected_time}} {{'MINUTE_SHORT' | translate}}</h6></div>
+                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="MIN_DELIVERY_AMOUNT"></h6><h6 style="margin: 0px;">{{shopDetails.min_amount}} {{currency}}</h6></div>
+                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_TIME"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_expected_time}} {{'MINUTE_SHORT' | translate}}</h6></div>
                     </div>
                     <div style="margin-top: 40px;margin-bottom: 75px;">
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_charge}} {{currency}}</h6></div>
-                        <div style="float: left; width: 50%;"><h6 style="margin: 0px; font-weight:200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{getCurrentDeliverHour()}}</h6></div>
+                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_charge}} {{currency}}</h6></div>
+                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{getCurrentDeliverHour()}}</h6></div>
                     </div>
                     <div>
                        <h6>{{'PHONE' | translate}} : {{shopDetails.phone}}</h6>
@@ -142,11 +157,11 @@
 
         <!--Promotions & Warnings area-->
         <ion-list>
-            <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px; border-right: 1px solid silver;" ng-click="toggleNotifications('promotions')">
+            <ion-item ng-class="isRTL() ? 'item-icon-left text-right' : 'item-icon-right'" style="float: {{default_float}}; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px; border-right: 1px solid silver;" ng-click="toggleNotifications('promotions')">
                 <span class="ion-pricetags" ng-class="shopDetails.promotion_note != '' ? 'energized' : 'stable'"> {{'PROMOTIONS' | translate}}</span>
                 <i class="icon dl-menu-item-icon" ng-if="shopDetails.promotion_note != ''" ng-class="isNotificationShown('promotions') && shopDetails.promotion_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
-            <ion-item class="item-icon-right" style="float: left; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px;" ng-click="toggleNotifications('warnings')">
+            <ion-item ng-class="isRTL() ? 'item-icon-left text-right' : 'item-icon-right'" style="float: {{default_float}}; border-bottom: 2px solid silver; width: 50%; height: 35px; padding-top: 7px; border-right: 1px solid silver;" ng-click="toggleNotifications('warnings')">
                 <span class="ion-alert" ng-class="shopDetails.warning_note != '' ? 'assertive' : 'stable'"> {{'WARNINGS' | translate}}</span>
                 <i class="icon dl-menu-item-icon" ng-if="shopDetails.warning_note != ''" ng-class="isNotificationShown('warnings') && shopDetails.warning_note != '' ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
             </ion-item>
@@ -161,21 +176,21 @@
         <!--Items Categories List-->
         <ion-list>
             <div ng-repeat="category in categories" ng-show="!isSearchApplied">
-                <ion-item class="item-icon-left" style="border-bottom: 2px solid silver; height: 35px; padding-top: 7px;" ng-click="toggleCategory(category)" ng-class="isCategoryShown(category) ? 'item-assertive' : 'item-stable'">
+                <ion-item ng-class="{'item-icon-right text-right': isRTL(), 'item-icon-left': !isRTL(), 'item-assertive': isCategoryShown(category), 'item-stable': !isCategoryShown(category)}" style="border-bottom: 2px solid silver; height: 35px; padding-top: 7px;" ng-click="toggleCategory(category)">
                     <i class="icon dl-menu-item-icon" ng-class="isCategoryShown(category) ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
                     <span>{{category.name}}</span>
-                    <span class="badge" ng-class="isCategoryShown(category) ? 'badge-stable' : 'badge-assertive'">{{category.items.length}}</span>
+                    <span class="badge" ng-class="{'badge-stable': isCategoryShown(category), 'badge-assertive': !isCategoryShown(category), 'badge-rtl': isRTL()}">{{category.items.length}}</span>
                 </ion-item>
-                <ion-item class="item-accordion" ng-repeat="item in category.items" ng-show="isCategoryShown(category)" style="border-bottom: 1px solid silver; padding: 5px;">
-                    <div style="width: 15%; float: left; padding-top: 10px;" ng-click="showItemDetails(item)">
+                <ion-item class="item-accordion dl-border-bottom-stable" ng-repeat="item in category.items" ng-show="isCategoryShown(category)" style="padding: 5px;" ng-class="isRTL() ? 'text-right' : ''">
+                    <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemDetails(item)">
                         <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
                     </div>
-                    <div style="width: 55%; float: left; padding: 5px 10px;" ng-click="showItemDetails(item)">
+                    <div style="width: 55%; float: {{default_float}}; padding: 5px 10px;" ng-click="showItemDetails(item)">
                         <h2 class="assertive">{{item.name}}</h2>
                         <h4 style="white-space: normal;">{{item.description}}</h4>
                         <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
                     </div>
-                    <div style="width: 30%; float: left; padding: 5px 10px;">
+                    <div style="width: 30%; float: {{default_float}}; padding: 5px 10px;">
                         <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id)"></i></div>
                         <div><button class="button button-positive button-small" style="width: 100%; font-size: xx-small; padding: 0px;" translate="ADD_TO_CART" ng-click="addToCart(item, shopDetails);"></button></div>
                     </div>
@@ -183,16 +198,16 @@
             </div>
             <!-- Show this list when searching for items is applied -->
             <ion-list ng-show="isSearchApplied">
-                <ion-item ng-repeat="item in items" style="border-bottom: 1px solid silver; padding: 5px;">
-                    <div style="width: 15%; float: left; padding-top: 10px;" ng-click="showItemDetails(item)">
+                <ion-item ng-repeat="item in items" class="dl-border-bottom-stable" style="padding: 5px;" ng-class="{'text-right': isRTL()}">
+                    <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemDetails(item)">
                         <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
                     </div>
-                    <div style="width: 55%; float: left; padding: 5px 10px;" ng-click="showItemDetails(item)">
+                    <div style="width: 55%; float: {{default_float}}; padding: 5px 10px;" ng-click="showItemDetails(item)">
                         <h2 class="assertive">{{item.name}}</h2>
                         <h4 style="white-space: normal;">{{item.description}}</h4>
                         <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
                     </div>
-                    <div style="width: 30%; float: left; padding: 5px 10px;">
+                    <div style="width: 30%; float: {{default_float}}; padding: 5px 10px;">
                         <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id)"></i></div>
                         <div><button class="button button-positive button-small" style="width: 100%; font-size: xx-small; padding: 0px;" translate="ADD_TO_CART" ng-click="addToCart(item, shopDetails);"></button></div>
                     </div>

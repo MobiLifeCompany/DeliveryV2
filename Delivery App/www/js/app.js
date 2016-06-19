@@ -30,15 +30,19 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
-    $rootScope.default_float = 'left';
-    $rootScope.opposite_float = 'right';
+    $rootScope.default_direction = $rootScope.lang === 'ar' ? 'rtl' : 'ltr';
+    $rootScope.opposite_direction = $rootScope.lang === 'ar' ? 'ltr' : 'rtl';
 
-    $rootScope.default_direction = 'ltr';
-    $rootScope.opposite_direction = 'rtl';
+    $rootScope.default_float = $rootScope.lang === 'ar' ? 'right' : 'left';
+    $rootScope.opposite_float = $rootScope.lang === 'ar' ? 'left' : 'right';
 
     // for Syria the coutnry id = 1
     $rootScope.countryId = 1;
-    $rootScope.currency = 'SYP';
+    if ($rootScope.lang == 'en')
+        $rootScope.currency = 'SYP';
+    else
+        $rootScope.currency = 'ل.س.';
+
     storageUtilityFactory.setCountry($rootScope.countryId);
 }])
 

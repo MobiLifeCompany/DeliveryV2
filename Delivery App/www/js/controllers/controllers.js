@@ -61,6 +61,13 @@ angular.module('delivery.controllers', [])
         $rootScope.userName = authFactory.getCustomer().username;
     }
 
+    $rootScope.isRTL = function(){
+    if($rootScope.lang == 'ar')
+        return true;
+    else
+        return false;
+    };
+
     ///////////////////////////////////////////////////////
     //////  Create the side menu functions and modals /////
     ///////////////////////////////////////////////////////

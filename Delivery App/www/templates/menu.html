@@ -1,17 +1,17 @@
 <ion-side-menus enable-menu-with-back-views="false" ng-show="showMainView == true">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-assertive">
-      <ion-nav-back-button class="no-text">
-      </ion-nav-back-button>
+      <ion-nav-bar class="bar-assertive">
+          <ion-nav-back-button class="no-text">
+          </ion-nav-back-button>
 
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-      
-    </ion-nav-bar>
+          <ion-nav-buttons side="left">
+              <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+          </ion-nav-buttons>
+
+      </ion-nav-bar>
+
       <div ng-show="isCategorySelected">
-          <button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-show="showCartFabButton" ui-sref="app.cart">
+          <button id="fab" class="button button-balanced button-fab button-fab-bottom-{{opposite_float}}" ng-show="showCartFabButton" ui-sref="app.cart">
               <span class="icon ion-ios-cart" style="margin-left: 15px; margin-top: 5px;"></span><span class="badge badge-assertive cart-badge">{{cartItems.length}}</span>
           </button>
           <ion-tabs class="tabs-striped tabs-color-assertive">
@@ -27,60 +27,61 @@
           </ion-tabs>
       </div>
 
-      <div ng-show="!isCategorySelected">
+      <div ng-show="!isCategorySelected" dir="{{default_direction}}">
           <div class="text-center padding-top" style="margin-top: 40px; height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
               <img src="img/delivery_logo.png" style="vertical-align: middle;">
           </div>
           <div class="padding">
               <h4 class="stable text-center" translate="NO_CATEGORY_SELECTED"></h4>
               <div class="icon ion-ios-keypad-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
-              <button class="button icon-left ion-home button-balanced button-small button-block" ng-click="categoriesModal.show()" translate="SELECT_CATEGORY"></button>
+              <button class="button icon-{{default_float}} ion-home button-balanced button-small button-block" ng-click="categoriesModal.show()" translate="SELECT_CATEGORY"></button>
           </div>
       </div>
 </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" width="250" dir="{{default_direction}}">
     <ion-header-bar class="expanded">
-        <img src="img/delivery_logo.png" class="avatar motion spin fade">
-        <div class="menu-bottom" ng-class="lang == 'ar' ? 'right_to_left' : 'left_to_right'">
-            {{'WELCOME' | translate}} <span class="assertive">{{fullName}}</span> {{'IN' | translate}} {{'APPLICATION_NAME' | translate}}
+        <img src="img/delivery_logo.png" class="avatar motion spin fade" ng-show="!isRTL()">
+        <img src="img/delivery_logo.png" class="avatar motion spin fade" style="right: 15px;" ng-show="isRTL()">
+        <div class="menu-bottom" ng-class="isRTL() ? 'text-right' : ''">
+            <h5 style="color: white;">{{'WELCOME' | translate}} <span class="assertive">{{fullName}}</span> {{'IN' | translate}} {{'APPLICATION_NAME' | translate}}</h5>
         </div>
     </ion-header-bar>
     <ion-content overflow-scroll="false" class="stable-bg has-expanded-header">
       <ion-list>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == false" ng-click="showLogin()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == false" ng-click="showLogin()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-unlocked">
               </i><span translate="LOGIN"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="logout()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="logout()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-locked">
               </i><span translate="LOGOUT"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == false"  ng-click="showRegister()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == false" ng-click="showRegister()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-person-add">
               </i><span translate="REGISTER"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true"  ng-click="showProfile()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="showProfile()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-person">
               </i><span translate="PROFILE"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true"  ng-click="showAddresses()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-home">
               </i><span translate="ADDRESSES"></span>
           </ion-item>
-          <ion-item nav-clear menu-close  ng-click="showContactUs()" class="item-icon-left">
+          <ion-item nav-clear menu-close  ng-click="showContactUs()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-compose">
               </i><span translate="CONTACT_US"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showHelp()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-click="showHelp()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-help-circled">
               </i><span translate="HELP"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="showAbout()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-click="showAbout()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-information-circled">
               </i><span translate="ABOUT"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-click="exitApp()" class="item-icon-left">
+          <ion-item nav-clear menu-close ng-click="exitApp()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-android-exit">
               </i><span translate="EXIT"></span>
           </ion-item>

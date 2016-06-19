@@ -4,26 +4,26 @@
         <!-- <button class="button button-icon button-clear ion-search"></button> -->
         <button class="button button-icon button-clear ion-refresh" ng-click="loadShopsOffers()"></button>
     </ion-nav-buttons>
-    <ion-content overflow-scroll="false" ng-class="shopsOffers.length == 0 ? '' : 'stable-bg'">
+    <ion-content overflow-scroll="false" ng-class="shopsOffers.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">
         
         <script id="item-details-modal.html" type="text/ng-template">
-            <ion-modal-view class="ion-nifty-modal">
+            <ion-modal-view class="ion-nifty-modal" dir="{{default_direction}}">
                 <div class="ion-modal-content-custom">
                     <ion-content overflow-scroll="false">
                         <div class="list card light-bg">
-                            <div class="item item-thumbnail-left" style="margin-top: 10px;">
+                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
                                 <img src="{{selectedItem.photo}}">
-                                <h2 class="assertive">{{selectedItem.name}}</h2>
-                                <h4><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
+                                <h2 class="assertive" ng-class="{'text-right': isRTL()}">{{selectedItem.name}}</h2>
+                                <h4 ng-class="{'text-right': isRTL()}"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                                 <p style="padding: 10px 0px; border-top: 1px solid silver;">
                                     <div style="text-align: center;" translate="QUANTITY"></div>
                                     <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
                                 </p>
                             </div>
-                            <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
+                            <div class="item item-body" ng-class="{'text-right': isRTL()}" style="max-height: 100px; overflow-y: auto;">
                                 {{selectedItem.description}}
                             </div>
-                            <div class="item tabs tabs-secondary tabs-icon-left">
+                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
                                 <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
                                     <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
                                 </a>
@@ -45,9 +45,9 @@
         <div class="list" ng-show="shopsOffers.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="shopOffer in shopsOffers">
                 <div class="list card" style="margin: 5px;" ng-click="showItemDetails(shopOffer.item,shopOffer.shop,shopOffer.clickable)">
-                    <img style="position: absolute; top: 0px; right: 0px; opacity: 0.4; height: 100%; border-bottom-left-radius: 50px; border-top-left-radius: 50px;" src="{{shopOffer.shop.photo}}" />
-                    <div class="silver-promotion-triangle"><span style="position: absolute; top: 5px; right: 1px; display: block; -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); font-size: xx-small;" translate="PROMO"></span></div>
-                    <a class="item item-thumbnail-left" >
+                    <img style="position: absolute; top: 0px; opacity: 0.4; height: 100%;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{shopOffer.shop.photo}}" />
+                    <div ng-class="isRTL() ? 'silver-promotion-triangle-rtl' : 'silver-promotion-triangle'"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
+                    <a class="item item-thumbnail-{{default_float}}" ng-class="{'text-right': isRTL()}">
                         <img src="{{shopOffer.item.photo}}">
                         <h2 class="assertive-900">{{shopOffer.shop.name}}</h2>
                         <p>{{shopOffer.name}}</p>
