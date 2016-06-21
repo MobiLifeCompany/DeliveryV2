@@ -157,7 +157,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.deleteAddressPopup = function (customerAddressId) {
-        connectionFactory.testConnection().success(function (data) {
+        connectionFactory.testConnection(deliveryLoader).success(function (data) {
             // Show a confirmation popup
             var confirmPopup = $ionicPopup.confirm({
                 title: $translate.instant('DELETE'),
