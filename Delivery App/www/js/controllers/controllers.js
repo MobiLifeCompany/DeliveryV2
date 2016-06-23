@@ -30,11 +30,8 @@ angular.module('delivery.controllers', [])
     });
 })
 
-<<<<<<< Updated upstream
+
 .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader) {
-=======
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory,deliveryLoader, connectionFactory) {
->>>>>>> Stashed changes
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
