@@ -250,7 +250,7 @@ angular.module('delivery.factory', [])
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                     customerAuthToken = authFactory.getCustomer().auth_token;
 
-                customer.gcmId = storageUtilityFactory.getGcmId();
+                customer.gcm_id = storageUtilityFactory.getGcmId();
                 return $http.put(baseURL + '/customers/' + customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerAddress: function (customerAddress) {
