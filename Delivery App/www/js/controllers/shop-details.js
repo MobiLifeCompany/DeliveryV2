@@ -177,32 +177,38 @@ angular.module('delivery.controllers')
         return "";
     }
     //increaseAmount: increase the item quantity counter label when click on '+' button
-    $scope.increaseQuantity = function (itemQuantity) {
-        var item = document.getElementById(itemQuantity);
-        item.innerHTML = parseInt(item.innerHTML) + 1;
+    $scope.increaseQuantity = function (itemId, item, shopDetails) {
+        var selectedItem = document.getElementById(itemId);
+        selectedItem.innerHTML = parseInt(selectedItem.innerHTML) + 1;
+
+        $scope.addToCart(item, shopDetails);
     };
 
     //decreseAmount: decrease the item quantity counter label when click on '-' button
-    $scope.decreseQuantity = function (itemQuantity) {
-        var item = document.getElementById(itemQuantity);
-        if (parseInt(item.innerHTML) > 1) {
-            item.innerHTML = parseInt(item.innerHTML) - 1;
+    $scope.decreseQuantity = function (itemId, item, shopDetails) {
+        var selectedItem = document.getElementById(itemId);
+        if (parseInt(selectedItem.innerHTML) > 0) {
+            selectedItem.innerHTML = parseInt(selectedItem.innerHTML) - 1;
+            $scope.addToCart(item, shopDetails);
         }
     };
 
     //increaseAmountFromModal: increase the item quantity counter on 'itemDetailsModal' when click on '+' button
-    $scope.increaseQuantityFromModal = function (itemQuantity) {
-        var item = document.getElementById(itemQuantity);
+    $scope.increaseQuantityFromModal = function (itemId, item, shopDetails) {
+        var menuItem = document.getElementById(itemId);
         var selectedItem = document.getElementById('selectedItemId');
-        item.innerHTML = selectedItem.innerHTML = parseInt(item.innerHTML) + 1;
+        menuItem.innerHTML = selectedItem.innerHTML = parseInt(menuItem.innerHTML) + 1;
+
+        $scope.addToCart(item, shopDetails);
     };
 
     //decreseAmountFromModal: decrease the item quantity counter on 'itemDetailsModal' when click on '-' button
-    $scope.decreseQuantityFromModal = function (itemQuantity) {
-        var item = document.getElementById(itemQuantity);
+    $scope.decreseQuantityFromModal = function (itemId, item, shopDetails) {
+        var menuItem = document.getElementById(itemId);
         var selectedItem = document.getElementById('selectedItemId');
-        if (parseInt(item.innerHTML) > 1) {
-            item.innerHTML = selectedItem.innerHTML = parseInt(item.innerHTML) - 1;
+        if (parseInt(menuItem.innerHTML) > 0) {
+            menuItem.innerHTML = selectedItem.innerHTML = parseInt(menuItem.innerHTML) - 1;
+            $scope.addToCart(item, shopDetails);
         }
     };
 
@@ -223,12 +229,23 @@ angular.module('delivery.controllers')
                 $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
                 for (i = 0; i < $rootScope.cartItems.length; i++) {
                     if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
-                        $rootScope.cartItems[i].quantity = quantity;
+                        if(quantity == 0)
+                            $rootScope.cartItems.splice(i, 1);
+                        else
+                            $rootScope.cartItems[i].quantity = quantity;
                         isNewItem = false;
                         i = $rootScope.cartItems.length; //break the loop
                     }
 
                 }
+
+                // if the cart become empty
+                if ($rootScope.cartItems.length == 0)
+                {
+                    $rootScope.showCartFabButton = false;
+                    $rootScope.cartShop = null;
+                }
+
                 if (isNewItem) //all new item to cart
                     $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
             }
@@ -256,7 +273,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.checkItemCount = function (itemId) {
-        var itemQty = 1;
+        var itemQty = 0;
         for (i = 0; i < $rootScope.cartItems.length; i++) {
             if ($rootScope.cartItems[i].id == itemId) {
                 itemQty = $rootScope.cartItems[i].quantity;

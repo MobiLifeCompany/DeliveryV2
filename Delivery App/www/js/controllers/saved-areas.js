@@ -42,10 +42,6 @@ angular.module('delivery.controllers')
         $rootScope.savedAreasModal.hide();
         $rootScope.showMainView = true;
         $rootScope.isCategorySelected = true;
-
-        //load required shops by business category and selected delivered area 
-        //
-        $rootScope.loadShops(deliveryLoader);
     };
 
     $scope.selectNewAddress = function () {

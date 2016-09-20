@@ -39,6 +39,7 @@
 
                 <button class="button button-balanced button-small button-block" translate="CONFIRM_YOUR_ORDER" ng-click="confirmOrder()"></button>
                 <button class="button button-positive button-small button-block" ui-sref="app.shop-details" translate="CONTINUE_SHOPPING"></button>
+                <button class="button button-assertive button-small button-block" translate="CANCEL_ORDER" ng-click="cancelOrder()"></button>
             </div>
         </div>
         <div ng-if="cartItems.length == 0" class="padding" ng-class="{'text-right': isRTL()}">

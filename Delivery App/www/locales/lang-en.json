@@ -172,5 +172,7 @@
   "NO_SHOPS_IN_SELECTED_AREA": "No shops in the selected area",
   "SHOP_NOT_SUBSCRIBED": "Shop not subscribed!",
   "SHOP_NOT_SUBSCRIBED_MSG": "Unfortunately this shop isn't supscribed in our service",
-  "CALL_NOW": "Call Now"
+  "CALL_NOW": "Call Now",
+  "CANCEL_ORDER": "Cancel Order",
+  "CANCEL_ORDER_MSG": "Are you sure you want to cancel your order?"
 }

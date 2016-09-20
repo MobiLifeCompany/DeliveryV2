@@ -9,23 +9,37 @@ angular.module('delivery.controllers')
     //$rootScope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
 
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
-            $ionicSlideBoxDelegate.slide(0);
-            $ionicSlideBoxDelegate.start();
-            $rootScope.loadShops(deliveryLoader);
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        if ($rootScope.showMainView)
+        {
+            connectionFactory.testConnection(deliveryLoader).success(function (data) {
+                $rootScope.loadShopsOffers(deliveryLoader);
+                $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+                $ionicSlideBoxDelegate.slide(0);
+                $ionicSlideBoxDelegate.start();
+                $rootScope.loadShops(deliveryLoader);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            })
+        }
+        
     });
 
-    $rootScope.$watch('isCategorySelected', function () {
-        $timeout(function () {
-            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
-            $ionicSlideBoxDelegate.slide(0);
-            $ionicSlideBoxDelegate.start();
-        }, 1000);
+    $rootScope.$watch('showMainView', function () {
+
+        if ($rootScope.showMainView)
+        {
+            connectionFactory.testConnection(deliveryLoader).success(function (data) {
+                $rootScope.loadShopsOffers(deliveryLoader);
+                $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+                $ionicSlideBoxDelegate.slide(0);
+                $ionicSlideBoxDelegate.start();
+                $rootScope.loadShops(deliveryLoader);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            })
+        }
     });
 
     $rootScope.loadShops = function (deliveryLoader) {
@@ -75,12 +89,6 @@ angular.module('delivery.controllers')
         })
     };
 
-    connectionFactory.testConnection(deliveryLoader).success(function (data) {
-      $rootScope.loadShopsOffers(deliveryLoader);
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        connectionFactory.exitApplication();
-    })
     
     $scope.done_loading = true;
 
@@ -90,19 +98,6 @@ angular.module('delivery.controllers')
     $scope.isMasteryFilterSet = false;
     $scope.isAdvanceFilterSet = false;
     $scope.advanceFilter = {minDeliveryValue: 10000, deliveryTime: 120, rating: 0, showClosed: true, promotionOnly: false};
-
-    // use ionicView.loaded event to load shops when navigating from checkout view after clearing $ionicHistory cache and history
-    $scope.$on('$ionicView.loaded', function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            if ($rootScope.showMainView)
-                $rootScope.loadShops(deliveryLoader);
-            else
-                deliveryLoader.hideLoading();
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
-    });
 
 
     // Create options popover

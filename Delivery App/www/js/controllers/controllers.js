@@ -69,6 +69,15 @@ angular.module('delivery.controllers', [])
         return false;
     };
 
+    $rootScope.getTotalItemsCount = function () {
+        var count = 0;
+        for (i = 0; i < $rootScope.cartItems.length; i++)
+        {
+            count += parseInt($rootScope.cartItems[i].quantity);
+        }
+
+        return count;
+    };
     ///////////////////////////////////////////////////////
     //////  Create the side menu functions and modals /////
     ///////////////////////////////////////////////////////
@@ -214,8 +223,8 @@ angular.module('delivery.controllers', [])
             $rootScope.categoriesModal.show();
             $cordovaSplashscreen.hide();
         }).error(function (err, statusCode) {
-            $cordovaSplashscreen.hide();
-
+            
+            deliveryLoader.hideLoading();
             // Create the no connection modal which should be displayed when no internet connection
             $ionicModal.fromTemplateUrl('templates/no-connection.html', {
                 scope: $rootScope,
@@ -224,7 +233,6 @@ angular.module('delivery.controllers', [])
                 $rootScope.noConnectionModal = modal;
                 $rootScope.noConnectionModal.show();
             });
-
             $cordovaSplashscreen.hide();
             //connectionFactory.exitApplication();
         })

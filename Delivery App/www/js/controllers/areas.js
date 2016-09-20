@@ -18,9 +18,6 @@ angular.module('delivery.controllers')
             $rootScope.showMainView = true;
             $rootScope.isCategorySelected = true;
 
-            //load required shops by business category and selected delivered area 
-            $rootScope.loadShops(deliveryLoader);
-
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             connectionFactory.exitApplication();

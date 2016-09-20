@@ -63,5 +63,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-google-analytics": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\Smarttech-DELL\\Desktop\\google-analytics-plugin-master"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

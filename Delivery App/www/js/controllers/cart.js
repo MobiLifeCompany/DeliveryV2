@@ -55,6 +55,32 @@ angular.module('delivery.controllers')
         return total;
     };
 
+    $scope.cancelOrder = function () {
+        // Show a confirmation popup
+        var confirmPopup = $ionicPopup.confirm({
+            title: $translate.instant('CANCEL_ORDER'),
+            template: $translate.instant('CANCEL_ORDER_MSG'),
+            cancelText: $translate.instant('NO'),
+            okText: $translate.instant('YES')
+        });
+
+        // Resolve the promise returned by the popup, then cancel the order if user confirm
+        confirmPopup.then(function (res) {
+            if (res) {
+                $rootScope.showCartFabButton = false;
+                $rootScope.cartItems = [];
+                $rootScope.cartShop = null;
+                $rootScope.cartAddress = null;
+                $rootScope.cartNote = { text: "" };
+                $state.go('app.shops'); //go back to start view 'shops'
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+            }
+        });
+        
+    };
+
     $scope.confirmOrder = function () {
         // Check if the shop is subscribed
         if (!$rootScope.cartShop.subscribed) {
