@@ -142,6 +142,7 @@ angular.module('delivery.factory', [])
     var selectedAreaKey = 'selectedArea';
     var customerAddressesKey = 'customerAddresses';
     var selectedLanguageKey = 'selectedLanguage';
+    var gcmIdkey = 'gcmId';
 
     var UtilityAPI = {
 
@@ -215,7 +216,18 @@ angular.module('delivery.factory', [])
 
         deleteSelectedLanguage: function () {
             LSFactory.delete(selectedLanguage);
-        }
+        },
+
+        getGcmId: function () {
+            return LSFactory.get(gcmIdkey);
+        },
+
+        setGcmId: function (gcmId) {
+             return LSFactory.set(gcmIdkey, gcmId);
+        },
+        getGcmId1: function () {
+            return LSFactory.get('registrationId');
+        },
 
     };
     return UtilityAPI;
@@ -230,6 +242,7 @@ angular.module('delivery.factory', [])
             },
 
             register: function (customer) {
+                customer.gcm_id = storageUtilityFactory.getGcmId();
                 return $http.post(baseURL + '/customers', customer);
             },
             updateProfile: function (customer) {
@@ -237,6 +250,7 @@ angular.module('delivery.factory', [])
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                     customerAuthToken = authFactory.getCustomer().auth_token;
 
+                customer.gcm_id = storageUtilityFactory.getGcmId();
                 return $http.put(baseURL + '/customers/' + customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerAddress: function (customerAddress) {
@@ -401,4 +415,76 @@ angular.module('delivery.factory', [])
     };
 
     return API;
+})
+.factory('gcmFactory', function ($rootScope, storageUtilityFactory) {
+
+    var app = {
+        // Application Constructor
+        initialize: function () {
+            this.bindEvents();
+        },
+        // Bind Event Listeners
+        //
+        // Bind any events that are required on startup. Common events are:
+        // 'load', 'deviceready', 'offline', and 'online'.
+        bindEvents: function () {
+            document.addEventListener('deviceready', this.onDeviceReady, false);
+        },
+        // deviceready Event Handler
+        //
+        // The scope of 'this' is the event. In order to call the 'receivedEvent'
+        // function, we must explicitly call 'app.receivedEvent(...);'
+
+        onDeviceReady: function () {
+            var push = PushNotification.init({
+                "android": {
+                    "senderID": "180733002242"
+                },
+                "ios": {
+                    "alert": "true",
+                    "badge": "true",
+                    "sound": "true"
+                },
+                "windows": {}
+            });
+
+            push.on('registration', function (data) {
+                console.log("registration event");
+                $rootScope.registrationId = data.registrationId;
+                storageUtilityFactory.setGcmId(data.registrationId);
+
+            });
+
+            push.on('registered', function (data) {
+                console.log("registration event");
+                $rootScope.registrationId = data.registrationId;
+                storageUtilityFactory.setGcmId(data.registrationId);
+
+            });
+
+            push.on('notification', function (data) {
+                if (cordova.platformId === 'android') {
+                    $rootScope.notification = data;
+                    console.log("notification event");
+                    cordova.plugins.notification.local.add({
+                        id: data.additionalData["google.message_id"].substring(2, 15),
+                        message: data.message,
+                        title: data.title,
+                        sound: "file://sound/delivery-tone.mp3",
+                        icon: "http://admin.deliveryonweb.com/dist/img/logo.png",
+                        data: { type: "ORDER" },
+                    }).then(function () {
+                        console.log("The notification has been set");
+                    });
+                }
+            });
+
+            push.on('error', function (e) {
+                console.log("push error");
+            });
+
+        }
+    };
+
+    return app;
 })

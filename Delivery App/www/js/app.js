@@ -6,7 +6,7 @@
 // 'delivery.controllers' is found in controllers.js
 angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory', 'pascalprecht.translate', 'ionic-material', 'jett.ionic.filter.bar', 'ngCordova', 'ui.router'])
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, $rootScope, $ionicPopup, storageUtilityFactory) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,9 +19,66 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+    cordova.plugins.notification.local.on("click", function () {
+        if ($rootScope.notification.additionalData["type"] === 'ORDER_NOTIFICATION') {
+            var alertPopup = $ionicPopup.alert({
+                title: $rootScope.notification.title,
+                template: $rootScope.notification.message
+            });
+        }
+    });
+
+    var push = PushNotification.init({
+        "android": {
+            "senderID": "180733002242"
+        },
+        "ios": {
+            "alert": "true",
+            "badge": "true",
+            "sound": "true"
+        },
+        "windows": {}
+    });
+
+    push.on('registration', function (data) {
+        console.log("registration event");
+        $rootScope.registrationId = data.registrationId;
+        storageUtilityFactory.setGcmId(data.registrationId);
+
+    });
+
+    push.on('registered', function (data) {
+        console.log("registration event");
+        $rootScope.registrationId = data.registrationId;
+        storageUtilityFactory.setGcmId(data.registrationId);
+
+    });
+
+    push.on('notification', function (data) {
+        if (cordova.platformId === 'android') {
+            $rootScope.notification = data;
+            console.log("notification event");
+            cordova.plugins.notification.local.add({
+                id: data.additionalData["google.message_id"].substring(2, 15),
+                message: data.message,
+                title: data.title,
+                sound: "file://sound/delivery-tone.mp3",
+                icon: "http://admin.deliveryonweb.com/dist/img/logo.png",
+                data: { type: "ORDER" },
+            }).then(function () {
+                console.log("The notification has been set");
+            });
+        }
+    });
+
+    push.on('error', function (e) {
+        console.log("push error");
+    });
+
   });
 })
-
 .run(['$rootScope','storageUtilityFactory', function ($rootScope, storageUtilityFactory) {
     if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
         $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
