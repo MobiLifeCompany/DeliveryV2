@@ -4,6 +4,38 @@
         <button class="button button-icon button-clear ion-refresh" ng-click="loadOldOrders()"></button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="false" ng-class="!isUserLoggedin || oldOrders.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">
+        <script id="order-details-modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal">
+                <div class="ion-modal-content-custom">
+                    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+                        <div class="list card light-bg">
+                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
+                                <img src="{{getShopPhoto(selectedOrder.shop.id)}}">
+                                <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedOrder.shop.name}}</h2>
+                                <h4 ng-class="isRTL() ? 'text-right' : ''"><span class="balanced"> {{'TOTAL' | translate}}: {{selectedOrder.total}} {{currency}}</span></h4>
+                                <h4 ng-class="isRTL() ? 'text-right' : ''" style="color: black;">
+                                    <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{selectedOrder.customer_address.street}}, <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{selectedOrder.customer_address.building}}, <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{selectedOrder.customer_address.phone}}<br />
+                                </h4>
+                            </div>
+                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
+                                <span class="assertive-900">{{'DETAILS' | translate}}: </span>
+                                <ol ng-repeat="item in selectedOrder.items">
+                                    <li>{{item.qty}} {{item.item.name}}</li>
+                                </ol>
+                            </div>
+                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeOrderDetails()">
+                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+
+        </script>
+
         <div ng-show="!isUserLoggedin || oldOrders.length == 0" ng-class="{'text-right': isRTL()}">
             <div class="icon ion-ios-filing-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
             <h4 class="stable text-center" translate="NO_OLD_ORDERS"></h4>
@@ -12,18 +44,18 @@
         <div class="list" ng-show="oldOrders.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="oldOrder in oldOrders">
                 <div class="list card" style="margin: 5px;">
-                    <img style="position: absolute; bottom: 0px; opacity: 0.4; height: 100%; max-height: 100px;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{getShopPhoto(oldOrder.shop.id)}}" />
-                    <div class="item item-body" style="padding: 5px; text-align: {{default_float}}">
-                        <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span><span class="pull-{{opposite_float}} balanced">{{'TOTAL' | translate}}: {{oldOrder.total}} {{currency}}</span></h3>
-                        <h4 style="color: black;"><strong>{{'ADDRESS_STREET' | translate}}: </strong>{{oldOrder.customer_address.street}}, <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{oldOrder.customer_address.building}}, <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{oldOrder.customer_address.phone}}<br />
-                        <span class="assertive-900">{{'DETAILS' | translate}}: </span><span ng-repeat="item in oldOrder.items">{{item.qty}} {{item.item.name}}, </span></h4>
+                    <img style="position: absolute; top: 20px; opacity: 0.4; height: 100%; max-height: 100px;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{getShopPhoto(oldOrder.shop.id)}}" />
+                    <div class="item item-body" style="padding: 5px; text-align: {{default_float}}" ng-click="showOrderDetails(oldOrder)">
+                        <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span></h3>
+                        <h3><span class="balanced">{{'TOTAL' | translate}}: {{oldOrder.total}} {{currency}}</span></h3>
+                        <h4><span class="assertive-900">{{'DETAILS' | translate}}: </span><span ng-repeat="item in oldOrder.items">{{item.qty}} {{item.item.name}}, </span></h4>
                         <h4 style="color: black;" ng-switch="oldOrder.order_status"><span>{{'ORDER_STATUS' | translate}}: </span>
                             <span ng-switch-when="FINISHED" class="balanced">{{'ORDER_FINISHED' | translate}}</span>
                             <span ng-switch-when="PENDING" class="assertive">{{'ORDER_PENDING' | translate}}</span>
                             <span ng-switch-when="PREPARED" class="energized">{{'ORDER_PREPARED' | translate}}</span>
                         </h4>
                     </div>
-                    <div>
+                    <div class="padding-left padding-right">
                         <button class="button button-balanced button-small button-block" translate="ORDER_REPEAT" ng-click="repeatOrder(oldOrder)" ng-show="oldOrder.order_status == 'CLOSED'"></button>
                         <button class="button button-positive button-small button-block" translate="FOLLOW_ORDER" ng-click="" ng-show="oldOrder.order_status == 'PREPARED'"></button>
                     </div>

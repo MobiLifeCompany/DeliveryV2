@@ -171,9 +171,13 @@
   "PROFILE_SUCCESS_MSG" : "تم تعديل ملفك بنجاح",
   "MESSAGE" :  "الرسالة",
   "NO_SHOPS_IN_SELECTED_AREA": "لا يوجد متاجر في هذه المنطقة",
-    "SHOP_NOT_SUBSCRIBED": "المتجر غير مشترك!",
+  "SHOP_NOT_SUBSCRIBED": "المتجر غير مشترك!",
   "SHOP_NOT_SUBSCRIBED_MSG": "للأسف هذا المتجر غير مشترك في خدماتنا",
+  "NOTIFY_SHOP_TO_SUBSCRIBE": "تنبيه المتجر",
   "CALL_NOW": "اتصل الآن",
   "CANCEL_ORDER": "إلغاء الطلبية",
-  "CANCEL_ORDER_MSG": "هل أنت متأكد من رغبتك بإلغاء الطلبية؟"
+  "CANCEL_ORDER_MSG": "هل أنت متأكد من رغبتك بإلغاء الطلبية؟",
+  "SHARED_USING_DELIVERY": "تمت المشاركة عن طريق تطبيق ديليفري إكسبريس - أفضل برنامج طلب الكتروني في سوريا. حمل التطبيق الآن و احصل على آخر العروض",
+  "SHOP": "المتجر",
+  "SHARE_TXT": "مشاركة"
 }

@@ -31,7 +31,7 @@ angular.module('delivery.controllers', [])
 })
 
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $state, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader, storageUtilityFactory) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -77,6 +77,20 @@ angular.module('delivery.controllers', [])
         }
 
         return count;
+    };
+
+    /// <summary>showOldOrders: Show the old orders modal when the corresponding sidemenu item is clicked</summary>
+    /// <param>No parameters</param>
+    $rootScope.showOldOrders = function () {
+
+        $rootScope.selectedCategory = storageUtilityFactory.getSelectedCategory();
+        $rootScope.selectedCity = storageUtilityFactory.getSelectedCity();
+        $rootScope.selectedArea = storageUtilityFactory.getSelectedArea();
+        $rootScope.showMainView = true;
+        $rootScope.isCategorySelected = true;
+        $rootScope.loadShops();
+        $state.go('app.old-orders'); //go to old orders tab
+
     };
     ///////////////////////////////////////////////////////
     //////  Create the side menu functions and modals /////
@@ -197,6 +211,7 @@ angular.module('delivery.controllers', [])
             $rootScope.aboutModal.show();
         });
     }
+
 
     /// <summary>exitApp: exit the application when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>

@@ -147,7 +147,7 @@
         </script>
         <ion-slide-box dir="ltr" class="" auto-play="true" does-continue="true" slide-interval="2000" >
            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
-                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer.item,shopOffer.shop,shopOffer.clickable)"/>
+                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer)"/>
            </ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true" dir="{{default_direction}}">
@@ -164,6 +164,18 @@
                             <i ng-class="shop.rating >= 3 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             <i ng-class="shop.rating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             <i ng-class="shop.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
+                        </div>
+                        <div>
+                            <table style="text-align: center; width: 100%;">
+                                <tr>
+                                    <td class="ion-share balanced" style="font-size: 18px; line-height: 12px;"></td>
+                                    <td class="ion-eye calm" style="font-size: 18px; line-height: 12px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 10px; line-height: 12px;">25</td>
+                                    <td style="font-size: 10px; line-height: 12px;">367</td>
+                                </tr>
+                            </table>
                         </div>
                         <img src="img/subscribed.png" style="position: absolute; bottom: 10%; right: 10%; opacity: 0.6; height: 50%; z-index: 9999;" ng-show="shop.subscribed && lang == 'en'"/>
                         <img src="img/subscribed_ar.png" style="position: absolute; bottom: 10%; left: 10%; opacity: 0.6; height: 50%; z-index: 9999;" ng-show="shop.subscribed && lang == 'ar'" />
@@ -224,6 +236,9 @@
                         <div class="item tabs tabs-secondary tabs-icon-left">
                             <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
                                 <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                            </a>
+                            <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="shareOffer(selectedOffer)">
+                                <i class="icon ion-android-share-alt"></i><i translate="SHARE_TXT"></i>
                             </a>
                             <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
                                 <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>

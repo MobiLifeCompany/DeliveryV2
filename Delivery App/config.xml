@@ -53,12 +53,13 @@
   <plugin name="cordova-plugin-network-information" version="1.2.1" />
   <plugin name="cordova-plugin-x-toast" version="2.5.1" src="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
   <preference name="Orientation" value="portrait" />
+  <plugin name="cordova-plugin-app-event" version="1.2.0" />
   <plugin name="phonegap-plugin-push" version="1.8.1" src="https://github.com/phonegap/phonegap-plugin-push">
-    <param name="SENDER_ID" value="180733002242" />
-    <param name="WindowsToastCapable" value="Delivery Express" />
+    <variable name="SENDER_ID" value="180733002242" />
+    <variable name="WindowsToastCapable" value="Delivery Express" />
   </plugin>
   <plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" src="https://github.com/katzer/cordova-plugin-local-notifications">
-    <param name="WindowsToastCapable" value="Delivery Express" />
+    <variable name="WindowsToastCapable" value="Delivery Express" />
   </plugin>
-  <plugin name="cordova-plugin-app-event" version="1.2.0" />
+  <plugin name="cordova-plugin-x-socialsharing" version="5.1.3" src="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
 </widget>

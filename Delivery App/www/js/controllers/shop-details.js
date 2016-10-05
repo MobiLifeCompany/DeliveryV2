@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicFilterBar, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicFilterBar, $cordovaSocialSharing, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
 
 
     $scope.shopDetails = [];
@@ -215,7 +215,6 @@ angular.module('delivery.controllers')
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
         if (!shop.is_open) {
-
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('SHOP_CLOSED'),
                 template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
@@ -223,6 +222,7 @@ angular.module('delivery.controllers')
         }
         else {
             if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+
                 var isNewItem = true; // used to determine if the added item is new or allready in the cart
                 var quantity = document.getElementById(item.id).innerHTML;
                 $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
@@ -239,15 +239,15 @@ angular.module('delivery.controllers')
 
                 }
 
+                if (isNewItem) //all new item to cart
+                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+
                 // if the cart become empty
                 if ($rootScope.cartItems.length == 0)
                 {
                     $rootScope.showCartFabButton = false;
                     $rootScope.cartShop = null;
                 }
-
-                if (isNewItem) //all new item to cart
-                    $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
             }
             else {
                 // Show a warning popup if shop changed
@@ -281,5 +281,36 @@ angular.module('delivery.controllers')
         }
 
         return itemQty;
+    };
+
+    $scope.shareShop = function () {
+        var message = $scope.shopDetails.name + '\n';
+        for (var i = 0; i < $scope.shopDetails.masteries.length; i++)
+            message += $scope.shopDetails.masteries[i] + ' | ';
+        message += '\n';
+        message += $scope.shopDetails.address + '\n';
+        message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
+
+        $cordovaSocialSharing
+            .share(message, $translate.instant('APPLICATION_NAME'), $scope.shopDetails.photo, $rootScope.downloadURL) // Share via native share sheet
+            .then(function(result) {
+              // Success!
+            }, function(err) {
+              // An error occured. Show a message to the user
+            });
+    };
+
+    $scope.shareItem = function (item) {
+        var message = item.name + '\n';
+        message += $translate.instant('SHOP') + ': ' + $scope.shopDetails.name + '\n';
+        message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
+
+        $cordovaSocialSharing
+            .share(message, item.name, item.photo, $rootScope.downloadURL) // Share via native share sheet
+            .then(function (result) {
+                // Success!
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
     }
 });

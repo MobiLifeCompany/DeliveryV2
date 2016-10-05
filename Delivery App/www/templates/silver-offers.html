@@ -27,6 +27,9 @@
                                 <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
                                     <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
                                 </a>
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="shareOffer(selectedOffer)">
+                                    <i class="icon ion-android-share-alt"></i><i translate="SHARE_TXT"></i>
+                                </a>
                                 <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
                                     <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>
                                 </a>
@@ -44,16 +47,17 @@
 
         <div class="list" ng-show="shopsOffers.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="shopOffer in shopsOffers">
-                <div class="list card" style="margin: 5px;" ng-click="showItemDetails(shopOffer.item,shopOffer.shop,shopOffer.clickable)">
+                <div class="list card" style="margin: 5px;">
                     <img style="position: absolute; top: 0px; opacity: 0.4; height: 100%;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{shopOffer.shop.photo}}" />
                     <div ng-class="isRTL() ? 'silver-promotion-triangle-rtl' : 'silver-promotion-triangle'"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
-                    <a class="item item-thumbnail-{{default_float}}" ng-class="{'text-right': isRTL()}">
+                    <div class="item item-thumbnail-{{default_float}}" ng-class="{'text-right': isRTL()}" ng-click="showItemDetails(shopOffer)">
                         <img src="{{shopOffer.item.photo}}">
                         <h2 class="assertive-900">{{shopOffer.shop.name}}</h2>
                         <p>{{shopOffer.name}}</p>
                         <p style="font-size: 12px; color: black; white-space: normal;"><strong>{{'OFFER_DETAILS' | translate}}: </strong>{{shopOffer.short_description}}</p>
-                    </a>
-                    
+                        
+                    </div>
+                    <button class="button-clear" style="float: {{opposite_float}}; margin: 2px;" ng-click="shareOffer(shopOffer)"><i class="ion-android-share-alt assertive-900" style="font-size:22px;"></i></button>
                 </div>
             </div>
         </div>

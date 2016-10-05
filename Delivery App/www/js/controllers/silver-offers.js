@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPlatform, shopsFactory, connectionFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPlatform, $cordovaSocialSharing, shopsFactory, connectionFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.shopsOffers = [];
 
@@ -41,10 +41,11 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal = modal;
     });
 
-    $scope.showItemDetails = function (item, shop, clickable) {
-        if (clickable) {
-            $scope.selectedItem = item;
-            $scope.shopDetails = shop;
+    $scope.showItemDetails = function (offer) {
+        if (offer.clickable) {
+            $scope.selectedOffer = offer;
+            $scope.selectedItem = offer.item;
+            $scope.shopDetails = offer.shop;
             var selectedItemQuantity = 1;
             $scope.itemDetailsModal.show();
             document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
@@ -135,6 +136,20 @@ angular.module('delivery.controllers')
         }
 
         return itemQty;
+    };
+
+    $scope.shareOffer = function (offer) {
+        var message = offer.item.name + '\n';
+        message += offer.shop.name + '\n';
+        message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
+
+        $cordovaSocialSharing
+            .share(message, $translate.instant('APPLICATION_NAME'), offer.photo, $rootScope.downloadURL) // Share via native share sheet
+            .then(function (result) {
+                // Success!
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
     };
 
 });

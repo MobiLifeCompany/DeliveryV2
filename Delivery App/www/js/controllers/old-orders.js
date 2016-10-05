@@ -1,8 +1,8 @@
 angular.module('delivery.controllers')
 
-.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $translate, $state, deliveryLoader, errorCodeMessageFactory, connectionFactory, shopDetailsFactory, customerFactory) {
+.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $ionicModal, $translate, $state, deliveryLoader, errorCodeMessageFactory, connectionFactory, shopDetailsFactory, customerFactory) {
 
-    // Load shop offers on enter
+    // Load old orders on enter
     $scope.$on('$ionicView.enter', function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
             if ($rootScope.isUserLoggedin == true)
@@ -29,13 +29,6 @@ angular.module('delivery.controllers')
             connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'));
         })
     };
-
-    connectionFactory.testConnection(deliveryLoader).success(function (data) {
-        if ($rootScope.isUserLoggedin == true)
-            $scope.loadOldOrders();
-    }).error(function (err, statusCode) {
-        connectionFactory.exitApplication();
-    })
 
     // Get shop photo
     $scope.getShopPhoto = function (shopId) {
@@ -88,5 +81,25 @@ angular.module('delivery.controllers')
             }
         }
     };
+
+    //Create 'old order details' modal to display information about the selected order
+    $ionicModal.fromTemplateUrl('order-details-modal.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.orderDetailsModal = modal;
+    });
+
+    $scope.showOrderDetails = function (order) {
+        $scope.selectedOrder = order;
+        $scope.orderDetailsModal.show();
+    };
+
+    $scope.closeOrderDetails = function () {
+        $scope.orderDetailsModal.hide();
+    };
+
+    $scope.$on('$destroy', function () {
+        $scope.orderDetailsModal.remove();
+    });
 
 });

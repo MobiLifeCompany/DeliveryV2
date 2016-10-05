@@ -101,6 +101,8 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         $rootScope.currency = 'ل.س.';
 
     storageUtilityFactory.setCountry($rootScope.countryId);
+
+    $rootScope.downloadURL = 'https://play.google.com/store/apps';
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {

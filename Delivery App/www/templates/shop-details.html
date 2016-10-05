@@ -2,7 +2,7 @@
     <search-bar></search-bar>
     <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
-        <!--<button class="button button-icon button-clear ion-home" ng-click="goBackToShops()"></button>-->
+        <button class="button button-icon button-clear ion-android-share-alt" ng-click="shareShop()"></button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="false" dir="{{default_direction}}">
         <script id="shop-info-modal.html" type="text/ng-template">
@@ -127,8 +127,21 @@
                         <i ng-class="shopDetails.rating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                         <i ng-class="shopDetails.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                     </div>
+                    <div>
+                        <table style="text-align: center; width: 100%; border-top: 1px dashed silver;">
+                            <tr>
+                                <td class="ion-share balanced" style="font-size: 18px; line-height: 12px;"></td>
+                                <td class="ion-eye calm" style="font-size: 18px; line-height: 12px;"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 10px; line-height: 12px;">25</td>
+                                <td style="font-size: 10px; line-height: 12px;">367</td>
+                            </tr>
+                        </table>
+                    </div>
                     <img src="img/subscribed.png" style="opacity: 0.6; width: 80%; margin-left: 10%;" ng-show="shopDetails.subscribed && lang == 'en'" />
                     <img src="img/subscribed_ar.png" style="opacity: 0.6; width: 80%; margin-right: 10%;" ng-show="shopDetails.subscribed && lang == 'ar'" />
+                    
                 </div>
                 <div style="float: {{default_float}}; padding: 5px 10px; width: 75%;">
                     <div>
@@ -180,18 +193,21 @@
                     <span class="badge" ng-class="{'badge-stable': isCategoryShown(category), 'badge-assertive': !isCategoryShown(category), 'badge-rtl': isRTL()}">{{category.items.length}}</span>
                 </ion-item>
                 <ion-item class="item-accordion dl-border-bottom-stable" ng-repeat="item in category.items" ng-show="isCategoryShown(category)" style="padding: 5px;" ng-class="isRTL() ? 'text-right' : ''">
-                    <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemDetails(item)">
-                        <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
+                    <div>
+                        <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemDetails(item)">
+                            <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
+                        </div>
+                        <div style="width: 70%; float: {{default_float}}; padding: 5px 10px;" ng-click="showItemDetails(item)">
+                            <h2 class="assertive">{{item.name}}</h2>
+                            <h4 style="white-space: normal;">{{item.description}}</h4>
+                            <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
+                        </div>
+                        <div style="width: 15%; float: {{default_float}}; padding: 5px 10px;">
+                            
+                            <div style="text-align: center;"><button class="button-clear" ng-click="shareItem(item)"><i class="ion-android-share-alt assertive-900" style="font-size:22px;"></i></button></div>
+                        </div>
                     </div>
-                    <div style="width: 55%; float: {{default_float}}; padding: 5px 10px;" ng-click="showItemDetails(item)">
-                        <h2 class="assertive">{{item.name}}</h2>
-                        <h4 style="white-space: normal;">{{item.description}}</h4>
-                        <h5><span translate="PRICE"></span><span>: {{item.price}} {{currency}}</span></h5>
-                    </div>
-                    <div style="width: 30%; float: {{default_float}}; padding: 5px 10px;">
-                        <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id, item, shopDetails)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id, item, shopDetails)"></i></div>
-                        
-                    </div>
+                    <div style="text-align: center; clear: both;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantity(item.id, item, shopDetails)"></i><span style="padding: 0px 10px;" id="{{item.id}}" ng-model="item.id">{{checkItemCount(item.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantity(item.id, item, shopDetails)"></i></div>
                 </ion-item>
             </div>
             <!-- Show this list when searching for items is applied -->

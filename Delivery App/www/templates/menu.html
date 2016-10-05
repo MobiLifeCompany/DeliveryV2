@@ -65,6 +65,10 @@
               <i class="icon ion-person">
               </i><span translate="PROFILE"></span>
           </ion-item>
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="showOldOrders()" ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
+              <i class="icon ion-archive">
+              </i><span translate="OLD_ORDERS"></span>
+          </ion-item>
           <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-home">
               </i><span translate="ADDRESSES"></span>
