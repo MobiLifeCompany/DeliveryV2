@@ -199,6 +199,12 @@ angular.module('delivery.controllers', [])
         });
     }
 
+    /// <summary>close: Close the help modal when user press back</summary>
+    /// <param>No parameters</param>
+    $rootScope.closeHelp = function () {
+        $rootScope.helpModal.hide();
+    };
+
     /// <summary>showAbout: Show the about modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAbout = function () {
@@ -236,6 +242,11 @@ angular.module('delivery.controllers', [])
     $ionicPlatform.ready(function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
             $rootScope.categoriesModal.show();
+            if (storageUtilityFactory.getFirstRun() != 'false')
+            {
+                $rootScope.showHelp();
+                storageUtilityFactory.setFirstRun('false');
+            }
             $cordovaSplashscreen.hide();
         }).error(function (err, statusCode) {
             

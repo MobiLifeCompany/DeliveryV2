@@ -143,6 +143,7 @@ angular.module('delivery.factory', [])
     var customerAddressesKey = 'customerAddresses';
     var selectedLanguageKey = 'selectedLanguage';
     var gcmIdkey = 'gcmId';
+    var firstRunKey = 'firstRun';
 
     var UtilityAPI = {
 
@@ -227,6 +228,14 @@ angular.module('delivery.factory', [])
         },
         getGcmId1: function () {
             return LSFactory.get('registrationId');
+        },
+
+        getFirstRun: function () {
+            return LSFactory.get(firstRunKey);
+        },
+
+        setFirstRun: function (state) {
+            return LSFactory.set(firstRunKey, state);
         },
 
     };

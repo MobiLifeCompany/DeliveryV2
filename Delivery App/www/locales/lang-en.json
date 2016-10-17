@@ -178,5 +178,9 @@
   "CANCEL_ORDER_MSG": "Are you sure you want to cancel your order?",
   "SHARED_USING_DELIVERY": "Shared using Delivery Express App - The best online ordering app in Syria. Download the app now to get latest offers",
   "SHOP": "Shop",
-  "SHARE_TXT": "Share"
+  "SHARE_TXT": "Share",
+  "SKIP": "Skip",
+  "GET_STARTED": "Get Started",
+  "WELCOME_TO_APP": "Welcome to Delivery Express",
+  "SWIPE_TO_LEARN": "Swipe to learn more"
 }

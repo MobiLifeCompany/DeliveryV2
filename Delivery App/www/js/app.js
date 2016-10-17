@@ -218,6 +218,6 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
         prefix: 'locales/lang-',
         suffix: '.json'
     })
-    .preferredLanguage('en');
+    .preferredLanguage('ar');
 
 }]);

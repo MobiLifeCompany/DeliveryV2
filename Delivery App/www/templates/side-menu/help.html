@@ -1,9 +1,138 @@
-<ion-modal-view ng-controller="HelpCtrl">
-  <ion-header-bar class="bar-assertive">
-    <button class="button button-icon button-clear" ng-click="close()"><span class="icon ion-ios-arrow-left"></span></button>
-    <h1 class="title" translate="HELP"></h1>
-  </ion-header-bar>
-  <ion-content>
-    
-  </ion-content>
+<ion-modal-view class="boarding-modal">
+    <div class="">
+        <ion-content overflow-scroll="false">
+            <ion-slide-box style="height: 100%; padding-top: 5px;">
+                <!-- First slide-->
+                <ion-slide>
+                    <div>
+                        <button style="float: {{opposite_float}}; font-family: GESSUniqueBold;" class="button button-light button-small button-clear" ng-click="closeHelp()" translate="SKIP"></button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="height: 100%; width: 100%; text-align: center;">
+                        
+                        <img src="img/delivery_logo.png" style="margin-top: 10px; height: 20%;">
+                        <h4 class="light" translate="WELCOME_TO_APP" style="font-family: GESSUniqueBold;"></h4>
+                        <h5 class="stable" translate="SWIPE_TO_LEARN" style="font-family: GESSUniqueBold;"></h5>
+                        <img src="img/onboarding/swipe.png" style="margin-top: 10px; height: 25%;">
+                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;">
+                            <button style="font-family: GESSUniqueBold;" class="button button-small button-positive button-block" ng-click="closeHelp(); showLogin();" translate="LOGIN"></button>
+                            <button style="font-family: GESSUniqueBold;" class="button button-small button-energized button-block" ng-click="closeHelp(); showRegister();" translate="REGISTER_NOW"></button>
+                        </div>
+                    </div>
+                </ion-slide>
+
+
+                <ion-slide style="padding-bottom: 60px;">
+                    <div>
+                        <button style="float: {{opposite_float}}; font-family: GESSUniqueBold;" class="button button-light button-small button-clear" ng-click="closeHelp()" translate="SKIP"></button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="display: table; height: 100%; width: 100%; padding-top: 6px;">
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step1.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step1_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text1.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <img src="img/onboarding/text1_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step2.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step2_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text2.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <img src="img/onboarding/text2_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                            </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step3.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step3_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text3.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <img src="img/onboarding/text3_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                    
+                </ion-slide>
+                
+                <ion-slide style="padding-bottom: 60px;">
+                    <div>
+                        <button style="float: {{opposite_float}}; font-family: GESSUniqueBold;" class="button button-light button-small button-clear" ng-click="closeHelp()" translate="SKIP"></button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="display: table; height: 100%; width: 100%; padding-top: 6px;">
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step4.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step4_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text4.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <img src="img/onboarding/text4_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step5.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step5_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text5.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <img src="img/onboarding/text5_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step6.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step6_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text6.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <img src="img/onboarding/text6_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+
+                </ion-slide>
+
+                <ion-slide style="padding-bottom: 60px;">
+                    <div>
+                        <button style="float: {{opposite_float}}; font-family: GESSUniqueBold;" class="button button-light button-small button-clear" ng-click="closeHelp()" translate="SKIP"></button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="display: table; height: 100%; width: 100%; padding-top: 6px;">
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step7.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step7_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text7.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <img src="img/onboarding/text7_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step8.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step8_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text8.png" ng-show="lang == 'en'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <img src="img/onboarding/text8_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{opposite_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="height: 30%; display: table-row;">
+                            <img src="img/onboarding/step9.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/step9_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; padding: 0px 20px; display: table-cell;">
+                            <img src="img/onboarding/text9.png" ng-show="lang == 'en'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <img src="img/onboarding/text9_ar.png" ng-show="lang == 'ar'" style="height: 90%; float: {{default_float}}; display: table-cell;">
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+
+                </ion-slide>
+
+                <!-- Final slide-->
+                <ion-slide>
+                    <div>
+                        <button style="font-family: GESSUniqueBold; float: {{opposite_float}}; border: 1px solid white; border-radius: 2px; padding: 5px !important; margin:2px 5px;" class="button button-light button-small button-clear" ng-click="closeHelp()" translate="GET_STARTED"></button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="height: 100%; width: 100%; text-align: center;">
+                        <h3></h3>
+                        <img src="img/onboarding/final-step.png" ng-show="lang == 'en'" style="width: 100%; position: absolute; bottom: 0px; left: 0px;">
+                        <img src="img/onboarding/final-step_ar.png" ng-show="lang == 'ar'" style="width: 100%; position: absolute; bottom: 0px; left: 0px;">
+                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;">
+                            <button style="font-family: GESSUniqueBold;" class="button button-small button-positive button-block" ng-click="closeHelp(); showLogin();" translate="LOGIN"></button>
+                            <button style="font-family: GESSUniqueBold;" class="button button-small button-energized button-block" ng-click="closeHelp(); showRegister();" translate="REGISTER_NOW"></button>
+                        </div>
+                    </div>
+
+                </ion-slide>
+            </ion-slide-box>
+        </ion-content>
+    </div>
 </ion-modal-view>
