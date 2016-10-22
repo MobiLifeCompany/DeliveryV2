@@ -14,13 +14,13 @@
                                 <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedOrder.shop.name}}</h2>
                                 <h4 ng-class="isRTL() ? 'text-right' : ''"><span class="balanced"> {{'TOTAL' | translate}}: {{selectedOrder.total}} {{currency}}</span></h4>
                                 <h4 ng-class="isRTL() ? 'text-right' : ''" style="color: black;">
-                                    <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{selectedOrder.customer_address.street}}, <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{selectedOrder.customer_address.building}}, <strong>{{'ADDRESS_PHONE' | translate}}: </strong>{{selectedOrder.customer_address.phone}}<br />
+                                    <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{selectedOrder.customer_address.street}}<br/> <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{selectedOrder.customer_address.building}}<br/> <strong>{{'PHONE' | translate}}: </strong>{{selectedOrder.customer_address.phone}}<br />
                                 </h4>
                             </div>
                             <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
                                 <span class="assertive-900">{{'DETAILS' | translate}}: </span>
                                 <ol ng-repeat="item in selectedOrder.items">
-                                    <li>{{item.qty}} {{item.item.name}}</li>
+                                    <li> {{item.qty*item.item_price}} = {{item.qty}} * {{item.item_price}} : {{item.item.name}}</li>
                                 </ol>
                             </div>
                             <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
@@ -48,12 +48,16 @@
                     <div class="item item-body" style="padding: 5px; text-align: {{default_float}}" ng-click="showOrderDetails(oldOrder)">
                         <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span></h3>
                         <h3><span class="balanced">{{'TOTAL' | translate}}: {{oldOrder.total}} {{currency}}</span></h3>
-                        <h4><span class="assertive-900">{{'DETAILS' | translate}}: </span><span ng-repeat="item in oldOrder.items">{{item.qty}} {{item.item.name}}, </span></h4>
-                        <h4 style="color: black;" ng-switch="oldOrder.order_status"><span>{{'ORDER_STATUS' | translate}}: </span>
-                            <span ng-switch-when="FINISHED" class="balanced">{{'ORDER_FINISHED' | translate}}</span>
+                        <h4><span class="assertive-900">{{'ORDER_NUM' | translate}}: </span><span>{{oldOrder.id}} </span></h4>
+                        <h4><span class="assertive-900">{{'ORDER_DATE' | translate}}: </span><span>{{oldOrder.created_at}} </span></h4>
+                        <h4 style="color: black;" ng-switch="oldOrder.order_status"><span class="assertive-900">{{'ORDER_STATUS' | translate}}: </span>
+                            <span ng-switch-when="CANCEL" class="assertive">{{'ORDER_CANCEL' | translate}}</span>
                             <span ng-switch-when="PENDING" class="assertive">{{'ORDER_PENDING' | translate}}</span>
                             <span ng-switch-when="PREPARED" class="energized">{{'ORDER_PREPARED' | translate}}</span>
+                            <span ng-switch-when="OPEN" class="balanced">{{'ORDER_OPEN' | translate}}</span>
+                            <span ng-switch-when="CLOSED" class="assertive">{{'ORDER_CLOSED' | translate}}</span>
                         </h4>
+                        <h4><span class="assertive-900" ng-show="oldOrder.order_status=='CANCEL'">{{'CANCEL_REASON' | translate}}: </span><span>{{oldOrder.cancel_reason}} </span></h4>
                     </div>
                     <div class="padding-left padding-right">
                         <button class="button button-balanced button-small button-block" translate="ORDER_REPEAT" ng-click="repeatOrder(oldOrder)" ng-show="oldOrder.order_status == 'CLOSED'"></button>

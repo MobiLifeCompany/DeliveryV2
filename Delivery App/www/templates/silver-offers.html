@@ -51,7 +51,7 @@
                     <img style="position: absolute; top: 0px; opacity: 0.4; height: 100%;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{shopOffer.shop.photo}}" />
                     <div ng-class="isRTL() ? 'silver-promotion-triangle-rtl' : 'silver-promotion-triangle'"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
                     <div class="item item-thumbnail-{{default_float}}" ng-class="{'text-right': isRTL()}" ng-click="showItemDetails(shopOffer)">
-                        <img src="{{shopOffer.item.photo}}">
+                        <img src="{{shopOffer.photo}}">
                         <h2 class="assertive-900">{{shopOffer.shop.name}}</h2>
                         <p>{{shopOffer.name}}</p>
                         <p style="font-size: 12px; color: black; white-space: normal;"><strong>{{'OFFER_DETAILS' | translate}}: </strong>{{shopOffer.short_description}}</p>

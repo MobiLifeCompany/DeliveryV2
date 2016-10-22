@@ -141,10 +141,11 @@ angular.module('delivery.controllers')
     $scope.shareOffer = function (offer) {
         var message = offer.item.name + '\n';
         message += offer.shop.name + '\n';
+        message += $translate.instant('PRICE') + " " + offer.item.price + $rootScope.currency + '\n';
         message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
 
         $cordovaSocialSharing
-            .share(message, $translate.instant('APPLICATION_NAME'), offer.photo, $rootScope.downloadURL) // Share via native share sheet
+            .share(message, $translate.instant('APPLICATION_NAME'), offer.item.photo, $rootScope.downloadURL) // Share via native share sheet
             .then(function (result) {
                 // Success!
             }, function (err) {

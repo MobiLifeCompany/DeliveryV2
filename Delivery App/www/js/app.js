@@ -102,7 +102,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 
     storageUtilityFactory.setCountry($rootScope.countryId);
 
-    $rootScope.downloadURL = 'https://play.google.com/store/apps';
+    $rootScope.downloadURL = 'http://onelink.to/deliveryxpresssy';
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {
