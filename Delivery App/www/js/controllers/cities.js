@@ -24,7 +24,7 @@ angular.module('delivery.controllers')
 
         $ionicModal.fromTemplateUrl('templates/areas.html', {
             scope: $rootScope,
-            hardwareBackButtonClose: false,
+            hardwareBackButtonClose: true,
         }).then(function (modal) {
             $rootScope.areasModal = modal;
             $rootScope.areasModal.show();

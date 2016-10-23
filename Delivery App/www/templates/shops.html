@@ -227,7 +227,7 @@
                             <h4><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                             <p style="padding: 10px 0px; border-top: 1px solid silver;">
                                 <div style="text-align: center;" translate="QUANTITY"></div>
-                                <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id)"></i></div>
+                                <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id, selectedItem)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id, selectedItem)"></i></div>
                             </p>
                         </div>
                         <div class="item item-body" style="max-height: 100px; overflow-y: auto;">
@@ -239,9 +239,6 @@
                             </a>
                             <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="shareOffer(selectedOffer)">
                                 <i class="icon ion-android-share-alt"></i><i translate="SHARE_TXT"></i>
-                            </a>
-                            <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="addToCart(selectedItem, shopDetails); closeItemDetails()">
-                                <i class="icon ion-android-cart"></i><i translate="ADD_TO_CART"></i>
                             </a>
                         </div>
                     </div>

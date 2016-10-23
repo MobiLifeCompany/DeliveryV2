@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPopover, $state, $ionicHistory, $ionicSlideBoxDelegate, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, $cordovaSocialSharing, ionicMaterialInk, connectionFactory, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopsCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPopover, $ionicPopup, $state, $ionicHistory, $ionicSlideBoxDelegate, $timeout, $http, $ionicPlatform, $ionicFilterBar, $ionicActionSheet, $cordovaSocialSharing, ionicMaterialInk, connectionFactory, shopDetailsFactory, shopsFactory, mastriesFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
@@ -303,23 +303,24 @@ angular.module('delivery.controllers')
     });
 
     //increaseAmountFromModal: increase the item quantity counter on 'itemDetailsModal' when click on '+' button
-    $scope.increaseQuantityFromModal = function (itemId) {
+    $scope.increaseQuantityFromModal = function (itemId, item) {
         var selectedItem = document.getElementById('selectedItemId');
         selectedItem.innerHTML = parseInt(selectedItem.innerHTML) + 1;
+        $scope.addToCart(item, $scope.shopDetails);
     };
 
     //decreseAmountFromModal: decrease the item quantity counter on 'itemDetailsModal' when click on '-' button
-    $scope.decreseQuantityFromModal = function (itemId) {
+    $scope.decreseQuantityFromModal = function (itemId, item) {
         var selectedItem = document.getElementById('selectedItemId');
-        if (parseInt(selectedItem.innerHTML) > 1) {
+        if (parseInt(selectedItem.innerHTML) > 0) {
             selectedItem.innerHTML = parseInt(selectedItem.innerHTML) - 1;
+            $scope.addToCart(item, $scope.shopDetails);
         }
     };
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
-        if (!shop.is_open) {
-
+        if (shop.is_open) {
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('SHOP_CLOSED'),
                 template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
@@ -327,23 +328,30 @@ angular.module('delivery.controllers')
         }
         else {
             if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+
                 var isNewItem = true; // used to determine if the added item is new or allready in the cart
                 var quantity = document.getElementById('selectedItemId').innerHTML;
                 $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
                 $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
                 for (i = 0; i < $rootScope.cartItems.length; i++) {
                     if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
-                        $rootScope.cartItems[i].quantity = quantity;
-                        $rootScope.shopId = shop.id;
+                        if (quantity == 0)
+                            $rootScope.cartItems.splice(i, 1);
+                        else
+                            $rootScope.cartItems[i].quantity = quantity;
                         isNewItem = false;
                         i = $rootScope.cartItems.length; //break the loop
                     }
 
                 }
+
                 if (isNewItem) //all new item to cart
-                {
-                    $rootScope.shopId = shop.id;
                     $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+
+                // if the cart become empty
+                if ($rootScope.cartItems.length == 0) {
+                    $rootScope.showCartFabButton = false;
+                    $rootScope.cartShop = null;
                 }
             }
             else {
@@ -370,7 +378,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.checkItemCount = function (itemId) {
-        var itemQty = 1;
+        var itemQty = 0;
         for (i = 0; i < $rootScope.cartItems.length; i++) {
             if ($rootScope.cartItems[i].id == itemId) {
                 itemQty = $rootScope.cartItems[i].quantity;

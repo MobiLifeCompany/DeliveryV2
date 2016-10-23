@@ -6,16 +6,20 @@ angular.module('delivery.controllers')
     $scope.$on('$ionicView.enter', function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
             if ($rootScope.isUserLoggedin == true)
-                $scope.loadOldOrders(deliveryLoader);
+                $scope.loadOldOrders();
             else
                 deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
+
+        if ($rootScope.cartItems.length > 0)
+            $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     });
 
-    $scope.loadOldOrders = function (deliveryLoader) {
+    $scope.loadOldOrders = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
         customerFactory.getCustomerOrders(deliveryLoader).success(function (data) {
             try {
                 $scope.oldOrders = data;

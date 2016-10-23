@@ -7,14 +7,17 @@ angular.module('delivery.controllers')
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $scope.loadShopsOffers(deliveryLoader);
+            $scope.loadShopsOffers();
         }).error(function (err, statusCode) {
             deliveryLoader.hideLoading();
             connectionFactory.exitApplication();
         })
+        if ($rootScope.cartItems.length > 0)
+            $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     });
 
-    $scope.loadShopsOffers = function (deliveryLoader) {
+    $scope.loadShopsOffers = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
         shopsFactory.getOffers().success(function (data) {
             try {
                 var silverOffers = [];
@@ -41,6 +44,10 @@ angular.module('delivery.controllers')
         $scope.itemDetailsModal = modal;
     });
 
+    $scope.closeItemDetails = function () {
+        $scope.itemDetailsModal.hide();
+    };
+
     $scope.showItemDetails = function (offer) {
         if (offer.clickable) {
             $scope.selectedOffer = offer;
@@ -52,32 +59,48 @@ angular.module('delivery.controllers')
         }
     };
 
-    $scope.closeItemDetails = function () {
-        $scope.itemDetailsModal.hide();
+    //Create 'item Photo' modal to display selected offer photo
+    $ionicModal.fromTemplateUrl('item-photo-modal.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.itemPhotoModal = modal;
+    });
+
+    $scope.closeItemPhoto = function () {
+        $scope.itemPhotoModal.hide();
     };
+
+
+    $scope.showItemPhoto = function (offerPhoto) {
+        $scope.selectedPhotoSrc = offerPhoto;
+        $scope.itemPhotoModal.show();
+    };
+    
 
     $scope.$on('$destroy', function () {
         $scope.itemDetailsModal.remove();
     });
 
     //increaseAmountFromModal: increase the item quantity counter on 'itemDetailsModal' when click on '+' button
-    $scope.increaseQuantityFromModal = function (itemId) {
+    $scope.increaseQuantityFromModal = function (itemId, item, shopDetails) {
         var selectedItem = document.getElementById('selectedItemId');
         selectedItem.innerHTML = parseInt(selectedItem.innerHTML) + 1;
+
+        $scope.addToCart(item, shopDetails);
     };
 
     //decreseAmountFromModal: decrease the item quantity counter on 'itemDetailsModal' when click on '-' button
-    $scope.decreseQuantityFromModal = function (itemId) {
+    $scope.decreseQuantityFromModal = function (itemId, item, shopDetails) {
         var selectedItem = document.getElementById('selectedItemId');
-        if (parseInt(selectedItem.innerHTML) > 1) {
+        if (parseInt(selectedItem.innerHTML) > 0) {
             selectedItem.innerHTML = parseInt(selectedItem.innerHTML) - 1;
+            $scope.addToCart(item, shopDetails);
         }
     };
 
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.addToCart = function (item, shop) {
         if (!shop.is_open) {
-
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('SHOP_CLOSED'),
                 template: $translate.instant('CANT_ORDER_SHOP_CLOSED'),
@@ -85,23 +108,30 @@ angular.module('delivery.controllers')
         }
         else {
             if ($rootScope.cartShop == null || shop.id == $rootScope.cartShop.id) {
+
                 var isNewItem = true; // used to determine if the added item is new or allready in the cart
                 var quantity = document.getElementById('selectedItemId').innerHTML;
                 $rootScope.showCartFabButton = true; //Set '$rootScope.showCartFabButton' (defined in 'controllers.js) to true, used to show the cart fab button in bottom right corner
                 $rootScope.cartShop = $scope.shopDetails; //Set the shop for the current order, don't allow items from other shops to be added to the cart
                 for (i = 0; i < $rootScope.cartItems.length; i++) {
                     if ($rootScope.cartItems[i].id == item.id) { //if item allready exists in cart, update the quantity
-                        $rootScope.cartItems[i].quantity = quantity;
-                        $rootScope.shopId = shop.id;
+                        if (quantity == 0)
+                            $rootScope.cartItems.splice(i, 1);
+                        else
+                            $rootScope.cartItems[i].quantity = quantity;
                         isNewItem = false;
                         i = $rootScope.cartItems.length; //break the loop
                     }
 
                 }
+
                 if (isNewItem) //all new item to cart
-                {
-                    $rootScope.shopId = shop.id;
                     $rootScope.cartItems.push({ id: item.id, name: item.name, description: item.description, photo: item.photo, quantity: quantity, price: item.price });
+
+                // if the cart become empty
+                if ($rootScope.cartItems.length == 0) {
+                    $rootScope.showCartFabButton = false;
+                    $rootScope.cartShop = null;
                 }
             }
             else {
@@ -128,7 +158,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.checkItemCount = function (itemId) {
-        var itemQty = 1;
+        var itemQty = 0;
         for (i = 0; i < $rootScope.cartItems.length; i++) {
             if ($rootScope.cartItems[i].id == itemId) {
                 itemQty = $rootScope.cartItems[i].quantity;

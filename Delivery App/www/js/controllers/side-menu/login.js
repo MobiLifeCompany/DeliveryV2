@@ -12,7 +12,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.switchToRegister = function () {
-        $scope.closeLogin();
+        //$scope.closeLogin();
         $rootScope.showRegister();
     };
 
