@@ -5,6 +5,13 @@ angular.module('delivery.controllers')
     $scope.categories = [];
     $scope.done_loading = true;
 
+    $rootScope.$on('modal.shown', function (event, modal) {
+        if (modal.id == '11') {
+            //////////// functions calls on show//////////////////////
+            $scope.loadCategories();
+        }
+    });
+
     if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
         $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
     } else {
@@ -12,13 +19,21 @@ angular.module('delivery.controllers')
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
-    $rootScope.loadCategories = function (deliveryLoader) {
+    $scope.loadCategories = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+
         businessCategoriesFactory.get().success(function (data) {
             $scope.categories = data;
             deliveryLoader.hideLoading();
+
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), $translate.instant('COMMON_ERROR_MSG'));
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), $translate.instant('COMMON_ERROR_MSG'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
         })
     }
 
@@ -43,6 +58,7 @@ angular.module('delivery.controllers')
             //Else if the user is not logged in redirect him\her to 'select cities' modal
         else {
             $ionicModal.fromTemplateUrl('templates/cities.html', {
+                id: '12',
                 scope: $rootScope,
                 hardwareBackButtonClose: false,
             }).then(function (modal) {
@@ -63,13 +79,5 @@ angular.module('delivery.controllers')
             $rootScope.categoriesModal.hide();
         }, 500);
     };
-    
-    /////////////////////// functions calls on load//////////////////////
-    connectionFactory.testConnection(deliveryLoader).success(function (data) {
-        $rootScope.loadCategories(deliveryLoader);
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        connectionFactory.exitApplication();
-    })
 
 });

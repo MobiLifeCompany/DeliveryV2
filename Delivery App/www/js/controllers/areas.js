@@ -9,19 +9,13 @@ angular.module('delivery.controllers')
     /// <summary>setArea: add the selected area to '$rootScope' and 'localStorage' then redirect the user to main view</summary>
     /// <param name="i" type="integer">The id of the selected area</param>
     $scope.setArea = function (area) {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $rootScope.selectedArea = area;
-            storageUtilityFactory.setSelectedArea(area);
+        $rootScope.selectedArea = area;
+        storageUtilityFactory.setSelectedArea(area);
 
-            // Hide the modal and show the main view
-            $rootScope.areasModal.hide();
-            $rootScope.showMainView = true;
-            $rootScope.isCategorySelected = true;
-
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        // Hide the modal and show the main view
+        $rootScope.areasModal.hide();
+        $rootScope.showMainView = true;
+        $rootScope.isCategorySelected = true;
 
     };
 

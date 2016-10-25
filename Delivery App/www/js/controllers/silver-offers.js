@@ -6,18 +6,16 @@ angular.module('delivery.controllers')
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $scope.loadShopsOffers();
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
         if ($rootScope.cartItems.length > 0)
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
+
+        $scope.loadShopsOffers();
+        
     });
 
     $scope.loadShopsOffers = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
+
         shopsFactory.getOffers().success(function (data) {
             try {
                 var silverOffers = [];
@@ -32,8 +30,13 @@ angular.module('delivery.controllers')
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
         })
     };
 

@@ -146,7 +146,7 @@
             </ion-modal-view>
         </script>
         <ion-slide-box dir="ltr" class="" auto-play="true" does-continue="true" slide-interval="2000" >
-           <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers">
+           <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in shopsOffers" >
                 <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer)"/>
            </ion-slide>
         </ion-slide-box>

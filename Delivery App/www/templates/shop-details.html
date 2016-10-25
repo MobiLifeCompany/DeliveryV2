@@ -113,6 +113,17 @@
             </ion-modal-view>
         </script>
 
+        <script id="item-photo-modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal" dir="{{default_direction}}">
+                <div class="ion-modal-content-custom">
+                    <ion-content overflow-scroll="false">
+                        <button style="border: 1px solid black; border-radius: 50%; background-color: white;" ng-click="closeItemPhoto()">X</button>
+                        <img src="{{selectedPhotoSrc}}" style="width: 100%;"/>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+        </script>
+
         <div style="border-bottom: 1px solid silver; padding-bottom: 10px;" ng-click="showShopInfo()">
             <div ng-class="isRTL() ? 'promotion-triangle-rtl' : 'promotion-triangle'" ng-show="{{shopDetails.promotion_note}}"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
             <div ng-class="isRTL() ? 'is-open-triangle-rtl' : 'is-open-triangle'" ng-show="{{shopDetails.is_open}}"></div>
@@ -194,7 +205,7 @@
                 </ion-item>
                 <ion-item class="item-accordion dl-border-bottom-stable" ng-repeat="item in category.items" ng-show="isCategoryShown(category)" style="padding: 5px;" ng-class="isRTL() ? 'text-right' : ''">
                     <div>
-                        <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemDetails(item)">
+                        <div style="width: 15%; float: {{default_float}}; padding-top: 10px;" ng-click="showItemPhoto(item.photo)">
                             <img class="button button-fab" src="{{item.photo}}" style="width: 100%; height: 100%;" />
                         </div>
                         <div style="width: 70%; float: {{default_float}}; padding: 5px 10px;" ng-click="showItemDetails(item)">

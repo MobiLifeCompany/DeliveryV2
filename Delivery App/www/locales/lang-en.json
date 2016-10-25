@@ -187,5 +187,7 @@
   "SKIP": "Skip",
   "GET_STARTED": "Get Started",
   "WELCOME_TO_APP": "Welcome to Delivery Express",
-  "SWIPE_TO_LEARN": "Swipe to learn more"
+  "SWIPE_TO_LEARN": "Swipe to learn more",
+  "LOGIN_REQUIRED": "Login required",
+  "PLEASE_LOGIN": "Please Login to your account first"
 }

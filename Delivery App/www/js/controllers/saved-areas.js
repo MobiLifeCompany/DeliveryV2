@@ -46,6 +46,7 @@ angular.module('delivery.controllers')
 
     $scope.selectNewAddress = function () {
         $ionicModal.fromTemplateUrl('templates/cities.html', {
+            id: '12',
             scope: $rootScope,
             hardwareBackButtonClose: false,
         }).then(function (modal) {

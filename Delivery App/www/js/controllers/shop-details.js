@@ -15,6 +15,8 @@ angular.module('delivery.controllers')
     $scope.$on('$ionicView.enter', function () {
         if ($rootScope.cartItems.length > 0)
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
+
+        $scope.loadShopItemsCategories();
     })
 
 
@@ -33,26 +35,33 @@ angular.module('delivery.controllers')
     };
 
 
-    $scope.loadShopItemsCategories = function (deliveryLoader) {
-    deliveryLoader.showLoading($translate.instant('LOADING'));
+    $scope.loadShopItemsCategories = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+
         shopDetailsFactory.getShopItemsCategories().success(function (data) {
-            $scope.categories = data;
-            for (i = 0; i < $scope.categories.length; i++) {
-                $scope.items = $scope.items.concat($scope.categories[i].items);
+            try {
+                $scope.categories = data;
+                for (i = 0; i < $scope.categories.length; i++) {
+                    $scope.items = $scope.items.concat($scope.categories[i].items);
+                }
+                deliveryLoader.hideLoading();
+
+            } catch (e) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
-            deliveryLoader.hideLoading();
+            
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            deliveryLoader.toggleLoadingWithMessage(deliveryLoader.toggleLoadingWithMessage(errorCodeMessageFactory.getErrorMessage(statusCode)));
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), $translate.instant('COMMON_ERROR_MSG'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
         })
     }
 
-    connectionFactory.testConnection(deliveryLoader).success(function (data) {
-        $scope.loadShopItemsCategories(deliveryLoader);
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        connectionFactory.exitApplication();
-    })
 
     // toggleCategory if given category is the selected category, deselect it. else, select the given category
     $scope.toggleCategory = function (category) {
@@ -146,6 +155,23 @@ angular.module('delivery.controllers')
     $scope.$on('$destroy', function () {
         $scope.itemDetailsModal.remove();
     });
+
+    //Create 'item Photo' modal to display selected item photo
+    $ionicModal.fromTemplateUrl('item-photo-modal.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.itemPhotoModal = modal;
+    });
+
+    $scope.closeItemPhoto = function () {
+        $scope.itemPhotoModal.hide();
+    };
+
+
+    $scope.showItemPhoto = function (itemPhoto) {
+        $scope.selectedPhotoSrc = itemPhoto;
+        $scope.itemPhotoModal.show();
+    };
 
     $scope.getCurrentDeliverHour = function () {
         days = $scope.shopDetails.delivery_hours;
@@ -302,7 +328,7 @@ angular.module('delivery.controllers')
 
     $scope.shareItem = function (item) {
         var message = item.name + '\n';
-        message += $translate.instant('PRICE') + " " + offer.item.price +" "+ $rootScope.currency + '\n';
+        message += $translate.instant('PRICE') + " " + item.price +" "+ $rootScope.currency + '\n';
         message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
 
         $cordovaSocialSharing

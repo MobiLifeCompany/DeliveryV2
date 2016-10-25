@@ -6,13 +6,28 @@ angular.module('delivery.controllers')
     $scope.done_loading = true;
     $rootScope.selectedCity = {};
 
-    $rootScope.loadCities = function (deliveryLoader) {
+    $rootScope.$on('modal.shown', function (event, modal) {
+        if (modal.id == '12') {
+            //////////// functions calls on show//////////////////////
+            $scope.loadCities();
+        }
+    });
+
+    $scope.loadCities = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+
         citiesFactory.get().success(function (data) {
             $scope.cities = data.cities;
             deliveryLoader.hideLoading();
+
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'CITY'));
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), $translate.instant('COMMON_ERROR_MSG'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
         })
     }
 
@@ -24,7 +39,7 @@ angular.module('delivery.controllers')
 
         $ionicModal.fromTemplateUrl('templates/areas.html', {
             scope: $rootScope,
-            hardwareBackButtonClose: true,
+            hardwareBackButtonClose: false,
         }).then(function (modal) {
             $rootScope.areasModal = modal;
             $rootScope.areasModal.show();
@@ -40,7 +55,6 @@ angular.module('delivery.controllers')
     /// <param>no parameters</param>
     $scope.prevStep = function () {
         connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $rootScope.loadCategories(deliveryLoader);
             $rootScope.categoriesModal.show();
             $rootScope.citiesModal.hide();
         }).error(function (err, statusCode) {
@@ -48,13 +62,4 @@ angular.module('delivery.controllers')
             connectionFactory.exitApplication();
         })
     }
-
-
-    /////////////////////// functions calls on load//////////////////////
-    connectionFactory.testConnection(deliveryLoader).success(function (data) {
-        $rootScope.loadCities(deliveryLoader);
-    }).error(function (err, statusCode) {
-        deliveryLoader.hideLoading();
-        connectionFactory.exitApplication();
-    })
 });

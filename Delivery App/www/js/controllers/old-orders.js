@@ -4,34 +4,42 @@ angular.module('delivery.controllers')
 
     // Load old orders on enter
     $scope.$on('$ionicView.enter', function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            if ($rootScope.isUserLoggedin == true)
-                $scope.loadOldOrders();
-            else
-                deliveryLoader.hideLoading();
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        $scope.loadOldOrders();
 
         if ($rootScope.cartItems.length > 0)
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
     });
 
     $scope.loadOldOrders = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-        customerFactory.getCustomerOrders(deliveryLoader).success(function (data) {
-            try {
-                $scope.oldOrders = data;
-                deliveryLoader.hideLoading();
-            } catch (e) {
-                deliveryLoader.hideLoading();
-                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
-            }
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'));
-        })
+        if ($rootScope.isUserLoggedin == true) {
+            deliveryLoader.showLoading($translate.instant('LOADING'));
+
+            customerFactory.getCustomerOrders(deliveryLoader).success(function (data) {
+                try {
+                    $scope.oldOrders = data;
+                    deliveryLoader.hideLoading();
+                } catch (e) {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
+                }
+            }).error(function (err, statusCode) {
+                connectionFactory.testConnection().success(function (data) {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(Number(statusCode), 'OLD_ORDERS'));
+                }).error(function (err, statusCode) {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.exitApplication();
+                });
+            })
+        }
+        else {
+            // Show a warning popup if not logged in
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('LOGIN_REQUIRED'),
+                template: $translate.instant('PLEASE_LOGIN')
+            });
+        }
+        
     };
 
     // Get shop photo

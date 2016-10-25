@@ -8,19 +8,16 @@ angular.module('delivery.controllers')
     $rootScope.shopsOffers = [];
     //$rootScope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
 
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.loaded', function () {
         if ($rootScope.showMainView)
         {
-            connectionFactory.testConnection(deliveryLoader).success(function (data) {
-                $rootScope.loadShopsOffers(deliveryLoader);
-                $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
-                $ionicSlideBoxDelegate.slide(0);
-                $ionicSlideBoxDelegate.start();
-                $rootScope.loadShops(deliveryLoader);
-            }).error(function (err, statusCode) {
-                deliveryLoader.hideLoading();
-                connectionFactory.exitApplication();
-            })
+            deliveryLoader.showLoading($translate.instant('LOADING'));
+
+            $rootScope.loadShopsOffers();
+            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+            $ionicSlideBoxDelegate.slide(0);
+            $ionicSlideBoxDelegate.start();
+            $rootScope.loadShops();
         }
         
     });
@@ -29,20 +26,44 @@ angular.module('delivery.controllers')
 
         if ($rootScope.showMainView)
         {
-            connectionFactory.testConnection(deliveryLoader).success(function (data) {
-                $rootScope.loadShopsOffers(deliveryLoader);
-                $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
-                $ionicSlideBoxDelegate.slide(0);
-                $ionicSlideBoxDelegate.start();
-                $rootScope.loadShops(deliveryLoader);
-            }).error(function (err, statusCode) {
-                deliveryLoader.hideLoading();
-                connectionFactory.exitApplication();
-            })
+            deliveryLoader.showLoading($translate.instant('LOADING'));
+
+            $rootScope.loadShopsOffers();
+            $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+            $ionicSlideBoxDelegate.slide(0);
+            $ionicSlideBoxDelegate.start();
+            $rootScope.loadShops();
         }
     });
 
-    $rootScope.loadShops = function (deliveryLoader) {
+    $rootScope.loadShopsOffers = function () {
+        shopsFactory.getOffers().success(function (data) {
+            try {
+                var silverOffers = [];
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].offer_type === 'GOLDEN')
+                        silverOffers.push(data[i]);
+                }
+                $scope.shopsOffers = silverOffers;
+                $ionicSlideBoxDelegate.update();
+                deliveryLoader.hideLoading();
+
+            } catch (e) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
+            }
+        }).error(function (err, statusCode) {
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
+        })
+    };
+
+    $rootScope.loadShops = function () {
         shopsFactory.get().success(function (data) {
             try{
                 $rootScope.shops = data;
@@ -61,31 +82,14 @@ angular.module('delivery.controllers')
             }
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+           connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
             $scope.noShopsFound = true;
-        })
-    };
-
-    $rootScope.loadShopsOffers = function (deliveryLoader) {
-        shopsFactory.getOffers().success(function (data) {
-            try {
-                var silverOffers = [];
-                for (i = 0; i < data.length; i++) {
-                    if (data[i].offer_type === 'GOLDEN')
-                        silverOffers.push(data[i]);
-                }
-                $scope.shopsOffers = silverOffers;
-                $ionicSlideBoxDelegate.update();
-                deliveryLoader.hideLoading();
-
-            } catch (e) {
-                deliveryLoader.hideLoading();
-                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
-            }
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
         })
     };
 
@@ -288,7 +292,7 @@ angular.module('delivery.controllers')
             $scope.selectedOffer = offer;
             $scope.selectedItem = offer.item;
             $scope.shopDetails = offer.shop;
-            var selectedItemQuantity = 1;
+            var selectedItemQuantity = 0;
             $scope.itemDetailsModal.show();
             document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
         }

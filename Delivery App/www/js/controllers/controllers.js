@@ -127,7 +127,6 @@ angular.module('delivery.controllers', [])
                 $rootScope.isUserLoggedin = false;
                 $rootScope.userName = '';
                 $rootScope.categoriesModal.show();
-                $rootScope.loadCategories();
             }
         });
     };
@@ -232,6 +231,7 @@ angular.module('delivery.controllers', [])
 
     // Create the categories modal which should be the starting point in the app
     $ionicModal.fromTemplateUrl('templates/categories.html', {
+        id: '11',
         scope: $rootScope,
         hardwareBackButtonClose: false,
     }).then(function (modal) {
