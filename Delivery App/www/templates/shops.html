@@ -151,7 +151,7 @@
            </ion-slide>
         </ion-slide-box>
         <div class="list" ng-show="done_loading == true" dir="{{default_direction}}">
-            <a class="item dl-border-bottom-stable" ng-class="isRTL() ? 'item-icon-left text-right' : 'item-icon-right'" style="padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" href="#/app/shop-details/{{shop.id}}">
+            <a class="item dl-border-bottom-stable" ng-class="isRTL() ? 'item-icon-left text-right' : 'item-icon-right'" style="padding: 1px;" ng-repeat="shop in shops | filter: filterFunction | orderBy: orderCriteria: descending" ng-href="#/app/shop-details/{{shop.id}}">
                 <div ng-class="isRTL() ? 'promotion-triangle-rtl' : 'promotion-triangle'" ng-show="{{shop.promotion_note}}"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
                 <div ng-class="isRTL() ? 'is-open-triangle-rtl' : 'is-open-triangle'" ng-show="{{shop.is_open}}"></div>
                 <div ng-class="isRTL() ? 'is-close-triangle-rtl' : 'is-close-triangle'" ng-hide="{{shop.is_open}}"></div>
@@ -172,8 +172,8 @@
                                     <td class="ion-eye calm" style="font-size: 18px; line-height: 12px;"></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 10px; line-height: 12px;">25</td>
-                                    <td style="font-size: 10px; line-height: 12px;">367</td>
+                                    <td style="font-size: 10px; line-height: 12px;">{{shop.notify_shop_count}}</td>
+                                    <td style="font-size: 10px; line-height: 12px;">{{shop.views_count}}</td>
                                 </tr>
                             </table>
                         </div>

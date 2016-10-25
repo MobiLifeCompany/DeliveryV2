@@ -41,7 +41,7 @@
             <h4 class="stable text-center" translate="NO_OLD_ORDERS"></h4>
         </div>
 
-        <div class="list" ng-show="oldOrders.length > 0">
+        <div class="list" ng-show="isUserLoggedin && oldOrders.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="oldOrder in oldOrders">
                 <div class="list card" style="margin: 5px;">
                     <img style="position: absolute; top: 20px; opacity: 0.4; height: 100%; max-height: 100px;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{getShopPhoto(oldOrder.shop.id)}}" />

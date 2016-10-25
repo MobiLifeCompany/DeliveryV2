@@ -72,7 +72,7 @@ angular.module('delivery.controllers')
             try {
                 var filteredAddresses = [];
                 for (i = 0; i < data.length; i++)
-                    if (data[i].area.id === $rootScope.selectedArea.id && data[i].city.id === $rootScope.selectedCity.id)
+                    if (data[i].area.id === storageUtilityFactory.getSelectedArea().id && data[i].city.id === storageUtilityFactory.getSelectedCity().id)
                         filteredAddresses.push(data[i]);
 
                 $rootScope.customerAddressess = filteredAddresses;

@@ -324,7 +324,13 @@ angular.module('delivery.factory', [])
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 return $http.post(baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo, { headers: { 'auth-token': customerAuthToken } });
-            }
+            },
+            notifyShopFunction: function (shopId) {
+                    var customerAuthToken = '';
+                    if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
+                        customerAuthToken = authFactory.getCustomer().auth_token;
+                    return $http.post(baseURL + '/shops/' + shopId + '/notify_to_subscribe', { headers: { 'auth-token': customerAuthToken } });
+                }
         };
 
         return customerAPI;
@@ -361,7 +367,8 @@ angular.module('delivery.factory', [])
         showLoading: function (text) {
             text = text || 'Loading...';
             $ionicLoading.show({
-                template: '<div class="loader" style="font-size: 8px;">' + text + '<svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+                template: '<div class="loader" style="font-size: 8px;">' + text + '<svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                duration: 25000,
             });
         },
 

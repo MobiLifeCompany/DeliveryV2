@@ -72,7 +72,7 @@
                                 <i ng-class="shopDetails.rating >= 4 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                                 <i ng-class="shopDetails.rating >= 5 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             </div>
-                            <a href="#">Read more reviews</a>
+                            <!--<a href="#">Read more reviews</a>-->
                         </ion-item>
                         <ion-item class="item-divider" style="text-align: center;" translate="LOCATION">
                         </ion-item>
@@ -145,8 +145,8 @@
                                 <td class="ion-eye calm" style="font-size: 18px; line-height: 12px;"></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; line-height: 12px;">25</td>
-                                <td style="font-size: 10px; line-height: 12px;">367</td>
+                                <td style="font-size: 10px; line-height: 12px;">{{shopDetails.notify_shop_count}}</td>
+                                <td style="font-size: 10px; line-height: 12px;">{{shopDetails.views_count}}</td>
                             </tr>
                         </table>
                     </div>

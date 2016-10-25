@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicHistory, $ionicFilterBar, $ionicActionSheet, $translate, ionicMaterialInk, shopDetailsFactory, deliveryLoader) {
+.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicHistory, $ionicFilterBar, $ionicActionSheet, $translate, ionicMaterialInk, shopDetailsFactory,customerFactory, deliveryLoader) {
 
     $scope.$on('$ionicView.enter', function () {
         $rootScope.showCartFabButton = false; //hide the cart button while in cart screen
@@ -9,6 +9,8 @@ angular.module('delivery.controllers')
     $scope.data = {
         showEdit: false
     };
+
+    $scope.isLogin = $rootScope.isUserLoggedin;
 
     $scope.changeStatus = function (){
         $scope.data.showEdit = !$scope.data.showEdit;
@@ -55,6 +57,22 @@ angular.module('delivery.controllers')
         return total;
     };
 
+    $scope.notifyShop = function () {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+        customerFactory.notifyShopFunction($rootScope.cartShop.id).success(function () {
+            try {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('RATING'), $translate.instant('RATING_SUCCESS_MSG'));
+            } catch (e) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
+            }
+        }).error(function (err, statusCode) {
+            deliveryLoader.hideLoading();
+        });
+
+    }
+
     $scope.cancelOrder = function () {
         // Show a confirmation popup
         var confirmPopup = $ionicPopup.confirm({
@@ -85,7 +103,7 @@ angular.module('delivery.controllers')
         // Check if the shop is subscribed
         if (!$rootScope.cartShop.subscribed) {
             var notSubscribedPopup = $ionicPopup.show({
-                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{cartShop.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{cartShop.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{cartShop.phone}}</p><a href="tel:{{cartShop.phone}}" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a><br/><br/><a ng-click="" class="button button-assertive" style="width: 100%;" translate="NOTIFY_SHOP_TO_SUBSCRIBE"></a></div>',
+                template: '<div style="width: 100%; border-top: 1px solid silver; padding-top: 5px;"><p><strong class="assertive-900">{{cartShop.name}}</strong></br><strong>{{\'ADDRESSES\' | translate}}: </strong>{{cartShop.address}}</br><strong>{{\'PHONE\' | translate}}: </strong>{{cartShop.phone}}</p><a href="tel:{{cartShop.phone}}" class="button button-balanced" style="width: 100%;" translate="CALL_NOW"></a><br/><br/><a ng-show="isLogin" ng-click="notifyShop()" class="button button-assertive" style="width: 100%;" translate="NOTIFY_SHOP_TO_SUBSCRIBE"></a></div>',
                 title: $translate.instant('SHOP_NOT_SUBSCRIBED'),
                 subTitle: $translate.instant('SHOP_NOT_SUBSCRIBED_MSG'),
                 scope: $scope,
