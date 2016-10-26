@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $translate, $state, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout,$ionicPopup, customerFactory, $translate, $state, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -19,8 +19,6 @@ angular.module('delivery.controllers')
     /// <summary>doLogin: Perform the login action when the user submits the login form, and save user data to '$rootScope' and 'localStorage'</summary>
     /// <param>No parameters</param>
     $scope.doLogin = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-
         customerFactory.login($scope.loginData).success(function (data) {
             try {
                 $rootScope.isAuthenticated = true;
@@ -31,8 +29,15 @@ angular.module('delivery.controllers')
                 data.password = $scope.loginData.password;
                 data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
+                $rootScope.fullName = authFactory.getCustomer().full_name;
                 deliveryLoader.hideLoading();
-                $scope.closeLogin();
+                var alertPopup = $ionicPopup.alert({
+                    title: $translate.instant('LOGIN'),
+                    template: $translate.instant('LOGIN_SUCCESS_MSG'),
+                });
+                alertPopup.then(function (res) {
+                    $scope.closeLogin();
+                });
             } catch (e) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(401, 'LOGIN'));

@@ -96,6 +96,7 @@ angular.module('delivery.controllers')
 
     $scope.showEditAddressModal = function (customerAddress) {
         $scope.customerAddress = customerAddress;
+        $scope.customerAddress.phone = Number(customerAddress.phone);
         $scope.addressEditModal.show();
     };
 

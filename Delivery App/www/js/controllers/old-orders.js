@@ -242,4 +242,9 @@ angular.module('delivery.controllers')
             });
     };
 
+     $scope.totalOrder = function (x,y) {
+            //Subtracting a Zero converts the input to an integer number
+         return parseInt(x) + parseInt(y);
+        };
+
 });
