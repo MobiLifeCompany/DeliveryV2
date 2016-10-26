@@ -164,7 +164,7 @@
   "FRIDAY":  "Friday",
   "COMMON_ERROR_MSG":  "Sorry, you have unexpected error, please call system admin to resolve the problem.",
   "CHANGE_SHOP_MSG": "Your cart contains items from other shop, Do you want to empty your existing cart and add other items to your cart?",
-  "REGISTER_ERROR_MSG": "Error In Register, please check your information",
+  "REGISTER_ERROR_MSG": "Error In Register, please check your information, It may be the username is exist or you have problem in your entered information",
   "LOGIN_ERROR_MSG": "Error In Login, please check your information",
   "ADDRESS_ERROR_MSG": "Error In Customer Addresses, please check your information",
   "PROFILE_ERROR_MSG": "Error In Customer Information, please check your information",

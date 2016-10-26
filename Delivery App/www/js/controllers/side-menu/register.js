@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $http, $ionicModal, connectionFactory, customerFactory, deliveryLoader) {
+.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $http, $ionicModal, connectionFactory, errorCodeMessageFactory, customerFactory, deliveryLoader) {
 
     $scope.customer = {};
 
