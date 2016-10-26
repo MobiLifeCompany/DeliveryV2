@@ -240,7 +240,7 @@ angular.module('delivery.controllers', [])
 
     //Show the categories modal when app is ready
     $ionicPlatform.ready(function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
+        connectionFactory.testConnection().success(function (data) {
             $rootScope.categoriesModal.show();
             if (storageUtilityFactory.getFirstRun() != 'false')
             {
@@ -260,7 +260,7 @@ angular.module('delivery.controllers', [])
                 $rootScope.noConnectionModal.show();
             });
             $cordovaSplashscreen.hide();
-            //connectionFactory.exitApplication();
+            connectionFactory.exitApplication();
         })
         
     });

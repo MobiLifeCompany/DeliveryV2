@@ -36,6 +36,42 @@
 
         </script>
 
+        <script id="item-details-modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal" dir="{{default_direction}}">
+                <div class="ion-modal-content-custom">
+                    <ion-content overflow-scroll="false">
+                        <div class="list card light-bg">
+                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
+                                <img src="{{selectedItem.photo}}" style="border-radius: 50%;">
+                                <h2 class="assertive" ng-class="{'text-right': isRTL()}">{{selectedItem.name}}</h2>
+                                <h4 ng-class="{'text-right': isRTL()}"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
+                                <p style="padding: 10px 0px; border-top: 1px solid silver;">
+                                    <div style="text-align: center;" translate="QUANTITY"></div>
+                                    <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id, selectedItem, shopDetails)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id, selectedItem, shopDetails)"></i></div>
+                                </p>
+                            </div>
+                            <div class="item item-body" ng-class="{'text-right': isRTL()}" style="max-height: 100px; overflow-y: auto;">
+                                {{selectedItem.description}}
+                            </div>
+                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
+                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                                </a>
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="shareOffer(selectedOffer)">
+                                    <i class="icon ion-android-share-alt"></i><i translate="SHARE_TXT"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+        </script>
+
+        <ion-slide-box dir="ltr" class="" auto-play="true" does-continue="true" slide-interval="3000">
+            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in goldenOffers">
+                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer)" />
+            </ion-slide>
+        </ion-slide-box>
         <div ng-show="!isUserLoggedin || oldOrders.length == 0" ng-class="{'text-right': isRTL()}">
             <div class="icon ion-ios-filing-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
             <h4 class="stable text-center" translate="NO_OLD_ORDERS"></h4>

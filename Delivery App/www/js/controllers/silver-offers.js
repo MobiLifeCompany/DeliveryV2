@@ -6,10 +6,14 @@ angular.module('delivery.controllers')
 
     // Load shop offers on enter
     $scope.$on('$ionicView.enter', function () {
+        $scope.loadShopsOffers();
+
+        $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+        $ionicSlideBoxDelegate.slide(0);
+        $ionicSlideBoxDelegate.start();
+
         if ($rootScope.cartItems.length > 0)
             $rootScope.showCartFabButton = true; //show the cart button when the cart has items
-
-        $scope.loadShopsOffers();
         
     });
 
@@ -56,7 +60,7 @@ angular.module('delivery.controllers')
             $scope.selectedOffer = offer;
             $scope.selectedItem = offer.item;
             $scope.shopDetails = offer.shop;
-            var selectedItemQuantity = 1;
+            var selectedItemQuantity = 0;
             $scope.itemDetailsModal.show();
             document.getElementById('selectedItemId').innerHTML = selectedItemQuantity;
         }

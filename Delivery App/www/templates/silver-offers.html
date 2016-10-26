@@ -12,7 +12,7 @@
                     <ion-content overflow-scroll="false">
                         <div class="list card light-bg">
                             <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
-                                <img src="{{selectedItem.photo}}">
+                                <img src="{{selectedItem.photo}}" style="border-radius: 50%;">
                                 <h2 class="assertive" ng-class="{'text-right': isRTL()}">{{selectedItem.name}}</h2>
                                 <h4 ng-class="{'text-right': isRTL()}"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                                 <p style="padding: 10px 0px; border-top: 1px solid silver;">
@@ -47,7 +47,11 @@
                 </div>
             </ion-modal-view>
         </script>
-
+        <ion-slide-box dir="ltr" class="" auto-play="true" does-continue="true" slide-interval="3000">
+            <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in goldenOffers">
+                <img ng-src="{{shopOffer.photo}}" ng-click="showItemDetails(shopOffer)" />
+            </ion-slide>
+        </ion-slide-box>
         <div ng-show="shopsOffers.length == 0">
             <div class="icon ion-ios-filing-outline stable" style="font-size: 130px; width: 100%; text-align: center;"></div>
             <h4 class="stable text-center" translate="NO_SILVER_OFFERS"></h4>
@@ -59,7 +63,7 @@
                     <img style="position: absolute; top: 0px; opacity: 0.1; height: 100%;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{shopOffer.shop.photo}}" />
                     <div ng-class="isRTL() ? 'silver-promotion-triangle-rtl' : 'silver-promotion-triangle'"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
                     <div class="item item-thumbnail-{{default_float}}" ng-class="{'text-right': isRTL()}">
-                        <img src="{{shopOffer.photo}}" ng-click="showItemPhoto(shopOffer.photo);" />
+                        <img src="{{shopOffer.photo}}" ng-click="showItemPhoto(shopOffer.photo);" style="border-radius: 50%;"/>
                         <h2 class="assertive-900" ng-click="showItemDetails(shopOffer)">{{shopOffer.shop.name}}</h2>
                         <p ng-click="showItemDetails(shopOffer)">{{shopOffer.name}}</p>
                         <p style="font-size: 12px; color: black; white-space: normal;" ng-click="showItemDetails(shopOffer)"><strong>{{'OFFER_DETAILS' | translate}}: </strong>{{shopOffer.short_description}}</p>

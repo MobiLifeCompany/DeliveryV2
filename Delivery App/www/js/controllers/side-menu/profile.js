@@ -11,33 +11,34 @@ angular.module('delivery.controllers')
     };
 
     $scope.updateProfile = function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            customerFactory.updateProfile($scope.customer, deliveryLoader).success(function (data) {
-                $rootScope.currentCustomerId = data.id;
-                $rootScope.currentCustomerUserName = data.username;
-                $rootScope.currentCustomerAuthToken = data.auth_token;
-                data.password = $scope.customer.password;
-                data.password_confirmation = $scope.customer.password;
-                authFactory.deleteCustomer();
-                authFactory.setCustomer(data);
-                deliveryLoader.hideLoading();
-                var alertPopup = $ionicPopup.alert({
-                    title: $translate.instant('PROFILE'),
-                    template: $translate.instant('PROFILE_SUCCESS_MSG'),
-                });
-                alertPopup.then(function (res) {
-                    $scope.customer = {};
-                    $scope.close();
-                });
+        deliveryLoader.showLoading($translate.instant('LOADING'));
 
-            }).error(function (err, statusCode) {
+        customerFactory.updateProfile($scope.customer).success(function (data) {
+            $rootScope.currentCustomerId = data.id;
+            $rootScope.currentCustomerUserName = data.username;
+            $rootScope.currentCustomerAuthToken = data.auth_token;
+            data.password = $scope.customer.password;
+            data.password_confirmation = $scope.customer.password;
+            authFactory.deleteCustomer();
+            authFactory.setCustomer(data);
+            deliveryLoader.hideLoading();
+            var alertPopup = $ionicPopup.alert({
+                title: $translate.instant('PROFILE'),
+                template: $translate.instant('PROFILE_SUCCESS_MSG'),
+            });
+            alertPopup.then(function (res) {
+                $scope.customer = {};
+                $scope.close();
+            });
+
+        }).error(function (err, statusCode) {
+            connectionFactory.testConnection().success(function (data) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('PROFILE'), errorCodeMessageFactory.getErrorMessage(statusCode, 'PROFILE'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
             });
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
-       
+        });
     }
 });

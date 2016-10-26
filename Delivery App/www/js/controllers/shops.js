@@ -5,7 +5,7 @@ angular.module('delivery.controllers')
     $rootScope.shops = [];
     $rootScope.masteriesArray = [];
     $rootScope.masteriesCheckList = [];
-    $rootScope.shopsOffers = [];
+    $rootScope.goldenOffers = [];
     //$rootScope.shopDetails = shopDetailsFactory.get($stateParams.shopId);
 
     $scope.$on('$ionicView.loaded', function () {
@@ -22,9 +22,15 @@ angular.module('delivery.controllers')
         
     });
 
+    $scope.$on('$ionicView.enter', function () {
+        $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
+        $ionicSlideBoxDelegate.slide(0);
+        $ionicSlideBoxDelegate.start();
+    });
+
     $rootScope.$watch('showMainView', function () {
 
-        if ($rootScope.showMainView)
+        if ($rootScope.showMainView && $rootScope.isCategorySelected)
         {
             deliveryLoader.showLoading($translate.instant('LOADING'));
 
@@ -44,7 +50,7 @@ angular.module('delivery.controllers')
                     if (data[i].offer_type === 'GOLDEN')
                         silverOffers.push(data[i]);
                 }
-                $scope.shopsOffers = silverOffers;
+                $rootScope.goldenOffers = silverOffers;
                 $ionicSlideBoxDelegate.update();
                 deliveryLoader.hideLoading();
 
@@ -140,6 +146,7 @@ angular.module('delivery.controllers')
         }
         else {
             $ionicModal.fromTemplateUrl('templates/cities.html', {
+                id: '12',
                 scope: $rootScope,
                 hardwareBackButtonClose: false,
             }).then(function (modal) {

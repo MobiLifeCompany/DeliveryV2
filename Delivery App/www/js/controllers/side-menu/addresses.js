@@ -112,49 +112,61 @@ angular.module('delivery.controllers')
     };
 
     $scope.createAddress = function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $scope.customerAddress.city_id = $rootScope.selectedCity.id;
-            $scope.customerAddress.area_id = $rootScope.selectedArea.id;
-            $scope.customerAddress.latitude = 0;
-            $scope.customerAddress.longitude = 0;
-            $scope.customerAddress.is_default = false;
-            customerFactory.createCustomerAddress($scope.customerAddress,deliveryLoader).success(function (data) {
-                $scope.closeCreateAddressModal();
-                $rootScope.customerAddressess.push($scope.customerAddress);
-                deliveryLoader.hideLoading();
-            }).error(function (err, statusCode) {
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+
+        $scope.customerAddress.city_id = $rootScope.selectedCity.id;
+        $scope.customerAddress.area_id = $rootScope.selectedArea.id;
+        $scope.customerAddress.latitude = 0;
+        $scope.customerAddress.longitude = 0;
+        $scope.customerAddress.is_default = false;
+        customerFactory.createCustomerAddress($scope.customerAddress, deliveryLoader).success(function (data) {
+            $scope.closeCreateAddressModal();
+            $rootScope.customerAddressess.push($scope.customerAddress);
+            deliveryLoader.hideLoading();
+        }).error(function (err, statusCode) {
+            connectionFactory.testConnection().success(function (data) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
             });
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        });
     };
+
     $scope.updateAddress = function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            customerFactory.updateCustomerAddress($scope.customerAddress,deliveryLoader).success(function (data) {
-                $scope.closeEditAddressModal();
-                $scope.getCustomerAddress();
-                $scope.customerAddress = {};
-                deliveryLoader.hideLoading();
+        deliveryLoader.showLoading($translate.instant('LOADING'));
+
+        customerFactory.updateCustomerAddress($scope.customerAddress).success(function (data) {
+            $scope.closeEditAddressModal();
+            $scope.getCustomerAddress();
+            $scope.customerAddress = {};
+            deliveryLoader.hideLoading();
             }).error(function (err, statusCode) {
+                connectionFactory.testConnection().success(function (data) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+                }).error(function (err, statusCode) {
+                    deliveryLoader.hideLoading();
+                    connectionFactory.exitApplication();
             });
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        });
     };
+
     $scope.deleteAddress = function (customerAddressId) {
         deliveryLoader.showLoading($translate.instant('DELETE_ADDRESSES'));
+
         customerFactory.deleteCustomerAddress(customerAddressId).success(function (data) {
             deliveryLoader.hideLoading();
             $scope.getCustomerAddress();
         }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            connectionFactory.testConnection().success(function (data) {
+                deliveryLoader.hideLoading();
+                connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(statusCode, 'ADDRESS'));
+            }).error(function (err, statusCode) {
+                deliveryLoader.hideLoading();
+                connectionFactory.exitApplication();
+            });
         });
     };
 

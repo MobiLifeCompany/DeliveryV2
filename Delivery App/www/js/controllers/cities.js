@@ -54,12 +54,7 @@ angular.module('delivery.controllers')
     /// <summary>prevStep: Redirect the user back to 'select categories' modal</summary>
     /// <param>no parameters</param>
     $scope.prevStep = function () {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            $rootScope.categoriesModal.show();
-            $rootScope.citiesModal.hide();
-        }).error(function (err, statusCode) {
-            deliveryLoader.hideLoading();
-            connectionFactory.exitApplication();
-        })
+        $rootScope.categoriesModal.show();
+        $rootScope.citiesModal.hide();
     }
 });

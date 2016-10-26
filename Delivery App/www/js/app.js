@@ -83,7 +83,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
     if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
         $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
     }else {
-        $rootScope.lang = 'en';
+        $rootScope.lang = 'ar';
         storageUtilityFactory.setSelectedLanguage($rootScope.lang);
     }
 
