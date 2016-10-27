@@ -1,6 +1,7 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $translate, $state, $cordovaToast, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $ionicPopup, customerFactory, $translate, $state, $cordovaToast, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
+
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -19,8 +20,6 @@ angular.module('delivery.controllers')
     /// <summary>doLogin: Perform the login action when the user submits the login form, and save user data to '$rootScope' and 'localStorage'</summary>
     /// <param>No parameters</param>
     $scope.doLogin = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-
         customerFactory.login($scope.loginData).success(function (data) {
             try {
                 $rootScope.isAuthenticated = true;
@@ -31,7 +30,9 @@ angular.module('delivery.controllers')
                 data.password = $scope.loginData.password;
                 data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
+                $rootScope.fullName = authFactory.getCustomer().full_name;
                 deliveryLoader.hideLoading();
+
                 $cordovaToast.showShortBottom($translate.instant('LOGIN_SUCCESSFUL'));
                 $scope.closeLogin();
             } catch (e) {

@@ -329,7 +329,7 @@ angular.module('delivery.factory', [])
                     var customerAuthToken = '';
                     if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                         customerAuthToken = authFactory.getCustomer().auth_token;
-                    return $http.post(baseURL + '/shops/' + shopId + '/notify_to_subscribe', { headers: { 'auth-token': customerAuthToken } });
+                    return $http.post(baseURL + '/shops/' + shopId + '/notify_to_subscribe',shopId, { headers: { 'auth-token': customerAuthToken } });
                 }
         };
 

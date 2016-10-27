@@ -155,6 +155,7 @@ angular.module('delivery.controllers', [])
         }).then(function (modal) {
             $rootScope.profileModal = modal;
             $rootScope.customerProfile = authFactory.getCustomer();
+            $rootScope.customerProfile.phone = Number($rootScope.customerProfile.phone);
             $rootScope.profileModal.show();
         });
     }

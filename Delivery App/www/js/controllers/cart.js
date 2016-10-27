@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicHistory, $ionicFilterBar, $ionicActionSheet, $translate, ionicMaterialInk, shopDetailsFactory,customerFactory, deliveryLoader) {
+.controller('CartCtrl', function ($scope, $rootScope, $stateParams, $state, $ionicLoading, $ionicModal, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicHistory, $ionicFilterBar, $ionicActionSheet, $translate, ionicMaterialInk, shopDetailsFactory, customerFactory, connectionFactory, deliveryLoader) {
 
     $scope.$on('$ionicView.enter', function () {
         $rootScope.showCartFabButton = false; //hide the cart button while in cart screen
@@ -62,7 +62,7 @@ angular.module('delivery.controllers')
         customerFactory.notifyShopFunction($rootScope.cartShop.id).success(function () {
             try {
                 deliveryLoader.hideLoading();
-                connectionFactory.showAlertPopup($translate.instant('RATING'), $translate.instant('RATING_SUCCESS_MSG'));
+                connectionFactory.showAlertPopup($translate.instant('NOTIFY'), $translate.instant('NOTIFY_SUCCESS_MSG'));
             } catch (e) {
                 deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));

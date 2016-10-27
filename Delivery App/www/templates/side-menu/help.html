@@ -14,7 +14,7 @@
                         <h4 class="light" translate="WELCOME_TO_APP" style="font-family: GESSUniqueBold;"></h4>
                         <h5 class="stable" translate="SWIPE_TO_LEARN" style="font-family: GESSUniqueBold;"></h5>
                         <img src="img/onboarding/swipe.png" style="margin-top: 10px; height: 25%;">
-                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;">
+                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;" ng-show="isUserLoggedin==false">
                             <button style="font-family: GESSUniqueBold;" class="button button-small button-positive button-block" ng-click="closeHelp(); showLogin();" translate="LOGIN"></button>
                             <button style="font-family: GESSUniqueBold;" class="button button-small button-energized button-block" ng-click="closeHelp(); showRegister();" translate="REGISTER_NOW"></button>
                         </div>
@@ -125,7 +125,7 @@
                         <h3></h3>
                         <img src="img/onboarding/final-step.png" ng-show="lang == 'en'" style="width: 100%; position: absolute; bottom: 0px; left: 0px;">
                         <img src="img/onboarding/final-step_ar.png" ng-show="lang == 'ar'" style="width: 100%; position: absolute; bottom: 0px; left: 0px;">
-                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;">
+                        <div class="padding" style="position: absolute; bottom: 15px; width: 100%;" ng-show="isUserLoggedin==false">
                             <button style="font-family: GESSUniqueBold;" class="button button-small button-positive button-block" ng-click="closeHelp(); showLogin();" translate="LOGIN"></button>
                             <button style="font-family: GESSUniqueBold;" class="button button-small button-energized button-block" ng-click="closeHelp(); showRegister();" translate="REGISTER_NOW"></button>
                         </div>

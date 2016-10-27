@@ -22,7 +22,7 @@
                         <div class="list">
                             <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;">
                                 <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
-                                <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
+                                <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="0993130478" only-num>
                             </label>
                             <div ng-class="isRTL() ? 'error-container-rtl' : 'error-container'" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
                                 <div class="error" ng-show="Cform.cphone.length < 0">
@@ -118,7 +118,7 @@
                         <div class="list" ng-class="{'text-right': isRTL()}">
                             <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;">
                                 <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
-                                <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="+963 33 2415081 | +963 993 130 478" only-num>
+                                <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="0993130478" only-num>
                             </label>
                             <div ng-class="isRTL() ? 'error-container-rtl' : 'error-container'" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
                                 <div class="error" ng-show="Cform.cphone.length < 0">

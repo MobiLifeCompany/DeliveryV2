@@ -4,6 +4,7 @@ angular.module('delivery.controllers')
 
     $scope.customer = authFactory.getCustomer();
     $scope.customer.phone = Number($scope.customer.phone);
+    //$scope.customerProfile = {};
     /// <summary>closeRegister: Close the register modal when user press back</summary>
     /// <param>No parameters</param>
     $scope.close = function () {
@@ -11,9 +12,8 @@ angular.module('delivery.controllers')
     };
 
     $scope.updateProfile = function () {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
-
-        customerFactory.updateProfile($scope.customer).success(function (data) {
+         $scope.customerProfile.mobile = $scope.customerProfile.phone;
+        customerFactory.updateProfile($scope.customerProfile).success(function (data) {
             $rootScope.currentCustomerId = data.id;
             $rootScope.currentCustomerUserName = data.username;
             $rootScope.currentCustomerAuthToken = data.auth_token;
@@ -21,6 +21,8 @@ angular.module('delivery.controllers')
             data.password_confirmation = $scope.customer.password;
             authFactory.deleteCustomer();
             authFactory.setCustomer(data);
+			$rootScope.customerProfile = authFactory.getCustomer();
+            $rootScope.fullName = authFactory.getCustomer().full_name;
             deliveryLoader.hideLoading();
             var alertPopup = $ionicPopup.alert({
                 title: $translate.instant('PROFILE'),
