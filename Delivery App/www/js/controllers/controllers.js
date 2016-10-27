@@ -88,6 +88,7 @@ angular.module('delivery.controllers', [])
         $rootScope.selectedArea = storageUtilityFactory.getSelectedArea();
         $rootScope.showMainView = true;
         $rootScope.isCategorySelected = true;
+        $rootScope.loadGoldenOffers();
         $rootScope.loadShops();
         $state.go('app.old-orders'); //go to old orders tab
 

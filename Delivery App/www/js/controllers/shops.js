@@ -13,7 +13,7 @@ angular.module('delivery.controllers')
         {
             deliveryLoader.showLoading($translate.instant('LOADING'));
 
-            $rootScope.loadShopsOffers();
+            $rootScope.loadGoldenOffers();
             $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
             $ionicSlideBoxDelegate.slide(0);
             $ionicSlideBoxDelegate.start();
@@ -34,7 +34,7 @@ angular.module('delivery.controllers')
         {
             deliveryLoader.showLoading($translate.instant('LOADING'));
 
-            $rootScope.loadShopsOffers();
+            $rootScope.loadGoldenOffers();
             $ionicSlideBoxDelegate.update();//this line is used to solve a bug associated with the ion-slide-box not being shown when 'ng-show' of the parent change to true
             $ionicSlideBoxDelegate.slide(0);
             $ionicSlideBoxDelegate.start();
@@ -42,28 +42,26 @@ angular.module('delivery.controllers')
         }
     });
 
-    $rootScope.loadShopsOffers = function () {
+    /// <summary>loadGoldenOffers: Load all golden offers and save an array to be used when needed in golden offers slider</summary>
+    /// <param>No parameters</param>
+    $rootScope.loadGoldenOffers = function () {
         shopsFactory.getOffers().success(function (data) {
             try {
-                var silverOffers = [];
+                var goldenOffers = [];
                 for (i = 0; i < data.length; i++) {
                     if (data[i].offer_type === 'GOLDEN')
-                        silverOffers.push(data[i]);
+                        goldenOffers.push(data[i]);
                 }
-                $rootScope.goldenOffers = silverOffers;
+                $rootScope.goldenOffers = goldenOffers;
                 $ionicSlideBoxDelegate.update();
-                deliveryLoader.hideLoading();
 
             } catch (e) {
-                deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), errorCodeMessageFactory.getErrorMessage(500, ''));
             }
         }).error(function (err, statusCode) {
             connectionFactory.testConnection().success(function (data) {
-                deliveryLoader.hideLoading();
                 connectionFactory.showAlertPopup($translate.instant('ERROR'), err.message);
             }).error(function (err, statusCode) {
-                deliveryLoader.hideLoading();
                 connectionFactory.exitApplication();
             });
         })

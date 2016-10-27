@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $http, $ionicModal, connectionFactory, customerFactory, deliveryLoader) {
+.controller('RegisterCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $http, $ionicModal, $cordovaToast, connectionFactory, customerFactory, deliveryLoader) {
 
     $scope.customer = {};
 
@@ -15,8 +15,9 @@ angular.module('delivery.controllers')
         customerFactory.register($scope.customer).success(function (data) {
             deliveryLoader.hideLoading();
             $rootScope.registerModal.hide();
-            connectionFactory.showAlertPopup($translate.instant('REGISTER_SUCCESSFUL'), $translate.instant('ACCOUNT_CREATED'));
-            $rootScope.showLogin();
+            $cordovaToast.showShortBottom($translate.instant('ACCOUNT_CREATED'));
+            //connectionFactory.showAlertPopup($translate.instant('REGISTER_SUCCESSFUL'), $translate.instant('ACCOUNT_CREATED'));
+            //$rootScope.showLogin();
         }).error(function (err, statusCode) {
             connectionFactory.testConnection().success(function (data) {
                 deliveryLoader.hideLoading();

@@ -192,5 +192,10 @@
   "LOGIN_REQUIRED": "تسجيل الدخول مطلوب",
   "PLEASE_LOGIN": "الرجاء تسجيل الدخول أولاُ",
   "REGISTER_SUCCESSFUL": "تم التسجيل",
-  "ACCOUNT_CREATED": "لقد تم إنشاء حسابك بنجاح"
+  "ACCOUNT_CREATED": "لقد تم إنشاء حسابك بنجاح",
+  "LOGIN_SUCCESSFUL": "تم تسجيل الدخول بنجاح",
+  "DELIVERY_EXPRESS": "تطبيق التوصيل السريع",
+  "TWO_CLICKS": "طلبيتك بتصير عندك بنقرتين",
+  "MOBILIFE": "Mobilife Co.",
+  "COPYRIGHT": "Mobilife Co. @ 2016 جميع الحقوق محفوظة"
 }

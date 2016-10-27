@@ -191,6 +191,11 @@
   "LOGIN_REQUIRED": "Login required",
   "PLEASE_LOGIN": "Please Login to your account first",
   "REGISTER_SUCCESSFUL": "Registration Successful",
-  "ACCOUNT_CREATED": "Your account has been created successfully"
+  "ACCOUNT_CREATED": "Your account has been created successfully",
+  "LOGIN_SUCCESSFUL": "Login Successful",
+  "DELIVERY_EXPRESS": "Delivery Express Application",
+  "TWO_CLICKS": "Your Order is Two Clicks Away",
+  "MOBILIFE": "Mobilife Co.",
+  "COPYRIGHT": "Mobilife Co. @ 2016 All Rights Reserved"
 
 }

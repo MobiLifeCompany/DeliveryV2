@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $translate, $state, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, customerFactory, $translate, $state, $cordovaToast, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -32,6 +32,7 @@ angular.module('delivery.controllers')
                 data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
                 deliveryLoader.hideLoading();
+                $cordovaToast.showShortBottom($translate.instant('LOGIN_SUCCESSFUL'));
                 $scope.closeLogin();
             } catch (e) {
                 deliveryLoader.hideLoading();
@@ -65,6 +66,7 @@ angular.module('delivery.controllers')
             data.password_confirmation = $scope.loginData.password;
             authFactory.setCustomer(data);
             deliveryLoader.hideLoading();
+            $cordovaToast.showShortBottom($translate.instant('LOGIN_SUCCESSFUL'));
             // if login successed, go to 'cart-addresses' view to continue order checkout
             $state.go('app.cart-addresses');
         }).error(function (err, statusCode) {
