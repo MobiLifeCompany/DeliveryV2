@@ -199,6 +199,11 @@
   "DELIVERY_EXPRESS": "Delivery Express Application",
   "TWO_CLICKS": "Your Order is Two Clicks Away",
   "MOBILIFE": "Mobilife Co.",
-  "COPYRIGHT": "Mobilife Co. @ 2016 All Rights Reserved"
+  "COPYRIGHT": "Mobilife Co. @ 2016 All Rights Reserved",
+  "DEAR_USER": "Dear User, ",
+  "RESET_PASSWORD_MSG1": "To reset your password please call",
+  "RESET_PASSWORD_MSG2": "Or send an email to",
+  "RESET_PASSWORD_MSG3": "To get a new password",
+  "SHOW_ON_STARTUP": "Show on startup"
 
 }

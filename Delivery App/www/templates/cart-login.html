@@ -18,7 +18,7 @@
                         </label>
                     </div>
                     <button class="button button-small button-positive button-block" ng-disabled="!loginData.username || !loginData.password" type="submit" ng-click="loginFromCart()" translate="LOGIN"></button>
-                    <a class="assertive"><span translate="FORGOT_YOUR_PASSWORD"></span></a>
+                    <a class="assertive" ng-click="showResetPassword()"><span translate="FORGOT_YOUR_PASSWORD"></span></a>
                 </form>
             </div>
             <div style="height: 30%; min-height: 80px;">

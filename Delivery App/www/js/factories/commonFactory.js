@@ -144,6 +144,7 @@ angular.module('delivery.factory', [])
     var selectedLanguageKey = 'selectedLanguage';
     var gcmIdkey = 'gcmId';
     var firstRunKey = 'firstRun';
+    var showHelpKey = 'showHelp';
 
     var UtilityAPI = {
 
@@ -236,6 +237,13 @@ angular.module('delivery.factory', [])
 
         setFirstRun: function (state) {
             return LSFactory.set(firstRunKey, state);
+        },
+        getShowHelp: function () {
+            return LSFactory.get(showHelpKey);
+        },
+
+        setShowHelp: function (state) {
+            return LSFactory.set(showHelpKey, state);
         },
 
     };

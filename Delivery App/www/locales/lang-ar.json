@@ -200,5 +200,10 @@
   "DELIVERY_EXPRESS": "تطبيق التوصيل السريع",
   "TWO_CLICKS": "طلبيتك بتصير عندك بنقرتين",
   "MOBILIFE": "Mobilife Co.",
-  "COPYRIGHT": "Mobilife Co. @ 2016 جميع الحقوق محفوظة"
+  "COPYRIGHT": "Mobilife Co. @ 2016 جميع الحقوق محفوظة",
+  "DEAR_USER": "عزيزي المستخدم، ",
+  "RESET_PASSWORD_MSG1": "لإعادة ضبط كلمة المرور الخاصة بحسابك الرجاء الاتصال على الرقم",
+  "RESET_PASSWORD_MSG2": "أو إرسال إيميل إلى العنوان",
+  "RESET_PASSWORD_MSG3": "لتصلك كلمة المرور الجديدة",
+  "SHOW_ON_STARTUP": "عرض عند كل تشغيل"
 }

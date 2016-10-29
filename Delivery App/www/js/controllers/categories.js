@@ -49,7 +49,7 @@ angular.module('delivery.controllers')
         if (authFactory.isLoggedIn()) {
             $ionicModal.fromTemplateUrl('templates/saved-areas.html', {
                 scope: $rootScope,
-                hardwareBackButtonClose: true,
+                hardwareBackButtonClose: false,
             }).then(function (modal) {
                 $rootScope.savedAreasModal = modal;
                 $rootScope.savedAreasModal.show();

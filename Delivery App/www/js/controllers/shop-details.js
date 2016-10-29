@@ -328,6 +328,7 @@ angular.module('delivery.controllers')
 
     $scope.shareItem = function (item) {
         var message = item.name + '\n';
+        message += $translate.instant('SHOP') + ": " + $scope.shopDetails.name + '\n';
         message += $translate.instant('PRICE') + " " + item.price +" "+ $rootScope.currency + '\n';
         message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
 

@@ -200,12 +200,6 @@ angular.module('delivery.controllers', [])
         });
     }
 
-    /// <summary>close: Close the help modal when user press back</summary>
-    /// <param>No parameters</param>
-    $rootScope.closeHelp = function () {
-        $rootScope.helpModal.hide();
-    };
-
     /// <summary>showAbout: Show the about modal when the corresponding sidemenu item is clicked</summary>
     /// <param>No parameters</param>
     $rootScope.showAbout = function () {
@@ -216,6 +210,19 @@ angular.module('delivery.controllers', [])
         }).then(function (modal) {
             $rootScope.aboutModal = modal;
             $rootScope.aboutModal.show();
+        });
+    }
+
+    /// <summary>showAbout: Show the about modal when the corresponding sidemenu item is clicked</summary>
+    /// <param>No parameters</param>
+    $rootScope.showResetPassword = function () {
+        // Create the about modal
+        $ionicModal.fromTemplateUrl('templates/side-menu/reset-password.html', {
+            id: '8',
+            scope: $rootScope
+        }).then(function (modal) {
+            $rootScope.resetPasswordModal = modal;
+            $rootScope.resetPasswordModal.show();
         });
     }
 
@@ -244,7 +251,7 @@ angular.module('delivery.controllers', [])
     $ionicPlatform.ready(function () {
         connectionFactory.testConnection().success(function (data) {
             $rootScope.categoriesModal.show();
-            if (storageUtilityFactory.getFirstRun() != 'false')
+            if (storageUtilityFactory.getFirstRun() != 'false' || storageUtilityFactory.getShowHelp())
             {
                 $rootScope.showHelp();
                 storageUtilityFactory.setFirstRun('false');
