@@ -205,5 +205,6 @@
   "RESET_PASSWORD_MSG1": "لإعادة ضبط كلمة المرور الخاصة بحسابك الرجاء الاتصال على الرقم",
   "RESET_PASSWORD_MSG2": "أو إرسال إيميل إلى العنوان",
   "RESET_PASSWORD_MSG3": "لتصلك كلمة المرور الجديدة",
-  "SHOW_ON_STARTUP": "عرض عند كل تشغيل"
+  "SHOW_ON_STARTUP": "عرض عند كل تشغيل",
+  "DELETE_ADDRESS": "حذف العنوان"
 }

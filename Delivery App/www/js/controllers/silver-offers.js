@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicPlatform, $cordovaSocialSharing, shopsFactory, connectionFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('SilverOffersCtrl', function ($scope, $rootScope, $ionicLoading, $translate, $ionicModal, $ionicSlideBoxDelegate, $ionicPlatform, $cordovaSocialSharing, shopsFactory, connectionFactory, deliveryLoader, errorCodeMessageFactory) {
 
     $scope.shopsOffers = [];
 

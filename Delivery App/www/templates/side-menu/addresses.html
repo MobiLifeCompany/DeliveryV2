@@ -217,12 +217,6 @@
                 </ion-modal-view>
             </script>
 
-            <div class="bar bar-subheader bar-energized static text-center" ng-class="{'text-right': isRTL()}">
-                <h5 class="title"><span translate="YOU_ARE_IN"></span><span> {{selectedCity.name}}, {{selectedArea.name}}</span></h5>
-            </div>
-            <div class="bar bar-subheader bar-stable static text-center" ng-class="{'text-right': isRTL()}">
-                <h5 class="title"><span translate="PLEASE_SELECT_ADDRESS"></span></h5>
-            </div>
             <div ng-if="customerAddressess.length == 0" ng-class="{'text-right': isRTL()}">
                 <div class="icon ion-ios-home-outline stable" style="font-size: 150px; width: 100%; text-align: center;"></div>
                 <h5 class="stable text-center" translate="NO_SAVED_ADDRESS"></h5>
@@ -230,7 +224,7 @@
             <div class="list padding-left padding-right" ng-show="customerAddressess.length > 0" ng-class="{'text-right': isRTL()}">
                 <div class="item" style="padding: 0px;" ng-repeat="customerAddress in customerAddressess">
                     <div class="list card" style="margin: 10px 0;">
-                        <div class="item item-body" ng-click="selectAddress(customerAddress.id)">
+                        <div class="item item-body" ng-click="selectAddress(customerAddress.id)" ng-class="isRTL() ? 'text-right' : ''">
                             <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{customerAddress.street}}<br />
                             <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{customerAddress.building}},
                             <strong>{{'ADDRESS_FLOOR' | translate}}: </strong>{{customerAddress.floor}}<br />

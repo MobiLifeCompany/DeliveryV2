@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $ionicModal, $translate, $state, $cordovaSocialSharing, deliveryLoader, errorCodeMessageFactory, connectionFactory, shopDetailsFactory, customerFactory) {
+.controller('OldOrdersCtrl', function ($scope, $rootScope, $ionicPopup, $ionicModal, $ionicSlideBoxDelegate, $translate, $state, $cordovaSocialSharing, deliveryLoader, errorCodeMessageFactory, connectionFactory, shopDetailsFactory, customerFactory) {
 
     // Load old orders on enter
     $scope.$on('$ionicView.enter', function () {

@@ -204,6 +204,7 @@
   "RESET_PASSWORD_MSG1": "To reset your password please call",
   "RESET_PASSWORD_MSG2": "Or send an email to",
   "RESET_PASSWORD_MSG3": "To get a new password",
-  "SHOW_ON_STARTUP": "Show on startup"
+  "SHOW_ON_STARTUP": "Show on startup",
+  "DELETE_ADDRESS": "Delete Address"
 
 }

@@ -155,7 +155,7 @@ angular.module('delivery.controllers')
     };
 
     $scope.deleteAddress = function (customerAddressId) {
-        deliveryLoader.showLoading($translate.instant('DELETE_ADDRESSES'));
+        deliveryLoader.showLoading($translate.instant('DELETE_ADDRESS'));
 
         customerFactory.deleteCustomerAddress(customerAddressId).success(function (data) {
             deliveryLoader.hideLoading();
@@ -172,23 +172,19 @@ angular.module('delivery.controllers')
     };
 
     $scope.deleteAddressPopup = function (customerAddressId) {
-        connectionFactory.testConnection(deliveryLoader).success(function (data) {
-            // Show a confirmation popup
-            var confirmPopup = $ionicPopup.confirm({
-                title: $translate.instant('DELETE'),
-                template: $translate.instant('ADDRESS_CONFIRMATION_MSG'),
-                cancelText: $translate.instant('NO'),
-                okText: $translate.instant('YES')
-            });
-            // Resolve the promise returned by the popup, then logout the user if user confirm
-            confirmPopup.then(function (res) {
-                if (res) {
-                    $scope.deleteAddress(customerAddressId);
-                }
-            });
-        }).error(function (err, statusCode) {
-            connectionFactory.exitApplication();
-        })
+        // Show a confirmation popup
+        var confirmPopup = $ionicPopup.confirm({
+            title: $translate.instant('DELETE'),
+            template: $translate.instant('ADDRESS_CONFIRMATION_MSG'),
+            cancelText: $translate.instant('NO'),
+            okText: $translate.instant('YES')
+        });
+        // Resolve the promise returned by the popup, then logout the user if user confirm
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.deleteAddress(customerAddressId);
+            }
+        });
     };
 
     //showMap: Show a map of the selected address with position marker, will be called from the 'mapModal' when it's shown
