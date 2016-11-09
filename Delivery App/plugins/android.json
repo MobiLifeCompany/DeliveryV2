@@ -1,0 +1,49 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "180733002242",
+            "PACKAGE_NAME": "com.delivery.mobilife"
+        }
+    },
+    "dependent_plugins": {}
+}
