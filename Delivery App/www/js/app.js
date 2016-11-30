@@ -94,11 +94,24 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
     $rootScope.opposite_float = $rootScope.lang === 'ar' ? 'left' : 'right';
 
     // for Syria the coutnry id = 1
+    $rootScope.versionCountry = 'sy';
     $rootScope.countryId = 1;
-    if ($rootScope.lang == 'en')
-        $rootScope.currency = 'SYP';
-    else
-        $rootScope.currency = 'ل.س.';
+    $rootScope.baseURL = 'http://' + $rootScope.versionCountry + '.deliveryonweb.com/api/v1';
+
+    if ($rootScope.versionCountry == 'lb') {
+        if ($rootScope.lang == 'en')
+            $rootScope.currency = 'L.L';
+        else
+            $rootScope.currency = 'ل.ل';
+
+    }else if ($rootScope.versionCountry == 'sy') {
+        if ($rootScope.lang == 'en')
+            $rootScope.currency = 'SYP';
+        else
+            $rootScope.currency = 'ل.س.';
+    }
+   
+   
 
     storageUtilityFactory.setCountry($rootScope.countryId);
 

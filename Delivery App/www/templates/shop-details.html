@@ -59,7 +59,7 @@
                         </ion-item>
                         <ion-item style="text-align: center;">
                             <ul ng-repeat="dayHour in shopDetails.delivery_hours">
-                                <li>{{getDayName(dayHour.day)}}: {{dayHour.open}}</li>
+                                <li>{{getDayName(dayHour.day)}}: {{replaceShift(dayHour.open)}}</li>
                             </ul>
                         </ion-item>
                         <ion-item class="item-divider" style="text-align: center;" translate="REVIEWS">
@@ -167,7 +167,7 @@
                     </div>
                     <div style="margin-top: 40px;margin-bottom: 75px;">
                         <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_FEE"></h6><h6 style="margin: 0px;">{{shopDetails.delivery_charge}} {{currency}}</h6></div>
-                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{getCurrentDeliverHour()}}</h6></div>
+                        <div style="float: {{default_float}}; width: 50%;"><h6 style="margin: 0px; font-weight: 200;" translate="DELIVERY_HOURS"></h6><h6 style="margin: 0px;">{{replaceShift(getCurrentDeliverHour())}}</h6></div>
                     </div>
                     <div>
                        <h6>{{'PHONE' | translate}} : {{shopDetails.phone}}</h6>

@@ -11,15 +11,17 @@ angular.module('delivery.controllers')
 
     // Get only unique values for savedAreas to prevent dubplication in the areas list
     var areaExists = false;
-    for (i = 0; i < $scope.savedAreas.length; i++) {
-        for (j = 0; j < $scope.uniqueAreas.length; j++) {
-            if ($scope.savedAreas[i].area.id == $scope.uniqueAreas[j].area.id)
-                areaExists = true;
-        }
-        if (!areaExists)
-            $scope.uniqueAreas.push($scope.savedAreas[i]);
-        areaExists = false;
-    };
+    if($scope.savedAreas!=null){
+        for (i = 0; i < $scope.savedAreas.length; i++) {
+            for (j = 0; j < $scope.uniqueAreas.length; j++) {
+                if ($scope.savedAreas[i].area.id == $scope.uniqueAreas[j].area.id)
+                    areaExists = true;
+            }
+            if (!areaExists)
+                $scope.uniqueAreas.push($scope.savedAreas[i]);
+            areaExists = false;
+        };
+    }
 
     $scope.prevStep = function () {
         $rootScope.savedAreasModal.hide();

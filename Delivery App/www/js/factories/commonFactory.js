@@ -1,12 +1,10 @@
-﻿var baseURL = 'http://deliveryonweb.com/api/v1';
+﻿angular.module('delivery.factory', [])
 
-angular.module('delivery.factory', [])
-
-.factory('businessCategoriesFactory', function (storageUtilityFactory, $http) {
+.factory('businessCategoriesFactory', function (storageUtilityFactory, $http, $rootScope) {
 
     var API = {
         get: function () {
-            return $http.get(baseURL + '/businesses?lang=' + storageUtilityFactory.getSelectedLanguage());
+            return $http.get($rootScope.baseURL + '/businesses?lang=' + storageUtilityFactory.getSelectedLanguage());
         }
     };
 
@@ -15,7 +13,7 @@ angular.module('delivery.factory', [])
 .factory('areasFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/cities/' + $rootScope.selectedCity.id + '/areas');
+            return $http.get($rootScope.baseURL + '/cities/' + $rootScope.selectedCity.id + '/areas');
         }
     };
 
@@ -24,7 +22,7 @@ angular.module('delivery.factory', [])
 .factory('citiesFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/countries/' + $rootScope.countryId + '/cities_areas?lang=' + $rootScope.lang);
+            return $http.get($rootScope.baseURL + '/countries/' + $rootScope.countryId + '/cities_areas?lang=' + $rootScope.lang);
         }
     };
 
@@ -33,10 +31,10 @@ angular.module('delivery.factory', [])
 .factory('shopsFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get(baseURL + '/businesses/' + $rootScope.selectedCategory.id + '/areas/' + $rootScope.selectedArea.id + '/shops?lang=' + $rootScope.lang);
+            return $http.get($rootScope.baseURL + '/businesses/' + $rootScope.selectedCategory.id + '/areas/' + $rootScope.selectedArea.id + '/shops?lang=' + $rootScope.lang);
         },
         getOffers: function () {
-            return $http.get(baseURL + '/offers?lang=' + $rootScope.lang);
+            return $http.get($rootScope.baseURL + '/offers?lang=' + $rootScope.lang);
         }
     };
 
@@ -79,7 +77,7 @@ angular.module('delivery.factory', [])
             return shopDetails;
         },
         getShopItemsCategories: function () {
-            return $http.get(baseURL + '/shops/' + $rootScope.selectedShop.id + '/items?lang=' + storageUtilityFactory.getSelectedLanguage());
+            return $http.get($rootScope.baseURL + '/shops/' + $rootScope.selectedShop.id + '/items?lang=' + storageUtilityFactory.getSelectedLanguage());
         }
     }
     return SAPI;
@@ -255,12 +253,12 @@ angular.module('delivery.factory', [])
         var customerAPI = {
 
             login: function (customer) {
-                return $http.post(baseURL + '/customers/login', customer);
+                return $http.post($rootScope.baseURL + '/customers/login', customer);
             },
 
             register: function (customer) {
                 customer.gcm_id = storageUtilityFactory.getGcmId();
-                return $http.post(baseURL + '/customers', customer);
+                return $http.post($rootScope.baseURL + '/customers', customer);
             },
             updateProfile: function (customer) {
                 var customerAuthToken = '';
@@ -268,7 +266,7 @@ angular.module('delivery.factory', [])
                     customerAuthToken = authFactory.getCustomer().auth_token;
 
                 customer.gcm_id = storageUtilityFactory.getGcmId();
-                return $http.put(baseURL + '/customers/' + customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
+                return $http.put($rootScope.baseURL + '/customers/' + customer.id, customer, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerAddress: function (customerAddress) {
                 var customerId = -1;
@@ -277,7 +275,7 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.post(baseURL + '/customers/' + customerId + '/addresses', customerAddress, { headers: { 'auth-token': customerAuthToken } });
+                return $http.post($rootScope.baseURL + '/customers/' + customerId + '/addresses', customerAddress, { headers: { 'auth-token': customerAuthToken } });
             },
 
             getCustomerAddressess: function () {
@@ -287,7 +285,7 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.get(baseURL + '/customers/' + customerId + '/addresses', { headers: { 'auth-token': customerAuthToken } });
+                return $http.get($rootScope.baseURL + '/customers/' + customerId + '/addresses', { headers: { 'auth-token': customerAuthToken } });
             },
 
             updateCustomerAddress: function (customerAddress) {
@@ -297,7 +295,7 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.put(baseURL + '/customers/' + customerId + '/addresses/' + customerAddress.id, customerAddress, { headers: { 'auth-token': customerAuthToken } });
+                return $http.put($rootScope.baseURL + '/customers/' + customerId + '/addresses/' + customerAddress.id, customerAddress, { headers: { 'auth-token': customerAuthToken } });
             },
 
             deleteCustomerAddress: function (customerAddressId) {
@@ -307,7 +305,7 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.delete(baseURL + '/customers/' + customerId + '/addresses/' + customerAddressId, { headers: { 'auth-token': customerAuthToken } });
+                return $http.delete($rootScope.baseURL + '/customers/' + customerId + '/addresses/' + customerAddressId, { headers: { 'auth-token': customerAuthToken } });
             },
             createCustomerOrder: function (customerOrder) {
                 var customerId = -1;
@@ -316,7 +314,7 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.post(baseURL + '/customers/' + customerId + '/orders', customerOrder, { headers: { 'auth-token': customerAuthToken } });
+                return $http.post($rootScope.baseURL + '/customers/' + customerId + '/orders', customerOrder, { headers: { 'auth-token': customerAuthToken } });
             },
             getCustomerOrders: function () {
                 var customerId = -1;
@@ -325,19 +323,19 @@ angular.module('delivery.factory', [])
                     customerId = authFactory.getCustomer().id;
                     customerAuthToken = authFactory.getCustomer().auth_token;
                 }
-                return $http.get(baseURL + '/customers/' + customerId + '/orders', { headers: { 'auth-token': customerAuthToken } });
+                return $http.get($rootScope.baseURL + '/customers/' + customerId + '/orders', { headers: { 'auth-token': customerAuthToken } });
             },
             sendCustomerRating: function (rateInfo) {
                 var customerAuthToken = '';
                 if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                     customerAuthToken = authFactory.getCustomer().auth_token;
-                return $http.post(baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo, { headers: { 'auth-token': customerAuthToken } });
+                return $http.post($rootScope.baseURL + '/shops/' + rateInfo.shopId + '/rate', rateInfo, { headers: { 'auth-token': customerAuthToken } });
             },
             notifyShopFunction: function (shopId) {
                     var customerAuthToken = '';
                     if (angular.isDefined(authFactory.isLoggedIn()) && authFactory.getCustomer())
                         customerAuthToken = authFactory.getCustomer().auth_token;
-                    return $http.post(baseURL + '/shops/' + shopId + '/notify_to_subscribe',shopId, { headers: { 'auth-token': customerAuthToken } });
+                    return $http.post($rootScope.baseURL + '/shops/' + shopId + '/notify_to_subscribe',shopId, { headers: { 'auth-token': customerAuthToken } });
                 }
         };
 
@@ -429,11 +427,11 @@ angular.module('delivery.factory', [])
 
     return API;
 })
-.factory('utilitiesFactory', function ($http) {
+.factory('utilitiesFactory', function ($http, $rootScope) {
 
     var API = {
         sendContactUsInfo: function (contactUsInfo) {
-            return $http.post(baseURL + '/contact', contactUsInfo);
+            return $http.post($rootScope.baseURL + '/contact', contactUsInfo);
         }
     };
 

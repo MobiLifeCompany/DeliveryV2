@@ -173,9 +173,21 @@ angular.module('delivery.controllers')
         $scope.itemPhotoModal.show();
     };
 
+
+    function findAndReplace(string, target, replacement) {
+        var i = 0, length = string.length;
+        for (i; i < length; i++) {
+            string = string.replace(target, replacement);
+        }
+        return string;
+    }
+    $scope.replaceShift = function (open) {
+        return $rootScope.lang == 'ar' ? findAndReplace(findAndReplace(open, 'am', $translate.instant('AM')),'pm', $translate.instant('PM')) : open;
+    }
+
     $scope.getCurrentDeliverHour = function () {
         days = $scope.shopDetails.delivery_hours;
-        var weekDays = ["sat", "sun", "mon", "tue", "wed", "thu", "fri"];
+        var weekDays = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
         var d = new Date();
         dayNumber = d.getDay();
         for (i = 0; i < days.length; i++) {
@@ -202,6 +214,8 @@ angular.module('delivery.controllers')
             return $translate.instant('FRIDAY');
         return "";
     }
+
+    
     //increaseAmount: increase the item quantity counter label when click on '+' button
     $scope.increaseQuantity = function (itemId, item, shopDetails) {
         var selectedItem = document.getElementById(itemId);

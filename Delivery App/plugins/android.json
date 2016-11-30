@@ -8,41 +8,41 @@
     },
     "installed_plugins": {
         "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "180733002242",
-            "PACKAGE_NAME": "com.delivery.mobilife"
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         }
     },
     "dependent_plugins": {}

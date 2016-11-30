@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget id="com.delivery.mobilife" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mobilife.deliveryexpress.sy" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="2">
   <name>Delivery Express</name>
   <description>
       Delivery application for all of your needs
@@ -9,12 +9,10 @@
     </author>
   <content src="index.html" />
   <access origin="*" />
-  <access origin="tel:*" launch-external="yes" />
-  <access origin="mailto:*" launch-external="yes" />
+  <allow-navigation href="*" />
   <preference name="webviewbounce" value="false" />
   <preference name="UIWebViewBounce" value="false" />
   <preference name="DisallowOverscroll" value="true" />
-  <preference name="android-minSdkVersion" value="16" />
   <preference name="BackupWebStorage" value="none" />
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar" />

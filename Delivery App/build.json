@@ -1,0 +1,11 @@
+{
+ "android": {
+     "release": {
+         "keystore":"D:\\Projects\\Delivery\\keystore\\admin\\admin.jks",
+         "storePassword":"Mobilife@2015",
+         "alias":"Client",
+         "password":"Mobilife@2015",
+         "keystoreType":""
+       }
+   }
+}

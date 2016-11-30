@@ -89,7 +89,7 @@
               <i class="icon ion-android-exit">
               </i><span translate="EXIT"></span>
           </ion-item>
-          <ion-item ng-controller="LanguageSwitchController">
+          <ion-item ng-controller="LanguageSwitchController"  ng-show="versionCountry == 'lb'">
               <button class="button button-positive button-small button-block" ng-show="lang == 'en'" ng-click="changeLanguage('ar'); refreshState();"><i translate="LANG_AR"></i></button>
               <button class="button button-positive button-small button-block" ng-show="lang == 'ar'" ng-click="changeLanguage('en'); refreshState();"><i translate="LANG_EN"></i></button>
           </ion-item>
