@@ -14,5 +14,10 @@
                 <i class="icon stable dl-menu-item-icon" ng-class="isRTL() ? 'ion-chevron-left' : 'ion-chevron-right'"></i><strong class="assertive"> {{ area.name }}</strong>
             </a>
         </div>
+        <div ng-show="areas.length == 0" class="padding">
+            <div class="icon ion-sad-outline stable" style="font-size: 100px; width: 100%; text-align: center;"></div>
+            <h4 class="stable text-center" translate="NO_AREAS"></h4>
+            <button class="button icon-{{default_float}} ion-location button-balanced button-small button-block" ng-click="prevStep()" translate="SELECT_ANOTHER_CITY"></button>
+        </div>
     </ion-content>
 </ion-modal-view>

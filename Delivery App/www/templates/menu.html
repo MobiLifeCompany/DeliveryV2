@@ -29,7 +29,7 @@
 
       <div ng-show="!isCategorySelected" dir="{{default_direction}}">
           <div class="text-center padding-top" style="margin-top: 40px; height: 25%; min-height: 100px; background-image: url('img/modal-bg.jpg'); background-repeat: repeat-x; background-size: contain; background-position: center;">
-              <img src="img/delivery_logo.png" style="vertical-align: middle;">
+              <img src="img/delivery_logo_{{versionCountry}}.png" style="vertical-align: middle; width: 40%;">
           </div>
           <div class="padding">
               <h4 class="stable text-center" translate="NO_CATEGORY_SELECTED"></h4>
@@ -41,8 +41,8 @@
 
   <ion-side-menu side="left" width="250" dir="{{default_direction}}">
     <ion-header-bar class="expanded">
-        <img src="img/delivery_logo.png" class="avatar motion spin fade" ng-show="!isRTL()">
-        <img src="img/delivery_logo.png" class="avatar motion spin fade" style="right: 15px;" ng-show="isRTL()">
+        <img src="img/delivery_logo_{{versionCountry}}.png" class="avatar motion spin fade" ng-show="!isRTL()">
+        <img src="img/delivery_logo_{{versionCountry}}.png" class="avatar motion spin fade" style="right: 15px;" ng-show="isRTL()">
         <div class="menu-bottom" ng-class="isRTL() ? 'text-right' : ''">
             <h5 style="color: white;">{{'WELCOME' | translate}} <span class="assertive">{{isUserLoggedin == true? fullName : ""}}</span> {{'IN' | translate}} {{'APPLICATION_NAME' | translate}}</h5>
         </div>
@@ -69,7 +69,7 @@
               <i class="icon ion-archive">
               </i><span translate="OLD_ORDERS"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin == true" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin && userHasAddress" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-home">
               </i><span translate="ADDRESSES"></span>
           </ion-item>

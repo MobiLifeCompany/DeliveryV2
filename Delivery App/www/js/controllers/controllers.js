@@ -31,7 +31,7 @@ angular.module('delivery.controllers', [])
 })
 
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $state, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader, storageUtilityFactory) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $state, $translate, $ionicPlatform, $ionicPopup, $ionicPopup, $cordovaNetwork, $cordovaSplashscreen, authFactory, connectionFactory, deliveryLoader, storageUtilityFactory, customerFactory) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -48,6 +48,7 @@ angular.module('delivery.controllers', [])
 
     //Define application-wide variables here
     $rootScope.isUserLoggedin = false;
+    $rootScope.userHasAddress = false;
     $rootScope.userName = '';
 
     $rootScope.showCartFabButton = false;
@@ -60,6 +61,25 @@ angular.module('delivery.controllers', [])
     if (authFactory.isLoggedIn()) {
         $rootScope.isUserLoggedin = true;
         $rootScope.userName = authFactory.getCustomer().username;
+
+        //Check if customer has any address
+        customerFactory.getCustomerAddressess().success(function (data) {
+            try {
+                var filteredAddresses = [];
+                for (i = 0; i < data.length; i++)
+                    if (data[i].area.id === storageUtilityFactory.getSelectedArea().id && data[i].city.id === storageUtilityFactory.getSelectedCity().id)
+                        filteredAddresses.push(data[i]);
+
+                if (filteredAddresses.length > 0)
+                    $rootScope.userHasAddress = true;
+                else
+                    $rootScope.userHasAddress = false;
+            } catch (e) {
+                $rootScope.userHasAddress = false;
+            }
+        }).error(function (err, statusCode) {
+            $rootScope.userHasAddress = false;
+        });
     }
 
     $rootScope.isRTL = function(){

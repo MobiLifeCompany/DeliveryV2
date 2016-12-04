@@ -94,7 +94,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
     $rootScope.opposite_float = $rootScope.lang === 'ar' ? 'left' : 'right';
 
     // for Syria the coutnry id = 1
-    $rootScope.versionCountry = 'sy';
+    $rootScope.versionCountry = 'lb';
     $rootScope.countryId = 1;
     $rootScope.baseURL = 'http://' + $rootScope.versionCountry + '.deliveryonweb.com/api/v1';
 

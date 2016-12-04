@@ -65,7 +65,7 @@ angular.module('delivery.controllers')
         });
     });
 
-    $rootScope.getCustomerAddress = function () {
+    $scope.getCustomerAddress = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
 
         customerFactory.getCustomerAddressess().success(function (data) {

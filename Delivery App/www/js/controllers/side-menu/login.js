@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $ionicPopup, customerFactory, $translate, $state, $cordovaToast, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('LoginCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $ionicPopup, customerFactory, $translate, $state, $cordovaToast, connectionFactory, authFactory, deliveryLoader, errorCodeMessageFactory, customerFactory) {
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -31,6 +31,24 @@ angular.module('delivery.controllers')
                 data.password_confirmation = $scope.loginData.password;
                 authFactory.setCustomer(data);
                 $rootScope.fullName = authFactory.getCustomer().full_name;
+                //Check if customer has any address
+                customerFactory.getCustomerAddressess().success(function (data) {
+                    try {
+                        var filteredAddresses = [];
+                        for (i = 0; i < data.length; i++)
+                            if (data[i].area.id === storageUtilityFactory.getSelectedArea().id && data[i].city.id === storageUtilityFactory.getSelectedCity().id)
+                                filteredAddresses.push(data[i]);
+
+                        if (filteredAddresses.length > 0)
+                            $rootScope.userHasAddress = true;
+                        else
+                            $rootScope.userHasAddress = false;
+                    } catch (e) {
+                        $rootScope.userHasAddress = false;
+                    }
+                }).error(function (err, statusCode) {
+                    $rootScope.userHasAddress = false;
+                });
                 deliveryLoader.hideLoading();
 
                 $cordovaToast.showShortBottom($translate.instant('LOGIN_SUCCESSFUL'));

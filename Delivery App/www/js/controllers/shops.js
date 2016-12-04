@@ -29,7 +29,6 @@ angular.module('delivery.controllers')
     });
 
     $rootScope.$watch('showMainView', function () {
-
         if ($rootScope.showMainView && $rootScope.isCategorySelected)
         {
             deliveryLoader.showLoading($translate.instant('LOADING'));
@@ -241,6 +240,7 @@ angular.module('delivery.controllers')
     /// <summary>filterFunction: filter the shops list according to mastery filter & advance filters</summary>
     $scope.filterFunction = function (element) {
         var matchFilter = false;
+        $scope.isMasteryFilterSet = false;
         //Apply advance filter first
         if (element.min_amount <= $scope.advanceFilter.minDeliveryValue &&
             parseInt(element.estimation_time) <= $scope.advanceFilter.deliveryTime &&
@@ -250,15 +250,15 @@ angular.module('delivery.controllers')
 
             // Then apply mastery filter
             //loop through the masteryCheckList to see if any mastery is checked
-            for (i = 0; i < $scope.masteriesCheckList.length; i++) {
-                if ($scope.masteriesCheckList[i].checked)
+            for (i = 0; i < $rootScope.masteriesCheckList.length; i++) {
+                if ($rootScope.masteriesCheckList[i].checked)
                     $scope.isMasteryFilterSet = true;
             }
             //if any mastery had been checked '$scope.isMasteryFilterSet == true'  -> filter the list
             if ($scope.isMasteryFilterSet) {
-                for (i = 0; i < $scope.masteriesCheckList.length; i++) {
-                    if ($scope.masteriesCheckList[i].checked) {
-                        if ((element.masteries.indexOf($scope.masteriesCheckList[i].name) > -1))
+                for (i = 0; i < $rootScope.masteriesCheckList.length; i++) {
+                    if ($rootScope.masteriesCheckList[i].checked) {
+                        if ((element.masteries.indexOf($rootScope.masteriesCheckList[i].name) > -1))
                             matchFilter = true;
                     }
                 }
@@ -273,8 +273,8 @@ angular.module('delivery.controllers')
 
     $scope.clearMasteryFilter = function () {
         $scope.isMasteryFilterSet = false;
-        for (i = 0; i < $scope.masteriesCheckList.length; i++) {
-            $scope.masteriesCheckList[i].checked = false;
+        for (i = 0; i < $rootScope.masteriesCheckList.length; i++) {
+            $rootScope.masteriesCheckList[i].checked = false;
             $scope.filterModal.hide();
         }
     }

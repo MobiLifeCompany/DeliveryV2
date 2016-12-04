@@ -2,7 +2,18 @@
 @font-face
 {
 	 font-family: GESSUniqueBold;
-	 src: url("GE SS Unique Bold.otf"); /* EOT file for IE */
+	 src: url("DroidKufi-Regular.ttf"); /* EOT file for IE */
+}
+
+@font-face
+{
+	 font-family: Droid Arabic Kufi;
+	 src: url("DroidKufi-Regular.ttf"); /* EOT file for IE */
+}
+
+div,p,h1,h2,h3,h4,h5,h6,a,span, input, .title, .item, .button {
+  /*!important*/
+  font-family: 'Droid Arabic Kufi', sans-serif, tahoma;  
 }
 
 .link {

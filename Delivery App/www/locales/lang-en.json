@@ -207,6 +207,7 @@
   "SHOW_ON_STARTUP": "Show on startup",
   "DELETE_ADDRESS": "Delete Address",
   "AM": "am",
-  "PM": "pm"
-
+  "PM": "pm",
+  "SELECT_ANOTHER_CITY": "Please select another city",
+  "NO_AREAS": "No areas in selected city"
 }

@@ -8,6 +8,7 @@ angular.module('delivery.controllers')
     $rootScope.$on('modal.shown', function (event, modal) {
         if (modal.id == '11') {
             //////////// functions calls on show//////////////////////
+            $rootScope.showMainView = false;
             $scope.loadCategories();
         }
     });

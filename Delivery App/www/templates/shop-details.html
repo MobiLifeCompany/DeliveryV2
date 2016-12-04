@@ -128,7 +128,7 @@
             <div ng-class="isRTL() ? 'promotion-triangle-rtl' : 'promotion-triangle'" ng-show="{{shopDetails.promotion_note}}"><span ng-class="isRTL() ? 'promotion-triangle-lable-rtl' : 'promotion-triangle-lable'" translate="PROMO"></span></div>
             <div ng-class="isRTL() ? 'is-open-triangle-rtl' : 'is-open-triangle'" ng-show="{{shopDetails.is_open}}"></div>
             <div ng-class="isRTL() ? 'is-close-triangle-rtl' : 'is-close-triangle'" ng-hide="{{shopDetails.is_open}}"></div>
-            <div style="overflow: auto;">
+            <div style="overflow: auto; padding: 4px 0px;"">
                 <div style="width: 25%; float: {{default_float}}; margin-top: 10px;">
                     <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shopDetails.photo}}" style="width: 70%; height: 70%;" /></div>
                     <div style="text-align: center;">
