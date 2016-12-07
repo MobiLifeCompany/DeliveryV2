@@ -61,4 +61,6 @@
     <variable name="WindowsToastCapable" value="Delivery Express" />
   </plugin>
   <plugin name="cordova-plugin-x-socialsharing" version="5.1.3" src="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
+  <engine name="android" spec="6.0.0" />
+  <plugin name="cordova-plugin-crosswalk-webview" version="2.2.0" />
 </widget>

@@ -1,8 +1,9 @@
 node_modules
 platforms
 bin
-/.vs/TamkeenApp/v14/.suo
-/TamkeenApp/Tamkeen.jsproj.user
-/TamkeenApp/plugins/android.json
-/TamkeenApp/platforms
-/.vs/TamkeenApp/v14/*.suo
+/.vs/Delivery App/v14/.suo
+/Delivery App/Delivery App.jsproj.user
+/Delivery App/plugins/android.json
+/Delivery App/platforms
+/Delivery App/res
+/.vs/Delivery App/v14/*.suo
