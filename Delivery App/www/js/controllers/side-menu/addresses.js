@@ -121,8 +121,10 @@ angular.module('delivery.controllers')
         $scope.customerAddress.longitude = 0;
         $scope.customerAddress.is_default = false;
         customerFactory.createCustomerAddress($scope.customerAddress, deliveryLoader).success(function (data) {
+            $scope.customerAddress = data;
             $scope.closeCreateAddressModal();
             $rootScope.customerAddressess.push($scope.customerAddress);
+            storageUtilityFactory.setCustomerAddress($scope.customerAddress);
             deliveryLoader.hideLoading();
         }).error(function (err, statusCode) {
             connectionFactory.testConnection().success(function (data) {

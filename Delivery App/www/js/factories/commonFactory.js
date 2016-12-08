@@ -201,6 +201,12 @@
         setCustomerAddresses: function (customerAddresses) {
             return LSFactory.set(customerAddressesKey, customerAddresses);
         },
+        setCustomerAddress: function (customerAddress) {
+            customerAddresses = LSFactory.get(customerAddressesKey);
+            customerAddresses.push(customerAddress);
+            LSFactory.delete(customerAddressesKey);
+            LSFactory.set(customerAddressesKey, customerAddresses);
+        },
 
         deleteCustomerAddresses: function () {
             LSFactory.delete(customerAddressesKey);

@@ -13,6 +13,14 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
+        "cordova-plugin-crosswalk-webview": {
+            "XWALK_VERSION": "22+",
+            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+            "XWALK_MODE": "embedded",
+            "XWALK_MULTIPLEAPK": "true",
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
+        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
@@ -42,14 +50,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "180733002242",
-            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "XWALK_VERSION": "22+",
-            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-            "XWALK_MODE": "embedded",
-            "XWALK_MULTIPLEAPK": "true",
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         }
     },
