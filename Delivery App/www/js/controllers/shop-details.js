@@ -329,7 +329,7 @@ angular.module('delivery.controllers')
             message += $scope.shopDetails.masteries[i] + ' | ';
         message += '\n';
         message += $scope.shopDetails.address + '\n';
-        message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
+        message += ($rootScope.versionCountry == 'lb') ? $translate.instant('SHARED_USING_DELIVERY_LB') : $translate.instant('SHARED_USING_DELIVERY_SY') + '\n';
 
         $cordovaSocialSharing
             .share(message, $translate.instant('APPLICATION_NAME'), $scope.shopDetails.photo, $rootScope.downloadURL) // Share via native share sheet
@@ -344,7 +344,7 @@ angular.module('delivery.controllers')
         var message = item.name + '\n';
         message += $translate.instant('SHOP') + ": " + $scope.shopDetails.name + '\n';
         message += $translate.instant('PRICE') + " " + item.price +" "+ $rootScope.currency + '\n';
-        message += $translate.instant('SHARED_USING_DELIVERY') + '\n';
+        message += ($rootScope.versionCountry == 'lb')?$translate.instant('SHARED_USING_DELIVERY_LB'):$translate.instant('SHARED_USING_DELIVERY_SY') + '\n';
 
         $cordovaSocialSharing
             .share(message, item.name, item.photo, $rootScope.downloadURL) // Share via native share sheet

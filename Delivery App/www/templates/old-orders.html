@@ -98,8 +98,11 @@
                             <span ng-switch-when="PREPARED" class="energized">{{'ORDER_PREPARED' | translate}}</span>
                             <span ng-switch-when="OPEN" class="balanced">{{'ORDER_OPEN' | translate}}</span>
                             <span ng-switch-when="CLOSED" class="assertive">{{'ORDER_CLOSED' | translate}}</span>
+                            <span ng-switch-when="READY" class="assertive">{{'ORDER_READY' | translate}}</span>
+                            <span ng-switch-when="ON-DELIVERY" class="assertive">{{'ORDER_ON_DELIVERY' | translate}}</span>
                         </h4>
-                        <h4><span class="assertive-900" ng-show="oldOrder.order_status=='CANCEL'">{{'CANCEL_REASON' | translate}}: </span><span>{{oldOrder.cancel_reason}} </span></h4>
+                        <h4 ng-show="oldOrder.order_status=='CANCEL'"><span class="assertive-900">{{'CANCEL_REASON' | translate}}: </span><span>{{oldOrder.cancel_reason}} </span></h4>
+                        <h4 ng-show="oldOrder.order_status=='PENDING'"><span class="assertive-900">{{'READY_TIME' | translate}}: </span><span>{{oldOrder.ready_time}} {{'MINUTES' | translate}}</span></h4>
                     </div>
                     <div class="padding-left padding-right">
                         <button class="button button-balanced button-small button-block" translate="ORDER_REPEAT" ng-click="repeatOrder(oldOrder)" ng-show="oldOrder.order_status == 'CLOSED'"></button>
