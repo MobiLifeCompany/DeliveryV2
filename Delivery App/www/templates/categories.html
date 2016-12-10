@@ -12,7 +12,7 @@
         <div class="padding">
             <div class="list" ng-repeat="category in categories" style="display: inline-block; width: 33%;">
                 <a class="item" ng-click="setCategory(category)" style="width: 100%; padding: 10px; text-align: center;" >
-                    <img src="{{category.photo}}" style="width: 90%; border-radius: 50%;"/>
+                    <img ng-src="{{category.photo}}" style="width: 90%; border-radius: 50%;"/>
                     <h3 style="height: 35px; text-decoration: none; white-space: normal; word-wrap: normal; font-family: GESSUniqueBold;">{{category.name}}</h3>
                 </a>
             </div>

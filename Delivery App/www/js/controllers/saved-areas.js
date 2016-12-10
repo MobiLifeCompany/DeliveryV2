@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('SavedAreasCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $ionicModal, deliveryLoader, storageUtilityFactory, authFactory) {
+.controller('SavedAreasCtrl', function ($scope, $rootScope, $ionicLoading, $timeout, $translate, $ionicModal, deliveryLoader, customerFactory, storageUtilityFactory, authFactory) {
 
     $rootScope.selectedCity = storageUtilityFactory.getSelectedCity();
     $rootScope.selectedArea =  storageUtilityFactory.getSelectedArea();
@@ -36,8 +36,8 @@ angular.module('delivery.controllers')
     };
 
     $scope.selectSavedAddress = function (area) {
-        deliveryLoader.showLoading($translate.instant('LOADING'));
         $rootScope.selectedArea = area;
+        
         storageUtilityFactory.setSelectedArea(area);
         //Check if customer has any address
         customerFactory.getCustomerAddressess().success(function (data) {

@@ -157,7 +157,7 @@
                 <div ng-class="isRTL() ? 'is-close-triangle-rtl' : 'is-close-triangle'" ng-hide="{{shop.is_open}}"></div>
                 <div style="overflow: auto; padding: 4px 0px;">
                     <div style="width: 25%; float: {{default_float}};">
-                        <div style="padding: 5px; text-align: center;"><img class="button button-fab" src="{{shop.photo}}" style="width: 60%; height: 60%;" /></div>
+                        <div style="padding: 5px; text-align: center;"><img class="button button-fab" ng-src="{{shop.photo}}" style="width: 60%; height: 60%;" /></div>
                         <div style="text-align: center;">
                             <i ng-class="shop.rating >= 1 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
                             <i ng-class="shop.rating >= 2 ? 'ion-ios-star energized' : 'ion-ios-star-outline energized'"></i>
@@ -223,7 +223,7 @@
                 <ion-content overflow-scroll="false">
                     <div class="list card light-bg">
                         <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
-                            <img src="{{selectedItem.photo}}" style="border-radius: 50%;">
+                            <img ng-src="{{selectedItem.photo}}" style="border-radius: 50%;">
                             <h2 class="assertive" ng-class="{'text-right': isRTL()}">{{selectedItem.name}}</h2>
                             <h4 ng-class="{'text-right': isRTL()}"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
                             <p style="padding: 10px 0px; border-top: 1px solid silver;">
