@@ -4,7 +4,7 @@
         <!-- <button class="button button-icon button-clear ion-search"></button> -->
         <button class="button button-icon button-clear ion-refresh" ng-click="loadShopsOffers()"></button>
     </ion-nav-buttons>
-    <ion-content overflow-scroll="false" ng-class="shopsOffers.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">
+    <ion-content overflow-scroll="true" ng-class="shopsOffers.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">
         
         <script id="item-details-modal.html" type="text/ng-template">
             <ion-modal-view class="ion-nifty-modal" dir="{{default_direction}}">

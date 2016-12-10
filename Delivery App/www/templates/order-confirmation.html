@@ -1,6 +1,6 @@
 <ion-view view-title="{{'ORDER_CONFIRMATION' | translate}}">
 
-    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+    <ion-content overflow-scroll="true" dir="{{default_direction}}">
         <div ng-show="orderSubmittedSuccessfully && showSubmissionResult" ng-class="{'text-right': isRTL()}">
             <div class="padding" ui-sref="app.old-orders">
                 <div class="icon ion-thumbsup balanced" style="font-size: 100px; width: 100%; text-align: center;"></div>

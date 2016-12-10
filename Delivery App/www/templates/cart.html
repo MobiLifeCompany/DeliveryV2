@@ -4,7 +4,7 @@
         <button class="button button-icon button-clear" ng-class="data.showEdit == true ? 'ion-checkmark' : 'ion-edit'" ng-click="changeStatus()"></button>
     </ion-nav-buttons>
     
-    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+    <ion-content overflow-scroll="true" dir="{{default_direction}}">
         <div ng-if="cartItems.length > 0">
             <div class="bar bar-subheader bar-stable static text-center">
                 <h5 class="title">{{cartShop.name}}</h5>

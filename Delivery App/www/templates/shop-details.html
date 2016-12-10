@@ -1,10 +1,7 @@
 <ion-view view-title="{{shopDetails.name}}">
     <search-bar></search-bar>
-    <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
-        <button class="button button-icon button-clear ion-android-share-alt" ng-click="shareShop()"></button>
-    </ion-nav-buttons>
-    <ion-content overflow-scroll="false" dir="{{default_direction}}">
+    
+    <ion-content overflow-scroll="true" dir="{{default_direction}}" delegate-handle="content">
         <script id="shop-info-modal.html" type="text/ng-template">
             <ion-modal-view>
                 <ion-header-bar class="bar-assertive" ng-if="!isRTL()">
@@ -197,7 +194,7 @@
 
         <!--Items Categories List-->
         <ion-list>
-            <div ng-repeat="category in categories" ng-show="!isSearchApplied">
+            <div ng-repeat="category in categories" ng-show="!isSearchApplied" id="{{category.id}}">
                 <ion-item ng-class="{'item-icon-right text-right': isRTL(), 'item-icon-left': !isRTL(), 'item-assertive': isCategoryShown(category), 'item-stable': !isCategoryShown(category)}" style="border-bottom: 2px solid silver; height: 35px; padding-top: 7px;" ng-click="toggleCategory(category)">
                     <i class="icon dl-menu-item-icon" ng-class="isCategoryShown(category) ? 'ion-arrow-up-b' : 'ion-arrow-down-b'"></i>
                     <span>{{category.name}}</span>

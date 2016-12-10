@@ -1,6 +1,6 @@
 angular.module('delivery.controllers')
 
-.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicFilterBar, $cordovaSocialSharing, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
+.controller('ShopDetailsCtrl', function ($scope, $rootScope, $stateParams, $ionicLoading, $ionicModal, $translate, $timeout, $http, $ionicPlatform, $ionicPopup, $ionicFilterBar, $cordovaSocialSharing, $location, $anchorScroll, $ionicScrollDelegate, connectionFactory, ionicMaterialInk, shopDetailsFactory, deliveryLoader, errorCodeMessageFactory) {
 
 
     $scope.shopDetails = [];
@@ -68,6 +68,9 @@ angular.module('delivery.controllers')
         if ($scope.isCategoryShown(category)) {
             $scope.shownCategory = null;
         } else {
+            $location.hash(category.id);
+            var handle = $ionicScrollDelegate.$getByHandle('content');
+            handle.anchorScroll(true);
             $scope.shownCategory = category;
         }
     };
