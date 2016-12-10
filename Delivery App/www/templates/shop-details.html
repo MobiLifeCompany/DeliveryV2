@@ -1,6 +1,9 @@
 <ion-view view-title="{{shopDetails.name}}">
     <search-bar></search-bar>
-    
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-search" ng-click="showFilterBar()"></button>
+        <button class="button button-icon button-clear ion-android-share-alt" ng-click="shareShop()"></button>
+    </ion-nav-buttons>
     <ion-content overflow-scroll="true" dir="{{default_direction}}" delegate-handle="content">
         <script id="shop-info-modal.html" type="text/ng-template">
             <ion-modal-view>
