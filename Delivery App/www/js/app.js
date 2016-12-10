@@ -79,7 +79,7 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
 
   });
 })
-.run(['$rootScope','storageUtilityFactory', function ($rootScope, storageUtilityFactory) {
+.run(['$rootScope','storageUtilityFactory','authFactory', function ($rootScope, storageUtilityFactory, authFactory) {
     if (!angular.isUndefined(storageUtilityFactory.getSelectedLanguage()) && storageUtilityFactory.getSelectedLanguage() !== null) {
         $rootScope.lang = storageUtilityFactory.getSelectedLanguage();
     }else {
@@ -111,7 +111,8 @@ angular.module('delivery', ['ionic', 'delivery.controllers', 'delivery.factory',
             $rootScope.currency = 'ل.س.';
     }
    
-   
+    if (authFactory.isLoggedIn())
+        $rootScope.fullName = authFactory.getCustomer().full_name;
 
     storageUtilityFactory.setCountry($rootScope.countryId);
 

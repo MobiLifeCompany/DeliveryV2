@@ -41,9 +41,9 @@
     return API;
 })
 .factory('mastriesFactory', function () {
-    var resultArray = [];
     return {
         get: function (shops) {
+            resultArray = [];
             tempArray = [];
             for (i = 0; i < shops.length; i++) {
                 for (j = 0; j < shops[i].masteries.length; j++) {
