@@ -48,7 +48,7 @@ angular.module('delivery.controllers')
 
         //If the user has been logged in before redirect him\her to 'saved areas' modal
         $scope.savedAreas = storageUtilityFactory.getCustomerAddresses();
-        if ($rootScope.isUserLoggedin) {
+        if ($rootScope.isUserLoggedin && storageUtilityFactory.getSelectedCity() != null && storageUtilityFactory.getSelectedArea() != null && storageUtilityFactory.getCustomerAddresses() !=null) {
             $ionicModal.fromTemplateUrl('templates/saved-areas.html', {
                 scope: $rootScope,
                 hardwareBackButtonClose: false,

@@ -94,7 +94,7 @@ angular.module('delivery.controllers')
 
     //showMap: Show a map of the shop with position marker, will be called from the 'shopInfoModal' when it's shown
     $scope.showMap = function () {
-        var latLng = new google.maps.LatLng($scope.shopDetails.longitude, $scope.shopDetails.latitude);
+        var latLng = new google.maps.LatLng($scope.shopDetails.latitude,$scope.shopDetails.longitude);
         var mapOptions = {
             center: latLng,
             zoom: 16,
@@ -104,7 +104,7 @@ angular.module('delivery.controllers')
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
         var myLocation = new google.maps.Marker({
-            position: new google.maps.LatLng($scope.shopDetails.longitude, $scope.shopDetails.latitude),
+            position: new google.maps.LatLng($scope.shopDetails.latitude, $scope.shopDetails.longitude),
             map: map,
             title: $scope.shopDetails.name
         });
