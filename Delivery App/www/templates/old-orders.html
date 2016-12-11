@@ -10,7 +10,7 @@
                     <ion-content overflow-scroll="false" dir="{{default_direction}}">
                         <div class="list card light-bg">
                             <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
-                                <img src="{{getShopPhoto(selectedOrder.shop.id)}}">
+                                <img src="{{selectedOrder.shop.photo)}}">
                                 <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedOrder.shop.name}}</h2>
                                 <h4 ng-class="isRTL() ? 'text-right' : ''"><span class="balanced"> {{'TOTAL' | translate}}: {{totalOrder(selectedOrder.total,selectedOrder.delivery_charge)}} {{currency}}</span></h4>
                                 <h4 ng-class="isRTL() ? 'text-right' : ''" style="color: black;">
@@ -86,7 +86,7 @@
         <div class="list" ng-show="isUserLoggedin && oldOrders.length > 0">
             <div class="item" style="padding: 0px;" ng-repeat="oldOrder in oldOrders">
                 <div class="list card" style="margin: 5px;">
-                    <img style="position: absolute; top: 20px; opacity: 0.4; height: 100%; max-height: 100px;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{getShopPhoto(oldOrder.shop.id)}}" />
+                    <img style="position: absolute; top: 20px; opacity: 0.4; height: 100%; max-height: 100px;" ng-class="isRTL() ? 'order-bg-img-rtl' : 'order-bg-img'" src="{{oldOrder.shop.photo}}" />
                     <div class="item item-body" style="padding: 5px; text-align: {{default_float}}" ng-click="showOrderDetails(oldOrder)">
                         <h3 style="border-bottom: 1px solid silver;"><span class="assertive-900">{{oldOrder.shop.name}}</span></h3>
                         <h3><span class="balanced">{{'TOTAL' | translate}}: {{totalOrder(oldOrder.delivery_charge,oldOrder.total)}} {{currency}}</span></h3>

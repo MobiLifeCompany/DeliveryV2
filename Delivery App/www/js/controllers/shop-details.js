@@ -38,7 +38,7 @@ angular.module('delivery.controllers')
     $scope.loadShopItemsCategories = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
 
-        shopDetailsFactory.getShopItemsCategories().success(function (data) {
+        shopDetailsFactory.getShopItemsCategories($stateParams.shopId).success(function (data) {
             try {
                 $scope.categories = data;
                 for (i = 0; i < $scope.categories.length; i++) {

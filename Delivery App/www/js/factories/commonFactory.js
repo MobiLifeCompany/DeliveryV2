@@ -63,20 +63,21 @@
 })
 
 .factory('shopDetailsFactory', function ($rootScope, $http,storageUtilityFactory) {
-    var shopsArray = $rootScope.shops;
-    var shopDetails = {};
+   
     var SAPI = {
         get: function (shopId) {
+            shopDetails = {};
             shopsArray = $rootScope.shops;
             for (i = 0; i < shopsArray.length; i++) {
                 if (shopsArray[i].id == shopId) {
                     shopDetails = shopsArray[i];
+                    break;
                 }
             }
-            $rootScope.selectedShop = shopDetails;
             return shopDetails;
         },
-        getShopItemsCategories: function () {
+        getShopItemsCategories: function (shopId) {
+            $rootScope.selectedShop = this.get(shopId);
             return $http.get($rootScope.baseURL + '/shops/' + $rootScope.selectedShop.id + '/items?lang=' + storageUtilityFactory.getSelectedLanguage());
         }
     }

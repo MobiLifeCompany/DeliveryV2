@@ -46,14 +46,9 @@ angular.module('delivery.controllers')
         
     };
 
-    // Get shop photo
-    $scope.getShopPhoto = function (shopId) {
-        return shopDetailsFactory.get(shopId).photo;
-    }
-
     //addToCart: add the selected item to '$rootScope.cartItems' (defined in 'controllers.js)
     $scope.repeatOrder = function (order) {
-        var shopDetails = shopDetailsFactory.get(order.shop.id);
+        var shopDetails = order.shop;
 
         if (!shopDetails.is_open) {
             var alertPopup = $ionicPopup.alert({
