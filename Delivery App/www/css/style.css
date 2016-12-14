@@ -782,3 +782,9 @@ input::-webkit-inner-spin-button {
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
 }
+
+.menu .avatar {
+  top: 8px;
+  left: 8;
+  height: 100px;
+  width: 100px; }

@@ -1,9 +1,9 @@
 <ion-modal-view ng-controller="AboutCtrl" dir="{{default_direction}}">
     
-  <ion-content scroll="false">
+  <ion-content scroll="treu">
     
-    <div style="height: 100%; background-image: url('img/about-bg.jpg'); background-repeat: repeat-x; background-size: cover; background-position: center;">
-        <div style="height: 35px;">
+    <div style="min-height: 100%; background-image: url('img/about-bg.jpg'); background-repeat: repeat; background-size: contain; background-position: center;">
+        <div style="height: 5%;">
             <button class="button button-icon button-clear" style="padding: 0px 10px !important;" ng-click="close()"><span class="icon ion-close assertive"></span></button>
         </div>
         <div style="height: 10%;"></div>
@@ -16,12 +16,24 @@
             <h5 style="font-family: GESSUniqueBold; color: white;" translate="TWO_CLICKS"></h5>
         </div>
         <div style="text-align: center; padding: 5px 2px;">
-            <h5 class="assertive" style="font-family: GESSUniqueBold; padding: 5px 0px;"><span translate="EMAIL"></span><span>: </span><a class="balanced-bg" style="font-family: GESSUniqueBold; color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="mailto:mobilifecomp@gmail.com">support@deliveryexpresslb.com<i class="icon ion-ios-email" style="padding: 0px 8px; color: white;"></i></a></h5>
-            <h5 class="assertive" style="font-family: GESSUniqueBold; padding: 5px 0px;" ng-show="versionCountry == 'sy'"><span translate="PHONE"></span><span>: </span><a class="balanced-bg" style="font-family: GESSUniqueBold; color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:00963332520463">00963332520463<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5>
-            <h5 class="assertive" style="font-family: GESSUniqueBold; padding: 5px 0px;" ng-show="versionCountry == 'sy'"><span translate="Mobile"></span><span>: </span><a class="balanced-bg" style="font-family: GESSUniqueBold; color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:00963938591510">00963938591510<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5>
-            <h5 class="assertive" style="font-family: GESSUniqueBold; padding: 5px 0px;" ng-show="versionCountry == 'lb'"><span translate="Mobile"></span><span>: </span><a class="balanced-bg" style="font-family: GESSUniqueBold; color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:0096171939686">0096171939686<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5>
+            <ul>
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><span translate="EMAIL"></span><span>: </span></h5></li>
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><a class="balanced-bg" style="color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="mailto:mobilifecomp@gmail.com">support@deliveryexpresslb.com<i class="icon ion-ios-email" style="padding: 0px 8px; color: white;"></i></a></h5></li>
+            </ul>
+            <ul ng-show="versionCountry == 'sy'">
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><span translate="PHONE"></span><span>: </span></h5></li>
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><a class="balanced-bg" style="color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:00963332520463">00963332520463<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5></li>
+            </ul>
+            <ul ng-show="versionCountry == 'sy'">
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><span translate="Mobile"></span><span>: </span></h5></li>
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><a class="balanced-bg" style="color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:00963938591510">00963938591510<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5></li>
+            </ul>
+            <ul ng-show="versionCountry == 'lb'">
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><span translate="Mobile"></span><span>: </span></h5></li>
+                <li style="display: inline-block;"><h5 class="assertive" style="padding: 5px 0px;"><a class="balanced-bg" style="color: white; border-radius: 10px; padding: 2px 5px; text-decoration: none;" href="tel:0096171939686">0096171939686<i class="icon ion-ios-telephone" style="padding: 0px 8px; color: white;"></i></a></h5></li>
+            </ul>
         </div>
-        <div style="text-align: center; position: absolute; bottom: 10px; width: 100%;">
+        <div style="text-align: center; width: 100%; margin-top: 20%;">
             <h6 translate="COPYRIGHT" dir="ltr" style="font-family: GESSUniqueBold; color: black;"></h6>
         </div>
     </div>
