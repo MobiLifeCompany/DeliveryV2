@@ -13,10 +13,17 @@
 .factory('areasFactory', function ($http, $rootScope) {
     var API = {
         get: function () {
-            return $http.get($rootScope.baseURL + '/cities/' + $rootScope.selectedCity.id + '/areas');
+            $rootScope.$apply(function () {
+                $http.get($rootScope.baseURL + '/cities/' + $rootScope.selectedCity.id + '/areas').
+                    success(function (data) {
+                        return data;
+                    })
+                    .error(function (data) {
+                        console.log(data);
+                    });
+            });
         }
-    };
-
+    }
     return API;
 })
 .factory('citiesFactory', function ($http, $rootScope) {
@@ -71,6 +78,7 @@
             for (i = 0; i < shopsArray.length; i++) {
                 if (shopsArray[i].id == shopId) {
                     shopDetails = shopsArray[i];
+                    $rootScope.shopId = shopId;
                     break;
                 }
             }

@@ -33,7 +33,7 @@
   "VALIDATION_MIN_8": "Minimum: 8 characters",
    "VALIDATION_MIN_1": "Minimum: one character",
   "VALIDATION_PASSWORD_DONT_MATCH": "Password don't match",
-  "VALIDATION_MOBILE_MATCH": "Mobile number should be 10 digits",
+  "VALIDATION_MOBILE_MATCH": "Mobile number should be 9-10 digits",
   "VALIDATION_EMAIL_MATCH":  "Email is not valid",
   "CATEGORIES": "Categories",
   "SELECT_CATEGORY": "Please select a category",

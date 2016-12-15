@@ -69,7 +69,7 @@
               <i class="icon ion-archive">
               </i><span translate="OLD_ORDERS"></span>
           </ion-item>
-          <ion-item nav-clear menu-close ng-show="isUserLoggedin && userHasAddress" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
+          <ion-item nav-clear menu-close ng-show="isUserLoggedin && userHasAddress && userHasSelectedArea && userHasSelectedCity" ng-click="showAddresses()"  ng-class="isRTL() ? 'item-icon-right text-right' : 'item-icon-left'">
               <i class="icon ion-home">
               </i><span translate="ADDRESSES"></span>
           </ion-item>

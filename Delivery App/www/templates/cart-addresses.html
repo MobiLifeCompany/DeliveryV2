@@ -3,11 +3,11 @@
         <button class="button button-clear button-icon ion-plus" ng-click="showCreateAddressModal()"></button>
     </ion-nav-buttons>
 
-    <ion-content overflow-scroll="false">
+    <ion-content overflow-scroll="true">
 
         <!--'Edit Address' modal template-->
         <script id="editAddress-modal.html" type="text/ng-template">
-            <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}">
+            <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}" style="top:1%;">
                 <div class="bar bar-header bar-assertive" style="position: static;">
                     <div class="buttons buttons-left header-item">
                         <span class="left-buttons">
@@ -103,7 +103,7 @@
 
         <!--'Create Address' modal template-->
         <script id="createAddress-modal.html" type="text/ng-template">
-            <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}">
+            <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}" style="top:1%;">
                 <div class="bar bar-header bar-assertive" style="position: static;">
                     <div class="buttons buttons-left header-item">
                         <span class="left-buttons">

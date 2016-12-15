@@ -38,7 +38,7 @@
   "VALIDATION_MIN_1": "الحد الأدنى محرف واحد",
   "VALIDATION_PASSWORD_DONT_MATCH": "كلمة المرور غير متطابقة",
   "VALIDATION_EMAIL_MATCH": "الإيميل غير صحيح",
-  "VALIDATION_MOBILE_MATCH":  "يجب أن يكون رقم الموبايل من 10 أرقام",
+  "VALIDATION_MOBILE_MATCH":  "يجب أن يكون رقم الموبايل من 9-10 أرقام",
   "RATE_US": "تقييم المطعم",
   "CATEGORIES": "التصنيفات",
   "SELECT_CATEGORY": "الرجاء اختيار أحد التصنيفات",

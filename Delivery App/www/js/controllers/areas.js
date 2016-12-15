@@ -8,8 +8,13 @@ angular.module('delivery.controllers')
 
     /// <summary>setArea: add the selected area to '$rootScope' and 'localStorage' then redirect the user to main view</summary>
     /// <param name="i" type="integer">The id of the selected area</param>
+
     $scope.setArea = function (area) {
         $rootScope.selectedArea = area;
+        if (!angular.isUndefined($rootScope.selectedCity) && !angular.isUndefined($rootScope.selectedArea)) {
+            $rootScope.userHasSelectedArea = true;
+            $rootScope.userHasSelectedCity = true;
+        }
         storageUtilityFactory.setSelectedArea(area);
         //Check if customer has any address
         customerFactory.getCustomerAddressess().success(function (data) {

@@ -3,75 +3,7 @@
     <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-refresh" ng-click="loadOldOrders()"></button>
     </ion-nav-buttons>
-    <ion-content overflow-scroll="true" ng-class="!isUserLoggedin || oldOrders.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">
-        <script id="order-details-modal.html" type="text/ng-template">
-            <ion-modal-view class="ion-nifty-modal">
-                <div class="ion-modal-content-custom">
-                    <ion-content overflow-scroll="false" dir="{{default_direction}}">
-                        <div class="list card light-bg">
-                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
-                                <img src="{{selectedOrder.shop.photo)}}">
-                                <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedOrder.shop.name}}</h2>
-                                <h4 ng-class="isRTL() ? 'text-right' : ''"><span class="balanced"> {{'TOTAL' | translate}}: {{totalOrder(selectedOrder.total,selectedOrder.delivery_charge)}} {{currency}}</span></h4>
-                                <h4 ng-class="isRTL() ? 'text-right' : ''" style="color: black;">
-                                    <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{selectedOrder.customer_address.street}}<br/> <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{selectedOrder.customer_address.building}}<br/> <strong>{{'PHONE' | translate}}: </strong>{{selectedOrder.customer_address.phone}}<br />
-                                </h4>
-                            </div>
-                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
-                                <span class="assertive-900">{{'DETAILS' | translate}}: </span>
-                                <ol ng-repeat="item in selectedOrder.items">
-                                    <li> {{item.qty*item.item_price}} = {{item.qty}} * {{item.item_price}} : {{item.item.name}}</li>
-                                </ol>
-                            </div>
-                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
-                                <span class="assertive-900">{{'DELIVERY_FEE' | translate}}: </span>
-                                <ol>
-                                    <li>{{selectedOrder.delivery_charge}} {{currency}}</li>
-                                </ol>
-                            </div>
-                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
-                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeOrderDetails()">
-                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
-                                </a>
-
-                            </div>
-                        </div>
-                    </ion-content>
-                </div>
-            </ion-modal-view>
-
-        </script>
-
-        <script id="item-details-modal.html" type="text/ng-template">
-            <ion-modal-view class="ion-nifty-modal" dir="{{default_direction}}">
-                <div class="ion-modal-content-custom">
-                    <ion-content overflow-scroll="false">
-                        <div class="list card light-bg">
-                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
-                                <img src="{{selectedItem.photo}}" style="border-radius: 50%;">
-                                <h2 class="assertive" ng-class="{'text-right': isRTL()}">{{selectedItem.name}}</h2>
-                                <h4 ng-class="{'text-right': isRTL()}"><span translate="PRICE"></span><span> {{selectedItem.price}} {{currency}}</span></h4>
-                                <p style="padding: 10px 0px; border-top: 1px solid silver;">
-                                    <div style="text-align: center;" translate="QUANTITY"></div>
-                                    <div style="text-align: center;"><i class="icon ion-minus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="decreseQuantityFromModal(selectedItem.id, selectedItem, shopDetails)"></i><span style="padding: 0px 20px;" id="selectedItemId">{{checkItemCount(selectedItem.id)}}</span><i class="icon ion-plus-circled energized" style="font-size: xx-large; display:inline-block; vertical-align: middle;" ng-click="increaseQuantityFromModal(selectedItem.id, selectedItem, shopDetails)"></i></div>
-                                </p>
-                            </div>
-                            <div class="item item-body" ng-class="{'text-right': isRTL()}" style="max-height: 100px; overflow-y: auto;">
-                                {{selectedItem.description}}
-                            </div>
-                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
-                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeItemDetails()">
-                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
-                                </a>
-                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="shareOffer(selectedOffer)">
-                                    <i class="icon ion-android-share-alt"></i><i translate="SHARE_TXT"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </ion-content>
-                </div>
-            </ion-modal-view>
-        </script>
+    <ion-content overflow-scroll="true" ng-class="!isUserLoggedin || oldOrders.length == 0 ? '' : 'stable-bg'" dir="{{default_direction}}">  
 
         <ion-slide-box dir="ltr" class="" auto-play="true" does-continue="true" slide-interval="3000">
             <ion-slide class="dl-promotion-slider" ng-repeat="shopOffer in goldenOffers">
@@ -111,5 +43,43 @@
                 </div>
             </div>
         </div>
+
+        <script id="order-details-modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal">
+                <div class="ion-modal-content-custom">
+                    <ion-content overflow-scroll="true" dir="{{default_direction}}">
+                        <div class="list card light-bg">
+                            <div class="item" ng-class="isRTL() ? 'item-thumbnail-right' : 'item-thumbnail-left'" style="margin-top: 10px;">
+                                <img src="{{selectedOrder.shop.photo}}">
+                                <h2 class="assertive" ng-class="isRTL() ? 'text-right' : ''">{{selectedOrder.shop.name}}</h2>
+                                <h4 ng-class="isRTL() ? 'text-right' : ''"><span class="balanced"> {{'TOTAL' | translate}}: {{totalOrder(selectedOrder.total,selectedOrder.delivery_charge)}} {{currency}}</span></h4>
+                                <h4 ng-class="isRTL() ? 'text-right' : ''" style="color: black;">
+                                    <strong>{{'ADDRESS_STREET' | translate}}: </strong>{{selectedOrder.customer_address.street}}<br /> <strong>{{'ADDRESS_BUILDING' | translate}}: </strong>{{selectedOrder.customer_address.building}}<br /> <strong>{{'PHONE' | translate}}: </strong>{{selectedOrder.customer_address.phone}}<br />
+                                </h4>
+                            </div>
+                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
+                                <span class="assertive-900">{{'DETAILS' | translate}}: </span>
+                                <ol ng-repeat="item in selectedOrder.items">
+                                    <li> {{item.qty*item.item_price}} = {{item.qty}} * {{item.item_price}} : {{item.item.name}}</li>
+                                </ol>
+                            </div>
+                            <div class="item item-body" ng-class="isRTL() ? 'text-right' : ''" style="max-height: 100px; overflow-y: visible;">
+                                <span class="assertive-900">{{'DELIVERY_FEE' | translate}}: </span>
+                                <ol>
+                                    <li>{{selectedOrder.delivery_charge}} {{currency}}</li>
+                                </ol>
+                            </div>
+                            <div class="item tabs tabs-secondary tabs-icon-{{default_float}}">
+                                <a class="tab-item assertive" data-ink-opacity="0.5" ng-click="closeOrderDetails()">
+                                    <i class="icon ion-reply"></i><i translate="RETURN_TO_MENU"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+
+        </script>
     </ion-content>
 </ion-view>

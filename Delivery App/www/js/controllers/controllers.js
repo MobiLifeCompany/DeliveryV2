@@ -51,6 +51,10 @@ angular.module('delivery.controllers', [])
     $rootScope.userHasAddress = false;
     $rootScope.userName = '';
 
+    $rootScope.userHasSelectedArea = false;
+    $rootScope.userHasSelectedCity = false;
+   
+
     $rootScope.showCartFabButton = false;
     $rootScope.cartItems = [];
     $rootScope.cartShop = null;

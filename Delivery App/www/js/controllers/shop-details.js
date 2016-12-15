@@ -8,8 +8,9 @@ angular.module('delivery.controllers')
     $scope.categories = [];
     $scope.items = [];
     $scope.isSearchApplied = false;
+    shopId = $stateParams.shopId === "" ? $rootScope.shopId : $stateParams.shopId;
 
-    $scope.shopDetails = shopDetailsFactory.get($stateParams.shopId === "" ? $rootScope.shopId : $stateParams.shopId);
+    $scope.shopDetails = shopDetailsFactory.get(shopId);
 
 
     $scope.$on('$ionicView.enter', function () {
@@ -38,7 +39,7 @@ angular.module('delivery.controllers')
     $scope.loadShopItemsCategories = function () {
         deliveryLoader.showLoading($translate.instant('LOADING'));
 
-        shopDetailsFactory.getShopItemsCategories($stateParams.shopId).success(function (data) {
+        shopDetailsFactory.getShopItemsCategories(shopId).success(function (data) {
             try {
                 $scope.categories = data;
                 for (i = 0; i < $scope.categories.length; i++) {

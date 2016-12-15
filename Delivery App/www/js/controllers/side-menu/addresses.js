@@ -99,6 +99,9 @@ angular.module('delivery.controllers')
         $scope.customerAddress.phone = Number(customerAddress.phone);
         $scope.addressEditModal.show();
     };
+    $scope.toNumber = function (phone) {
+        return Number(phone);
+    }
 
     $scope.closeEditAddressModal = function () {
         $scope.addressEditModal.hide();

@@ -67,8 +67,10 @@ angular.module('delivery.controllers')
     };
 
     $rootScope.loadShops = function () {
+        console.log('2--------' + (new Date()));
         shopsFactory.get().success(function (data) {
             try{
+            console.log('3--------' + (new Date()));
                 $rootScope.shops = data;
                 if ($rootScope.shops.length > 0) {
                     $rootScope.masteriesCheckList = [];

@@ -9,11 +9,11 @@
                 <button class="button button-clear button-icon ion-plus" ng-click="showCreateAddressModal()" ng-show="!isRTL()"></button>
             </div>
         </ion-header-bar>
-        <ion-content overflow-scroll="false" dir="{{default_direction}}">
+        <ion-content overflow-scroll="true" dir="{{default_direction}}">
 
             <!--'Edit Address' modal template-->
             <script id="editAddress-modal.html" type="text/ng-template">
-                <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}">
+                <ion-modal-view overflow-scroll="true" class="dl-sort-action-sheet" dir="{{default_direction}}" style="top:1%;">
                     <div class="bar bar-header bar-assertive" style="position: static;">
                         <div class="buttons buttons-left header-item">
                             <span class="left-buttons">
@@ -23,12 +23,12 @@
                         <div class="h1 title" translate="EDIT"></div>
                     </div>
 
-                    <ion-content overflow-scroll="false" class="padding has-header dl-sort-action-sheet-content">
+                    <ion-content overflow-scroll="true" class="padding has-header dl-sort-action-sheet-content">
                         <form name="Cform">
                             <div class="list">
                                 <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;">
                                     <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
-                                    <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="0993130478" only-num>
+                                    <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="9" ng-maxlength="10" placeholder="0993130478" only-num>
                                 </label>
                                 <div ng-class="isRTL() ? 'error-container-rtl' : 'error-container'" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
                                     <div class="error" ng-show="Cform.cphone.length < 0">
@@ -100,8 +100,8 @@
                                     <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
                                     <input type="text" style="padding-right: 0px;" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
                                 </label>
+                                <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="updateAddress()" type="submit" translate="ADDRESS_SAVE"></button>
                             </div>
-                            <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="updateAddress()" type="submit" translate="ADDRESS_SAVE"></button>
                         </form>
                     </ion-content>
                 </ion-modal-view>
@@ -109,7 +109,7 @@
 
             <!--'Create Address' modal template-->
             <script id="createAddress-modal.html" type="text/ng-template">
-                <ion-modal-view class="dl-sort-action-sheet" dir="{{default_direction}}">
+                <ion-modal-view class="dl-sort-action-sheet" overflow-scroll="true" dir="{{default_direction}}" style="top:1%;">
                     <div class="bar bar-header bar-assertive" style="position: static;">
                         <div class="buttons buttons-left header-item">
                             <span class="left-buttons">
@@ -119,12 +119,12 @@
                         <div class="h1 title" translate="ADD_NEW_ADDRESSES"></div>
                     </div>
 
-                    <ion-content overflow-scroll="false" class="padding has-header dl-sort-action-sheet-content" >
+                    <ion-content overflow-scroll="true" class="padding has-header dl-sort-action-sheet-content" >
                         <form name="Cform">
                             <div class="list" ng-class="{'text-right': isRTL()}">
                                 <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;">
                                     <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="!((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)"></i> {{'Mobile' | translate}}</span>
-                                    <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="10" ng-maxlength="10" placeholder="0993130478" only-num>
+                                    <input type="number" style="padding-right: 0px;" name="cphone" ng-model="customerAddress.phone" ng-minlength="9" ng-maxlength="10" placeholder="0993130478" only-num>
                                 </label>
                                 <div ng-class="isRTL() ? 'error-container-rtl' : 'error-container'" ng-show="((Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength) && Cform.cphone.$dirty)">
                                     <div class="error" ng-show="Cform.cphone.length < 0">
@@ -196,8 +196,8 @@
                                     <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
                                     <input type="text" style="padding-right: 0px;" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
                                 </label>
-                            </div>
-                            <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="createAddress()" type="submit" translate="ADDRESS_SAVE"></button>
+                                <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="createAddress()" type="submit" translate="ADDRESS_SAVE"></button>
+                            </div>  
                         </form>
                     </ion-content>
 
@@ -211,7 +211,7 @@
                         <button class="button button-icon button-clear" ng-click="closeMapModal()"><span class="icon" ng-class="isRTL() ? 'ion-chevron-right' : 'ion-chevron-left'"></span></button>
                         <h1 class="title" translate="MAP" ng-show="!isRTL()"></h1>
                     </ion-header-bar>
-                    <ion-content overflow-scroll="false">
+                    <ion-content overflow-scroll="true">
                         <div id="map" data-tap-disabled="true"></div>
                     </ion-content>
                 </ion-modal-view>

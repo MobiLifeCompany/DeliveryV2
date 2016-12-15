@@ -37,7 +37,10 @@ angular.module('delivery.controllers')
 
     $scope.selectSavedAddress = function (area) {
         $rootScope.selectedArea = area;
-        
+        if (!angular.isUndefined($rootScope.selectedCity) && !angular.isUndefined($rootScope.selectedArea)) {
+            $rootScope.userHasSelectedArea = true;
+            $rootScope.userHasSelectedCity = true;
+        }
         storageUtilityFactory.setSelectedArea(area);
         //Check if customer has any address
         customerFactory.getCustomerAddressess().success(function (data) {
