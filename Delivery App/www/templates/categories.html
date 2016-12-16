@@ -10,8 +10,8 @@
         </div>
 
         <div class="padding">
-            <div class="list" ng-repeat="category in categories" style="display: inline-block; width: 33%;">
-                <a class="item" ng-click="setCategory(category)" style="width: 100%; padding: 10px; text-align: center;" >
+            <div class="list"  style="width: 100%; margin: 0px auto; text-align: center;">
+                <a class="item" ng-repeat="category in categories" ng-click="setCategory(category)" style="display: inline-block; min-width: 100px; max-width: 33%; padding: 10px; text-align: center;" >
                     <img ng-src="{{category.photo}}" style="width: 90%; border-radius: 50%;"/>
                     <h3 style="height: 35px; text-decoration: none; white-space: normal; word-wrap: normal; font-family: GESSUniqueBold;">{{category.name}}</h3>
                 </a>
