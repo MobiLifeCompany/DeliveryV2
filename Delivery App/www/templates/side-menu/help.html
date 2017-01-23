@@ -1,6 +1,9 @@
 <ion-modal-view ng-controller="HelpCtrl" class="boarding-modal">
     <div class="">
         <ion-content scroll="false">
+            <div style="position: absolute; bottom: 10%; right: 0px; height: 50px; width: 22px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; z-index: 9999;" class="positive-bg">
+                <a href="https://www.facebook.com/DeliveryExpressSY/" style="display: block; font-size: 26px; padding-top: 12px; padding-left: 7px; color: white;"><i class="icon ion-social-facebook"></i></a>
+            </div>
             <ion-slide-box style="height: 100%; padding-top: 5px;">
                 <!-- First slide-->
                 <ion-slide>
@@ -17,19 +20,21 @@
                             </div>
                             <h6 class="light" style="font-family: GESSUniqueBold; font-size: 10px; margin-top: 0px;" translate="SHOW_ON_STARTUP"></h6>
                         </div>
-                        
+
                         <div style="clear: both;"></div>
                     </div>
                     <div style="height: 100%; width: 100%; text-align: center;">
-                        
-                        <img src="img/delivery_logo_{{versionCountry}}.png" style="margin-top: 10px; height: 20%;">
+
+                        <img ng-show="showLaunchSoon()" src="img/delivery_logo_{{versionCountry}}.png" style="margin-top: 10px; height: 15%;">
+                        <img ng-show="!showLaunchSoon()" src="img/delivery_logo_{{versionCountry}}.png" style="margin-top: 10px; height: 20%;">
                         <h4 class="light" translate="WELCOME_TO_APP" style="font-family: GESSUniqueBold;"></h4>
                         <h5 class="stable" translate="SWIPE_TO_LEARN" style="font-family: GESSUniqueBold;"></h5>
-                        <img src="img/onboarding/swipe.png" style="margin-top: 10px; height: 25%;">
-                        
+                        <img ng-show="showLaunchSoon()" src="img/onboarding/swipe.png" style="margin-top: 10px; height: 20%;">
+                        <img ng-show="!showLaunchSoon()" src="img/onboarding/swipe.png" style="margin-top: 10px; height: 25%;">
+                        <h5 ng-show="showLaunchSoon()" class="energized" style="font-family: GESSUniqueBold;" translate="COMING_SOON"></h5>
+
                     </div>
                 </ion-slide>
-
 
                 <ion-slide style="padding-bottom: 60px;">
                     <div>

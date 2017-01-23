@@ -74,7 +74,6 @@
   "ADDRESS_BUILDING": "البناء",
   "ADDRESS_FLOOR": "الطابق",
   "ADDRESS_DETAILS": "تفاصيل أخرى",
-  "ADDRESS_DESCRIPTION": "الرجاء إدخال عنوانك بالتفصيل لنتمكن من الوصول إليك",
   "ADDRESS_AREA": "المنطقة",
   "ADDRESS_SAVE": "حفظ",
   "NO_SAVED_ADDRESS": "لا يوجد عناوين محفوظة في المنطقة الحالية",
@@ -216,6 +215,5 @@
   "SELECT_ANOTHER_CITY": "الرجاء اختيار مدينة أخرى",
   "NO_AREAS": "لا يوجد مناطق في هذه المدينة",
   "READY_TIME": "الوقت المتوقع للتحضير",
-  "MINUTES": "دقيقة",
-  "COMING_SOON": "أضف نص رسالة الانطلاق هنا"
+  "MINUTES" :  "دقيقة"
 }

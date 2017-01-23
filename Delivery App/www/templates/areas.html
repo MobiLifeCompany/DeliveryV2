@@ -1,10 +1,15 @@
-<ion-modal-view ng-controller="AreasCtrl" dir="{{default_direction}}">
+<ion-modal-view ng-controller="AreasCtrl">
     <ion-header-bar class="bar-assertive">
-        <h1 class="title title-right" translate="AREAS" ng-show="isRTL()"></h1>
-        <button class="button button-icon button-clear" ng-click="prevStep()"><span class="icon" ng-class="isRTL() ? 'ion-chevron-right' : 'ion-chevron-left'"></span></button>
+        <button class="button button-icon button-clear" ng-click="prevStep()" ng-show="!isRTL()"><span class="icon ion-chevron-left"></span></button>
+        <button class="button button-clear button-icon ion-search" ng-click="showFilterBar()" ng-show="isRTL()"></button>
         <h1 class="title" translate="AREAS" ng-show="!isRTL()"></h1>
+        <h1 class="title title-right" translate="AREAS" ng-show="isRTL()"></h1>
+        <div class="buttons">
+            <button class="button button-icon button-clear" ng-click="prevStep()" ng-show="isRTL()"><span class="icon ion-chevron-right"></span></button>
+            <button class="button button-clear button-icon ion-search" ng-click="showFilterBar()" ng-show="!isRTL()"></button>
+        </div>
     </ion-header-bar>
-    <ion-content overflow-scroll="true">
+    <ion-content overflow-scroll="true" dir="{{default_direction}}">
         <div class="dl-location-bar"><img src="img/location-bg.jpg" /></div>
         <div class="bar bar-subheader bar-energized static text-center">
             <h4 class="title"><span translate="SELECT_AREA"></span></h4>

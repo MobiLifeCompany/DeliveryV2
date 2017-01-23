@@ -41,6 +41,16 @@ angular.module('delivery.controllers')
         $rootScope.showMainView = true;
     };
 
+    $scope.showFilterBar = function () {
+        filterBarInstance = $ionicFilterBar.show({
+            items: $scope.areas,
+            update: function (filteredItems) {
+                $scope.areas = filteredItems;
+            },
+            filterProperties: 'name'
+        });
+    };
+
     $scope.prevStep = function () {
         $rootScope.areasModal.hide();
         $rootScope.citiesModal.show();

@@ -33,6 +33,9 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
+        },
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         },
@@ -47,9 +50,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "180733002242",
-            "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
-        },
-        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.mobilife.deliveryexpress.sy"
         }
     },

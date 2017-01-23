@@ -194,7 +194,7 @@
                                 </div>
                                 <label class="item item-input item-floating-label" style="margin-top: 5px; padding: 0px 5px;float:none;">
                                     <span class="input-label assertive-900" style="text-align: {{default_float}};"><i class="icon ion-checkmark" style="color: green;" ng-show="customerAddress.details >= 0"></i> {{'ADDRESS_DETAILS' | translate}}</span>
-                                    <input type="text" style="padding-right: 0px;" placeholder="{{'ADDRESS_DETAILS' | translate}}" ng-model="customerAddress.details" required min="8">
+                                    <textarea rows="2" style="padding-right: 0px;" placeholder="{{'ADDRESS_DESCRIPTION' | translate}}" ng-model="customerAddress.details" required min="8"></textarea>
                                 </label>
                                 <button class="button button-small button-balanced button-block" ng-disabled="(!Cform.cphone || (Cform.cphone.$error.minlength || Cform.cphone.$error.maxlength)) || (!Cform.cemail || Cform.cemail.$invalid) || (!customerAddress.street || customerAddress.street.length < 8) || (!customerAddress.building || customerAddress.building.length < 8) || (!customerAddress.floor || customerAddress.floor.length < 1)" ng-click="createAddress()" type="submit" translate="ADDRESS_SAVE"></button>
                             </div>  
